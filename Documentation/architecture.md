@@ -15,9 +15,13 @@ The system consists of three main components that communicate using RESTful APIs
 The frontend is a web-user interface that allows students to interact with our system. It will send HTTP requests to the backend to retrieve and update data, and render a response. Communication over HTTPS protects data in its transferral.
 
 **Responsibilities**
+
 *User authentication (login feature)
+
 *Displaying courses
+
 *Displaying the user stories we have listed
+
 *Providing links to IBM SkillsBuild
 
 ## 4. Backend 
@@ -27,8 +31,11 @@ The backend is implemented using Java and Spring Boot using the IDE IntelliJ, fo
 **Responsibilities**
 
 *Managing logic for gamification features
+
 *Validating requests
+
 *Error handling
+
 *User authentication and authorisation
 
 ## 5. Database 
@@ -36,7 +43,9 @@ The backend is implemented using Java and Spring Boot using the IDE IntelliJ, fo
 The database stores persistent data needed by the application, ensuring data integrity and structured data storage. The MySQL database is never accessed directly by the frontend, to reduce exposure of sensitive data.
 
 **Responsibilities**
+
 *User accounts and login details
+
 *User story data that needs to be stored
 
 ## 6. Security-Focussed 
