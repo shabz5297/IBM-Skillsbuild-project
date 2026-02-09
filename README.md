@@ -3,7 +3,7 @@
 ## Description
 As a group, we are gamifying elements of the IBM SkillsBuild web application to encourage students to use and engage with the platform
 
-#Team Members
+# Team Members
 - Destiny-Alliah Colombo
 - Ousman Ndoye
 - Precious Aghamelu
@@ -16,7 +16,7 @@ As a group, we are gamifying elements of the IBM SkillsBuild web application to 
 ## How to run
 
 ## Definition of Done
-See [Definition of Done](Definition-of-Done.md)
+See [Definition of Done](Documentation/Definition-of-Done.md)
 
 ## Tools and Technologies
 Java, Gitlab, Spring Boot, MySQL, IntelliJ
