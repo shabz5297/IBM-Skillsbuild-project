@@ -11,7 +11,7 @@
 - As a Student, I want to register and log in to the web app so that my learning progress is saved and tied to my account.
 
 **Acceptance Criteria:**  
-- Users can register using a valid university email and password. 
+- Users can register using a valid university email and password.  
 - Users can log in with correct credentials.  
 - Invalid credentials display an appropriate error message.  
 - User session persists until logout or expiration.  
@@ -24,9 +24,10 @@
 
 **Acceptance Criteria:**  
 - Dashboard displays all available courses in a grid or list format.  
-- Each course card shows the course title, category and a short description (1-2 lines).
+- Each course card shows the course title, category, and a short description (1–2 lines).  
 - Clicking a course redirects the user to the IBM SkillsBuild course link.  
 - Courses are dynamically loaded from the backend or a simulated API.  
+- Courses that have been completed are visually marked (e.g., status label or icon).  
 
 ---
 
@@ -50,7 +51,7 @@
 - Users can type keywords into a search bar to filter courses by title.  
 - Users can filter courses by category (e.g., AI, Cloud, Data Science).  
 - Search results update dynamically as the user types or selects a filter.  
-- The search/filter function works on all courses in the dashboard.  
+- The search and filter functionality works across all available courses.  
 
 ---
 
@@ -66,17 +67,32 @@
 
 ---
 
+### 6. Record Course Completion (Simulated Integration)
+**User Story:**  
+- As a Student, I want the app to record when I complete an IBM SkillsBuild course so that my learning progress is tracked within the web app.
+
+**Acceptance Criteria:**  
+- Users can manually mark a course as “Completed” after returning from IBM SkillsBuild.  
+- Completed courses are stored in the backend and linked to the user account.  
+- Completed courses remain marked after logout and subsequent login.  
+- The system prevents the same course from being marked completed multiple times.  
+- Completion timestamps are recorded for each completed course.  
+
+---
+
 ## Sprint 2
+
+---
 
 ### 1. Leaderboard
 **User Story:**  
 - As a Student, I want to have a global leaderboard so that I can track my progress compared to other students and feel motivated to complete more courses.
 
 **Acceptance Criteria:**  
-- Leaderboard displays the top students globally by points or level.  
-- Logged-in user’s row is highlighted.  
+- Leaderboard displays the top students globally based on points or level.  
+- The logged-in user’s position is clearly highlighted.  
 - Leaderboard updates automatically when a student completes a course or earns points.  
-- Leaderboard shows student name, level, points, and badges earned.  
+- Leaderboard shows student name, level, points, and earned badges.  
 
 ---
 
@@ -85,10 +101,10 @@
 - As a Student, I want to have levels that indicate my progress so that I can feel a sense of accomplishment as I complete more courses.
 
 **Acceptance Criteria:**  
-- Users start at a “Beginner” level.  
-- XP or progress points increase as courses are completed.  
-- Level-up occurs automatically when XP thresholds are reached.  
-- Current level is visible on the dashboard, profile, and leaderboard.  
+- Users start at a “Beginner” level by default.  
+- Experience points increase when courses are completed.  
+- Level upgrades occur automatically when defined thresholds are reached.  
+- The current level is visible on the dashboard, profile, and leaderboard.  
 
 ---
 
@@ -97,10 +113,10 @@
 - As a Student, I want to track my learning streak so that I am encouraged to return daily and maintain consistency.
 
 **Acceptance Criteria:**  
-- System tracks consecutive days of course activity.  
-- Streak is displayed on the dashboard/profile with an icon.  
-- Missing a day resets the streak.  
-- Streak milestones can trigger notifications or badges.  
+- The system tracks consecutive days of learning activity.  
+- The current streak is displayed on the dashboard or profile.  
+- Missing a day resets the streak count.  
+- Streak milestones can trigger visual indicators or rewards.  
 
 ---
 
@@ -109,9 +125,8 @@
 - As a Student, I want to earn badges for completing courses or reaching milestones so that I feel rewarded and motivated to continue learning.
 
 **Acceptance Criteria:**  
-- Badges are awarded for completing courses, reaching new levels, or maintaining streaks.  
-- Badges are displayed on the dashboard and profile.  
-- Users can see badge descriptions when hovering over or clicking the badge.  
+- Badges are awarded for course completion, level progression, or streak milestones.  
+- Earned badges are displayed on the user profile and dashboard.  
+- Users can view badge descriptions via hover or click interaction.  
 - Badge data is stored in the backend and persists across sessions.  
 
----
