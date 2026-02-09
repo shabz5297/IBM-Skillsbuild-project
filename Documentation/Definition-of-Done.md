@@ -32,12 +32,12 @@ A frontend user story is also considered complete when:
 A backend user story is also considered complete when:
 - Functionality is implemented using Java and Spring Boot and input validation and error handling are implemented
 
-###DoD-C: Database User Stories
+### DoD-C: Database User Stories
 
 A database user story is also considered complete when:
 -Required tables are created/updated in the relational database and data can be stored and retrieved via the backend API
 
-###DoD-D: Security User Stories
+### DoD-D: Security User Stories
 
 A security-related user story is also considered complete when:
 -Sensitive data is not stored or transmitted in plain text and authentication/authorisation mechanisms are enforced where necessary.
