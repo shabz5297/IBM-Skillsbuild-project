@@ -26,7 +26,7 @@
 - Dashboard displays all available courses in a grid or list format.  
 - Each course card shows the course title, category, and a short description (1–2 lines).  
 - Clicking a course redirects the user to the IBM SkillsBuild course link.  
-- Courses are dynamically loaded from the backend or a simulated API.  
+- Courses are dynamically loaded from the backend.  
 - Courses that have been completed are visually marked (e.g., status label or icon).  
 
 ---
