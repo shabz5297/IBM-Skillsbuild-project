@@ -1,6 +1,10 @@
 # IBM SkillsBuild Gamified Web App - User Stories
 
+---
+
 ## Sprint 1
+
+---
 
 ### 1. Registration & Login
 **User Story:**  
