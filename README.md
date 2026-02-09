@@ -19,4 +19,4 @@ As a group, we are gamifying elements of the IBM SkillsBuild web application to 
 See [Definition of Done](Definition-of-Done(S2).txt)
 
 ## Tools and Technologies
-Java, Gitlab (list frameworks, libraries etc)
+Java, Gitlab, Spring Boot, MySQL, IntelliJ
