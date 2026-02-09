@@ -67,7 +67,7 @@
 
 ---
 
-### 6. Record Course Completion (Simulated Integration)
+### 6. Record Course Completion 
 **User Story:**  
 - As a Student, I want the app to record when I complete an IBM SkillsBuild course so that my learning progress is tracked within the web app.
 
