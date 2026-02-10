@@ -1,16 +1,21 @@
-# IntelliJ
+# IDE files
 .idea/
 *.iml
 
-# Gradle caches
+# Gradle caches & builds
 .gradle/
 build/
+
+# Top-level wrapper scripts
+gradlew
+gradlew.bat
+gradle/wrapper/
 
 # MacOS / system files
 .DS_Store
 
-# Optional: keep only /code/gradle wrapper tracked
-!code/gradle/wrapper/gradle-wrapper.jar
-!code/gradle/wrapper/gradle-wrapper.properties
+# Keep /code wrapper files tracked
 !code/gradlew
 !code/gradlew.bat
+!code/gradle/wrapper/gradle-wrapper.jar
+!code/gradle/wrapper/gradle-wrapper.properties
