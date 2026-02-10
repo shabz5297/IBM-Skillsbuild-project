@@ -1,5 +1,16 @@
+# IntelliJ
 .idea/
 *.iml
-code/.gradle/
-code/build/
+
+# Gradle caches
+.gradle/
+build/
+
+# MacOS / system files
 .DS_Store
+
+# Optional: keep only /code/gradle wrapper tracked
+!code/gradle/wrapper/gradle-wrapper.jar
+!code/gradle/wrapper/gradle-wrapper.properties
+!code/gradlew
+!code/gradlew.bat
