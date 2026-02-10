@@ -21,4 +21,8 @@ We revised some of our user stories and DoD requirements as advised by our super
 
 Attendees: Destiny-Alliah Colombo, Ousman Ndoye, Precious Aghamelu, Raenah Swaby, Deborah Adekola, Laide Olubunmi
 
+## Discussions
+
+Attendees: Destiny-Alliah Colombo, Ousman Ndoye, Precious Aghamelu, Raenah Swaby, Deborah Adekola, Laide Olubunmi
+
 We all attended the lab session and established the user stories that everyone would be working on moving forwards. We had to redo our repository so we made sure that everyone had access to the new cloned repository on IntelliJ. We all started working on our user stories in the lab, and established branching and merging etiquette.
