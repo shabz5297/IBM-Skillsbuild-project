@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                        .requestMatchers("/register", "/login", "/error").permitAll()  // CRITICAL LINE
+                        .requestMatchers("/css/**","/register", "/login", "/error").permitAll()  // CRITICAL LINE
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth -> oauth
