@@ -1,20 +1,33 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
-<html><head><title>Login</title></head><body>
-<h2>Login</h2>
+<html>
+<head>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <title>Login</title>
+</head>
+<body>
 
-<form action="${pageContext.request.contextPath}/login" method="post">
-    <p>Username: <input name="username" required></p>
-    <p>Password: <input type="password" name="password" required></p>
-    <button type="submit">Login</button>
-</form>
+<div class="container">
+    <h2>Login</h2>
 
-<hr />
-<p>
-    <a href="${pageContext.request.contextPath}/oauth2/authorization/github">
+    <form action="${pageContext.request.contextPath}/login" method="post">
+        <p>Username:</p>
+        <input name="username" required>
+
+        <p>Password:</p>
+        <input type="password" name="password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <hr />
+
+    <a class="oauth-btn" href="${pageContext.request.contextPath}/oauth2/authorization/github">
         Login with GitHub
     </a>
-</p>
 
-<p><a href="${pageContext.request.contextPath}/register">Register</a></p>
-</body></html>
+    <p><a href="${pageContext.request.contextPath}/register">Register</a></p>
+</div>
+
+</body>
+</html>
