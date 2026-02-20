@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <title>Register</title>
 </head>
 <body>
