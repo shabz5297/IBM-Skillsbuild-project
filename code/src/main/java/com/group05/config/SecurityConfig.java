@@ -22,12 +22,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+            http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                         .requestMatchers("/register", "/login", "/error").permitAll()  // CRITICAL LINE
                         .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth -> oauth
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home", true)
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
