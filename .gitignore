@@ -19,6 +19,3 @@ gradle/wrapper/
 !code/gradlew.bat
 !code/gradle/wrapper/gradle-wrapper.jar
 !code/gradle/wrapper/gradle-wrapper.properties
-
-# local/IDE jars
-lib/*.jar
