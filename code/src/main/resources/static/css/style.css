@@ -5,7 +5,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #c6cdd5;
     margin: 0;
 
     /* Center everything vertically + horizontally */
@@ -17,7 +17,7 @@ body {
 
 /* Main card container */
 .container {
-    background: white;
+    background: #ecf2f8;
     padding: 40px;
     border-radius: 10px;
     width: 100%;
@@ -28,7 +28,7 @@ body {
 
 h2 {
     margin-bottom: 20px;
-    color: #333;
+    color: #000000;
 }
 
 form {
@@ -54,8 +54,8 @@ button {
     transition: background 0.3s ease;
 }
 
-oauth-btn {
-    background: #007bff;
+.oauth-btn {
+    background: #cea5fb;
     color: white;
     padding: 10px;
     border: none;
@@ -64,6 +64,9 @@ oauth-btn {
     transition: background 0.3s ease;
 }
 
+.oauth-btn:hover {
+    background: #77bdfb;
+}
 
 
 
@@ -98,7 +101,7 @@ label {
 }
 
 .logout-btn {
-    background: #dc3545;
+    background: #ff4254;
 }
 
 .logout-btn:hover {
