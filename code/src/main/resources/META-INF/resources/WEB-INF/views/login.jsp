@@ -25,7 +25,6 @@
     <a class="oauth-btn" href="${pageContext.request.contextPath}/oauth2/authorization/github">
         Login with GitHub
     </a>
-
     <p><a href="${pageContext.request.contextPath}/register">Register</a></p>
 </div>
 

@@ -9,9 +9,9 @@
 
 <div class="container">
 
-    <h2>Welcome</h2>
+    <h2>Welcome to the Home Page</h2>
 
-    <p class="subtitle">You are successfully logged in.</p>
+    <p class="subtitle">You are logged in</p>
 
     <form action="${pageContext.request.contextPath}/logout" method="post">
         <button type="submit" class="logout-btn">Logout</button>

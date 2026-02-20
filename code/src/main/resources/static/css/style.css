@@ -54,6 +54,20 @@ button {
     transition: background 0.3s ease;
 }
 
+oauth-btn {
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+
+
+
+
 button:hover {
     background: #0056b3;
 }
