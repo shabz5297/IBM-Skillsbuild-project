@@ -2,12 +2,24 @@ package com.group05.model;
 
 import jakarta.persistence.*;
 
-@Entity @Table
+@Entity
+@Table(name = "user")
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
+
+    @Column(unique = true, nullable = false)
     private String username;
+
+    // can be null for OAuth2 users
     private String password;
+
+    //new fields for OAuth2 users
+
+    private String provider;
+    private String providerId;
+    private String email;
 
 
     public Long getId() {
@@ -34,6 +46,16 @@ public class User {
         this.password = password;
     }
 
+    public String getProvider() { return provider;}
 
+    public void setProvider(String provider) { this.provider = provider;}
+
+    public String getProviderId() { return providerId;}
+
+    public void setProviderId(String providerId) { this.providerId = providerId;}
+
+    public String getEmail() { return email;}
+
+    public void setEmail(String email) { this.email = email;}
 
 }

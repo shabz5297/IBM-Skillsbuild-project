@@ -15,9 +15,11 @@ import jakarta.servlet.DispatcherType;
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
+    public SecurityConfig(UserDetailsService userDetailsService, OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler) {
         this.userDetailsService = userDetailsService;
+        this.oAuth2LoginSuccessHandler = oAuth2LoginSuccessHandler;
     }
 
     @Bean
@@ -31,7 +33,7 @@ public class SecurityConfig {
                 )
                 .oauth2Login(oauth -> oauth
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home", true)
+                        .successHandler(oAuth2LoginSuccessHandler)
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
