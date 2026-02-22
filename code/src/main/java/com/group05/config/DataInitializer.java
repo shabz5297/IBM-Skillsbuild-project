@@ -6,13 +6,18 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration // Marks this class as a Spring configuration class (used to define beans)
 public class DataInitializer {
 
-    @Bean
+    @Bean // Tells Spring to run this method at application startup
     public ApplicationRunner initializer(CourseRepo courseRepository) {
         return args -> {
+
+            // Check if the database already has courses
+            // This prevents duplicate courses being inserted every time the app starts
             if (courseRepository.count() == 0) { // only add if DB is empty
+
+                // Add starter courses to the database so the dashboard isn't empty
                 courseRepository.save(new Course(
                         "Introduction to Artificial Intelligence",
                         "AI",

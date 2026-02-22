@@ -24,7 +24,13 @@
 
 <!-- DASHBOARD HEADER -->
 <div class="dashboard-header">
-    <h1>Welcome back${user != null ? ", " + user.username : ""} 👋</h1>
+    <h1>
+        Welcome back
+        <c:if test="${user != null}">
+            , ${user.username}
+        </c:if>
+        👋
+    </h1>
 </div>
 
 <!-- YOUR COURSES SECTION -->
@@ -36,7 +42,14 @@
                 <h3>${course.title}</h3>
                 <p class="category">${course.category}</p>
                 <p>${course.description}</p>
-                <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
+                <div class="course-actions">
+                    <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
+                    <!-- REMOVE BUTTON -->
+                    <form action="${pageContext.request.contextPath}/removeCourse" method="post">
+                        <input type="hidden" name="courseId" value="${course.id}" />
+                        <button type="submit" class="trash-btn">🗑</button>
+                    </form>
+                </div>
             </div>
         </c:forEach>
 
@@ -59,9 +72,25 @@
                     <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
 
                     <!-- Save button (star) -->
-                    <form action="${pageContext.request.contextPath}/saveCourse" method="post" class="save-form">
+                    <c:set var="isSaved" value="${savedCourseIds.contains(course.id)}" />
+
+                    <form action="${pageContext.request.contextPath}/${isSaved ? 'removeCourse' : 'saveCourse'}"
+                          method="post"
+                          class="save-form">
+
                         <input type="hidden" name="courseId" value="${course.id}">
-                        <button class="save-btn" title="Save Course">⭐</button>
+
+                        <button class="save-btn" title="${isSaved ? 'Remove course' : 'Save course'}">
+                            <c:choose>
+                                <c:when test="${isSaved}">
+                                    ★
+                                </c:when>
+                                <c:otherwise>
+                                    ☆
+                                </c:otherwise>
+                            </c:choose>
+                        </button>
+
                     </form>
                 </div>
             </div>
