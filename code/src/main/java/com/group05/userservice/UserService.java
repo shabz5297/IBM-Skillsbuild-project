@@ -24,6 +24,14 @@ public class UserService {
         userRepo.save(user);
     }
 
+    public User findById(Long id) {
+        return userRepo.findById(id).orElse(null);
+    }
+
+    public void save(User user) {
+        userRepo.save(user);
+    }
+
 
 
 
