@@ -27,12 +27,6 @@ public class PageController {
     //login page
     @GetMapping("/login")
     public String login() {return "login";}
-
-    // Home page after successful login
-    @GetMapping("/home")
-    public String home() {
-        return "home";
-    }
 }
 
 
