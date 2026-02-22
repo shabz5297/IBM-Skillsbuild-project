@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface UserRepo extends JpaRepository <User, Long> {
 
     User findByUsername(String username);
+    // extend repo to find users by provider id
+    User findByProviderAndProviderId(String provider, String providerId);
+    User findByEmail(String email);
 }
