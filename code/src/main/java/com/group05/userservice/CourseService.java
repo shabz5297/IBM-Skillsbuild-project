@@ -1,6 +1,10 @@
 package com.group05.userservice;
 
 import com.group05.model.Course;
+import com.group05.model.User;
+import com.group05.repo.CourseRepo;
+import com.group05.repo.UserRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,25 +13,36 @@ import java.util.List;
 @Service
 public class CourseService {
 
+    private final CourseRepo courseRepository;
+    private final UserRepo userRepository;
+
+    public CourseService(CourseRepo courseRepository, UserRepo userRepository) {
+        this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
+    }
+
+    // Get all courses from the database
     public List<Course> getAllCourses() {
-        List<Course> courses = new ArrayList<>();
+        return courseRepository.findAll();
+    }
 
-        courses.add(new Course(
-                1L,
-                "Introduction to Artificial Intelligence",
-                "AI",
-                "Learn the basics of AI and machine learning concepts.",
-                "https://skillsbuild.org/course/artificial-intelligence"
-        ));
+    // Get the courses saved by a specific user
+    public List<Course> getSavedCourses(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return user != null ? List.copyOf(user.getSavedCourses()) : List.of();
+    }
 
-        courses.add(new Course(
-                2L,
-                "IBM Cloud Fundamentals",
-                "Cloud",
-                "Understand core cloud computing principles.",
-                "https://skillsbuild.org/course/ibm-cloud"
-        ));
+    // Save a course for a user (adds to savedCourses)
+    @Transactional
+    public void saveCourseForUser(Long userId, Long courseId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course not found"));
 
-        return courses;
+        // Check if already saved
+        if (!user.getSavedCourses().contains(course)) {
+            user.getSavedCourses().add(course);
+            // Hibernate automatically persists the join table because of @Transactional
+            userRepository.save(user);
+        }
     }
 }

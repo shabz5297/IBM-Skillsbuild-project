@@ -2,11 +2,15 @@ package com.group05.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "user")
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(unique = true, nullable = false)
@@ -16,16 +20,27 @@ public class User {
     private String password;
 
     //new fields for OAuth2 users
-
     private String provider;
     private String providerId;
     private String email;
 
+    public Set<Course> getSavedCourses() {
+        return savedCourses;
+    }
 
+    // Saved Courses
+    @ManyToMany
+    @JoinTable(
+            name = "user_courses",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private Set<Course> savedCourses = new HashSet<>();
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -33,7 +48,6 @@ public class User {
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -41,21 +55,17 @@ public class User {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
     public String getProvider() { return provider;}
-
     public void setProvider(String provider) { this.provider = provider;}
 
     public String getProviderId() { return providerId;}
-
     public void setProviderId(String providerId) { this.providerId = providerId;}
 
     public String getEmail() { return email;}
-
     public void setEmail(String email) { this.email = email;}
 
 }

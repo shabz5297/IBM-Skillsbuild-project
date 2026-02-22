@@ -1,18 +1,73 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
+<html>
 <head>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
 </head>
-<h1>Available Courses</h1>
 
-<div>
-    <c:forEach var="course" items="${courses}">
-        <div class="course-card">
-            <h3>${course.title}</h3>
-            <p><b>Category:</b> ${course.category}</p>
-            <p>${course.description}</p>
-            <a href="${course.link}" target="_blank">Start Course</a>
-        </div>
-    </c:forEach>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+    <div class="left">
+        <form action="${pageContext.request.contextPath}/logout" method="post">
+            <button class="logout-btn">Logout</button>
+        </form>
+    </div>
+    <div class="right">
+        <a href="${pageContext.request.contextPath}/profile" class="profile-btn">Profile ⚙</a>
+    </div>
 </div>
+
+<!-- DASHBOARD HEADER -->
+<div class="dashboard-header">
+    <h1>Welcome back${user != null ? ", " + user.username : ""} 👋</h1>
+</div>
+
+<!-- YOUR COURSES SECTION -->
+<div class="course-section">
+    <h2>Your Courses</h2>
+    <div class="course-grid">
+        <c:forEach var="course" items="${savedCourses}">
+            <div class="course-card saved">
+                <h3>${course.title}</h3>
+                <p class="category">${course.category}</p>
+                <p>${course.description}</p>
+                <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
+            </div>
+        </c:forEach>
+
+        <c:if test="${empty savedCourses}">
+            <p>No courses saved yet. Click the ⭐ button on any course below to add it here!</p>
+        </c:if>
+    </div>
+</div>
+
+<!-- ALL COURSES SECTION -->
+<div class="course-section">
+    <h2>All Courses</h2>
+    <div class="course-grid">
+        <c:forEach var="course" items="${courses}">
+            <div class="course-card">
+                <h3>${course.title}</h3>
+                <p class="category">${course.category}</p>
+                <p>${course.description}</p>
+                <div class="course-actions">
+                    <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
+
+                    <!-- Save button (star) -->
+                    <form action="${pageContext.request.contextPath}/saveCourse" method="post" class="save-form">
+                        <input type="hidden" name="courseId" value="${course.id}">
+                        <button class="save-btn" title="Save Course">⭐</button>
+                    </form>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+</div>
+
+</body>
+</html>
