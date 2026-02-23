@@ -49,6 +49,30 @@
                         <input type="hidden" name="courseId" value="${course.id}" />
                         <button type="submit" class="trash-btn">🗑</button>
                     </form>
+
+                    <c:set var="isCompleted" value="${completedCourseIds.contains(course.id)}" />
+
+                    <c:choose>
+                        <c:when test="${isCompleted}">
+                            <span class="completed-badge">
+                                Completed ✅
+                                <c:if test="${completionTimestamps[course.id] != null}">
+                                    <small>(${completionTimestamps[course.id]})</small>
+                                </c:if>
+                            </span>
+                        </c:when>
+                        <c:otherwise>
+                            <form action="${pageContext.request.contextPath}/completeCourse"
+                                  method="post"
+                                  class="complete-form">
+                                <input type="hidden" name="courseId" value="${course.id}" />
+                                <button type="submit" class="complete-btn">
+                                    Mark Completed
+                                </button>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
+
                 </div>
             </div>
         </c:forEach>
@@ -92,6 +116,30 @@
                         </button>
 
                     </form>
+
+                    <c:set var="isCompleted" value="${completedCourseIds.contains(course.id)}" />
+
+                    <c:choose>
+                        <c:when test="${isCompleted}">
+                            <span class="completed-badge">
+                                Completed ✅
+                                <c:if test="${completionTimestamps[course.id] != null}">
+                                    <small>(${completionTimestamps[course.id]})</small>
+                                </c:if>
+                            </span>
+                        </c:when>
+                        <c:otherwise>
+                            <form action="${pageContext.request.contextPath}/completeCourse"
+                                  method="post"
+                                  class="complete-form">
+                                <input type="hidden" name="courseId" value="${course.id}" />
+                                <button type="submit" class="complete-btn">
+                                    Mark Completed
+                                </button>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
+
                 </div>
             </div>
         </c:forEach>
