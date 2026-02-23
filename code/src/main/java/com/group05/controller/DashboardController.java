@@ -4,8 +4,6 @@ import com.group05.model.Course;
 import com.group05.model.User;
 import com.group05.repo.UserRepo;
 import com.group05.userservice.CourseService;
-import com.group05.userservice.UserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,10 +67,20 @@ public class DashboardController {
 
         // Create a set of saved course IDs for quick lookup in the JSP
         // Used to decide whether a star should be filled or empty
-        Set<Long> savedCourseIds = user.getSavedCourses()
-                .stream()
-                .map(Course::getId)
-                .collect(Collectors.toSet());
+        Set<Long> savedCourseIds = user != null
+                ? user.getSavedCourses().stream().map(Course::getId).collect(Collectors.toSet())
+                : Set.of();
+
+        // NEW: Completed course IDs + timestamps for UI
+        Set<Long> completedCourseIds = user != null
+                ? courseService.getCompletedCourseIds(user.getId())
+                : Set.of();
+
+        model.addAttribute("completionTimestamps",
+                user != null ? courseService.getCompletionTimestamps(user.getId()) : java.util.Map.of()
+        );
+
+        model.addAttribute("completedCourseIds", completedCourseIds);
 
         // Send data to the JSP page
         model.addAttribute("savedCourseIds", savedCourseIds);
@@ -117,9 +125,20 @@ public class DashboardController {
         return "redirect:/home";
     }
 
+    @PostMapping("/completeCourse")
+    public String completeCourse(@RequestParam Long courseId, Authentication authentication) {
+        User user = getLoggedInUser(authentication);
+        if (user != null) {
+            courseService.markCourseCompleted(user.getId(), courseId);
+        }
+        return "redirect:/home";
+    }
+
     // Loads the profile page
     @GetMapping("/profile")
-    public String profile(Model model) {
-        return "profile";
-    }
+        public String profile(Authentication authentication, Model model) {
+            User user = getLoggedInUser(authentication);
+            model.addAttribute("user", user);
+            return "profile";
+        }
 }
