@@ -25,9 +25,17 @@ public class PageController {
 
     //submission
     @PostMapping("/register")
-    public String registerUser(@RequestParam String username, @RequestParam String password){
-        userService.registerUser(username,password);
-        return "redirect:/login";}
+    public String registerUser(@RequestParam String username,
+                               @RequestParam String password,
+                               Model model) {
+        try {
+            userService.registerUser(username, password);
+            return "redirect:/login";
+        } catch (IllegalArgumentException ex) {
+            model.addAttribute("error", ex.getMessage());
+            return "register";
+        }
+    }
 
     //login page
     @GetMapping("/login")
