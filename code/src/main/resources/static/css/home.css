@@ -108,3 +108,19 @@ body {
 .save-btn:hover {
     transform: scale(1.2);
 }
+
+.complete-btn {
+    border: none;
+    padding: 6px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.completed-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+}
