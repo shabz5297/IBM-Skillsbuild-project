@@ -1,12 +1,19 @@
 package com.group05.userservice;
 
 import com.group05.model.Course;
+import com.group05.model.CourseCompletion;
 import com.group05.model.User;
 import com.group05.repo.CourseRepo;
+import com.group05.repo.CourseCompletionRepo;
 import com.group05.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +23,15 @@ public class CourseService {
     // Repositories used to access database tables
     private final CourseRepo courseRepository;
     private final UserRepo userRepository;
+    private final CourseCompletionRepo courseCompletionRepo;
 
     // Constructor injection of repositories
-    public CourseService(CourseRepo courseRepository, UserRepo userRepository) {
+    public CourseService(CourseRepo courseRepository,
+                         UserRepo userRepository,
+                         CourseCompletionRepo courseCompletionRepo) {
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
+        this.courseCompletionRepo = courseCompletionRepo;
     }
 
     // Returns all courses stored in the database
@@ -67,5 +78,40 @@ public class CourseService {
 
         // Persist the change
         userRepository.save(user);
+    }
+
+    //Mark courses as completed for a user
+
+    @Transactional
+    public void markCourseCompleted(Long userId, Long courseId) {
+
+        // Prevent duplicate completions
+        if (courseCompletionRepo.existsByUser_IdAndCourse_Id(userId, courseId)) {
+            return;
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        CourseCompletion completion = new CourseCompletion(user, course, LocalDateTime.now());
+        courseCompletionRepo.save(completion);
+    }
+
+    public Set<Long> getCompletedCourseIds(Long userId) {
+        return courseCompletionRepo.findAllByUser_Id(userId)
+                .stream()
+                .map(cc -> cc.getCourse().getId())
+                .collect(Collectors.toSet());
+    }
+
+    public Map<Long, LocalDateTime> getCompletionTimestamps(Long userId) {
+        Map<Long, LocalDateTime> map = new HashMap<>();
+        for (CourseCompletion cc : courseCompletionRepo.findAllByUser_Id(userId)) {
+            map.put(cc.getCourse().getId(), cc.getCompletedAt());
+        }
+        return map;
     }
 }
