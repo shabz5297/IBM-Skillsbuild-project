@@ -46,7 +46,9 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
+
     private Set<Course> savedCourses = new HashSet<>();
+    private int progress=0;
 
     // Getters and Setters
     public Long getId() {return id;}
@@ -75,5 +77,21 @@ public class User {
 
     public String getProfilePicture() {return profilePicture;}
     public void setProfilePicture(String profilePicture) {this.profilePicture = profilePicture;}
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
+    public List<Badge> getBadges() {
+        return badges;
+    }
+
+    public void setBadges(List<Badge> badges) {
+        this.badges = badges;
+    }
 
 }
