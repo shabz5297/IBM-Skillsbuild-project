@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.group05.model.User;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 @Controller
@@ -58,21 +64,36 @@ public class PageController {
     }
 
     @PostMapping("/profile/{id}/edit")
-    public String updateProfile(
-            @PathVariable Long id,
-            @RequestParam String displayName,
-            @RequestParam String bio,
-            @RequestParam String email
-    ) {
+    public String updateProfile(@PathVariable Long id,
+                                @RequestParam String displayName,
+                                @RequestParam String bio,
+                                @RequestParam String email,
+                                @RequestParam("profileImage") MultipartFile file) throws IOException {
+
         User user = userService.findById(id);
 
         user.setDisplayName(displayName);
         user.setBio(bio);
         user.setEmail(email);
 
+        if (!file.isEmpty()) {
+
+            String uploadDir = "uploads/";
+            File uploadPath = new File(uploadDir);
+            if (!uploadPath.exists()) {
+                uploadPath.mkdirs();
+            }
+
+            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            Path filePath = Paths.get(uploadDir, fileName);
+            Files.write(filePath, file.getBytes());
+
+            user.setProfilePicture("/uploads/" + fileName);
+        }
+
         userService.save(user);
 
-        return "redirect:/profile/" + id;
+        return "redirect:/profile/" + id + "?updated=true";
     }
 }
 
