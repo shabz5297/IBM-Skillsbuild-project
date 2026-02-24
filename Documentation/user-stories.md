@@ -30,6 +30,8 @@
 - Users are logged into the app after successful OAuth2 authentication
 - User session persists until logout or session expiration.
 
+---
+
 ### 3. View Courses
 **User Story:**  
 - As a Student, I want to see a list or grid of available IBM SkillsBuild courses so that I can choose which course to start.
@@ -132,7 +134,7 @@
 
 ---
 
-### 4. Badges
+### 3. Badges
 **User Story:**  
 - As a Student, I want to earn badges for completing courses or reaching milestones so that I feel rewarded and motivated to continue learning.
 
