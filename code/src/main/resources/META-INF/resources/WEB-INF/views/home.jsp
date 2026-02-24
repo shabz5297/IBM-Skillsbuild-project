@@ -118,19 +118,40 @@
                 <div class="course-actions">
                     <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
 
+                    <!-- Save/Unsave (STAR) -->
                     <c:set var="isSaved" value="${savedCourseIds.contains(course.id)}" />
-
                     <form action="${pageContext.request.contextPath}/${isSaved ? 'removeCourse' : 'saveCourse'}"
                           method="post"
                           class="save-form">
                         <input type="hidden" name="courseId" value="${course.id}" />
                         <button type="submit" class="save-btn" title="${isSaved ? 'Remove course' : 'Save course'}">
                             <c:choose>
-                                <c:when test="${isSaved}">★</c:when>
+                                <c:when test="${isSaved}">⭐</c:when>
                                 <c:otherwise>☆</c:otherwise>
                             </c:choose>
                         </button>
                     </form>
+
+                    <!-- Completed / Mark Completed -->
+                    <c:set var="isCompleted" value="${completedCourseIds.contains(course.id)}" />
+                    <c:choose>
+                        <c:when test="${isCompleted}">
+                            <span class="completed-badge">
+                                Completed ✅
+                                <c:if test="${completionTimestamps[course.id] != null}">
+                                    <small>(${completionTimestamps[course.id]})</small>
+                                </c:if>
+                            </span>
+                        </c:when>
+                        <c:otherwise>
+                            <form action="${pageContext.request.contextPath}/completeCourse"
+                                  method="post"
+                                  class="complete-form">
+                                <input type="hidden" name="courseId" value="${course.id}" />
+                                <button type="submit" class="complete-btn">Mark Completed</button>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </c:forEach>
