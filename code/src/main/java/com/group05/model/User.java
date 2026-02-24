@@ -33,6 +33,12 @@ public class User {
     @ManyToMany
     private List<Badge> badges = new ArrayList<>();
 
+    @Column(nullable = false)
+    private int points = 0;
+
+    @Column(nullable = false)
+    private int level = 1;
+
     public User() {}
 
     public Set<Course> getSavedCourses() {
@@ -94,4 +100,30 @@ public class User {
         this.badges = badges;
     }
 
+    // handles points and levelling system for leaderboard
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = Math.max(0, points);
+        this.level = calculateLevelFromPoints(this.points);
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = Math.max(1, level);
+    }
+
+    public void addPoints(int delta) {
+        this.points = Math.max(0, this.points + delta);
+        this.level = calculateLevelFromPoints(this.points);
+    }
+
+    private int calculateLevelFromPoints(int points) {
+        return (points / 100) + 1;
+    }
 }
