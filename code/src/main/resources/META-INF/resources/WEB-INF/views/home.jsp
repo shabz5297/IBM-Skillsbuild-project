@@ -86,18 +86,11 @@
 <!-- ALL COURSES SECTION -->
 <div class="course-section">
 
-    <!-- Header row (title + search on same line) -->
     <div class="section-header">
         <h2>All Courses</h2>
 
-        <form action="${pageContext.request.contextPath}/home"
-              method="get"
-              class="filter-bar">
-
-            <input type="text"
-                   name="query"
-                   placeholder="Search..."
-                   value="${param.query}" />
+        <form action="${pageContext.request.contextPath}/home" method="get" class="filter-bar">
+            <input type="text" name="query" placeholder="Search..." value="${param.query}" />
 
             <select name="category">
                 <option value="">All</option>
@@ -111,71 +104,39 @@
         </form>
     </div>
 
+    <c:if test="${empty courses}">
+        <p>No courses found. Try a different search or clear filters.</p>
+    </c:if>
+
     <div class="course-grid">
-        <div class="course-grid">
-            <c:if test="${empty courses}">
-                <p>No courses found. Try a different search or clear filters.</p>
-            </c:if>
+        <c:forEach var="course" items="${courses}">
+            <div class="course-card">
+                <h3>${course.title}</h3>
+                <p class="category">${course.category}</p>
+                <p>${course.description}</p>
 
-            <c:forEach var="course" items="${courses}">
-                <div class="course-card">
-                    <h3>${course.title}</h3>
-                    <p class="category">${course.category}</p>
-                    <p>${course.description}</p>
-                    <div class="course-actions">
-                        <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
+                <div class="course-actions">
+                    <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
 
-                        <!-- Save button (star) -->
-                        <c:set var="isSaved" value="${savedCourseIds.contains(course.id)}" />
+                    <c:set var="isSaved" value="${savedCourseIds.contains(course.id)}" />
 
-                        <form action="${pageContext.request.contextPath}/${isSaved ? 'removeCourse' : 'saveCourse'}"
-                              method="post"
-                              class="save-form">
-
-                            <input type="hidden" name="courseId" value="${course.id}">
-                        </form>
-
-                    <c:set var="isCompleted" value="${completedCourseIds.contains(course.id)}" />
-
-                    <c:choose>
-                        <c:when test="${isCompleted}">
-                            <span class="completed-badge">
-                                Completed ✅
-                                <c:if test="${completionTimestamps[course.id] != null}">
-                                    <small>(${completionTimestamps[course.id]})</small>
-                                </c:if>
-                            </span>
-                        </c:when>
-                        <c:otherwise>
-                            <form action="${pageContext.request.contextPath}/completeCourse"
-                                  method="post"
-                                  class="complete-form">
-                                <input type="hidden" name="courseId" value="${course.id}" />
-                                <button type="submit" class="complete-btn">
-                                    Mark Completed
-                                </button>
-                            </form>
-                        </c:otherwise>
-                    </c:choose>
-
-                            <button class="save-btn" title="${isSaved ? 'Remove course' : 'Save course'}">
-                                <c:choose>
-                                    <c:when test="${isSaved}">
-                                        ★
-                                    </c:when>
-                                    <c:otherwise>
-                                        ☆
-                                    </c:otherwise>
-                                </c:choose>
-                            </button>
-
-                        </form>
-                    </div>
+                    <form action="${pageContext.request.contextPath}/${isSaved ? 'removeCourse' : 'saveCourse'}"
+                          method="post"
+                          class="save-form">
+                        <input type="hidden" name="courseId" value="${course.id}" />
+                        <button type="submit" class="save-btn" title="${isSaved ? 'Remove course' : 'Save course'}">
+                            <c:choose>
+                                <c:when test="${isSaved}">★</c:when>
+                                <c:otherwise>☆</c:otherwise>
+                            </c:choose>
+                        </button>
+                    </form>
                 </div>
-            </c:forEach>
-        </div>
+            </div>
+        </c:forEach>
     </div>
 </div>
+
 
 </div>
 
