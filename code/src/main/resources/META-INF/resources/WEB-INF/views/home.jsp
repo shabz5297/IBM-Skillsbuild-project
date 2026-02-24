@@ -61,42 +61,77 @@
 
 <!-- ALL COURSES SECTION -->
 <div class="course-section">
-    <h2>All Courses</h2>
+
+    <!-- Header row (title + search on same line) -->
+    <div class="section-header">
+        <h2>All Courses</h2>
+
+        <form action="${pageContext.request.contextPath}/home"
+              method="get"
+              class="filter-bar">
+
+            <input type="text"
+                   name="query"
+                   placeholder="Search..."
+                   value="${param.query}" />
+
+            <select name="category">
+                <option value="">All</option>
+                <option value="AI" ${param.category == 'AI' ? 'selected' : ''}>AI</option>
+                <option value="Cloud" ${param.category == 'Cloud' ? 'selected' : ''}>Cloud</option>
+                <option value="Data Science" ${param.category == 'Data Science' ? 'selected' : ''}>Data Science</option>
+                <option value="Security" ${param.category == 'Security' ? 'selected' : ''}>Security</option>
+            </select>
+
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
     <div class="course-grid">
-        <c:forEach var="course" items="${courses}">
-            <div class="course-card">
-                <h3>${course.title}</h3>
-                <p class="category">${course.category}</p>
-                <p>${course.description}</p>
-                <div class="course-actions">
-                    <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
+        <div class="course-grid">
+            <c:if test="${empty courses}">
+                <p>No courses found. Try a different search or clear filters.</p>
+            </c:if>
 
-                    <!-- Save button (star) -->
-                    <c:set var="isSaved" value="${savedCourseIds.contains(course.id)}" />
+            <c:forEach var="course" items="${courses}">
+                <div class="course-card">
+                    <h3>${course.title}</h3>
+                    <p class="category">${course.category}</p>
+                    <p>${course.description}</p>
+                    <div class="course-actions">
+                        <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
 
-                    <form action="${pageContext.request.contextPath}/${isSaved ? 'removeCourse' : 'saveCourse'}"
-                          method="post"
-                          class="save-form">
+                        <!-- Save button (star) -->
+                        <c:set var="isSaved" value="${savedCourseIds.contains(course.id)}" />
 
-                        <input type="hidden" name="courseId" value="${course.id}">
+                        <form action="${pageContext.request.contextPath}/${isSaved ? 'removeCourse' : 'saveCourse'}"
+                              method="post"
+                              class="save-form">
 
-                        <button class="save-btn" title="${isSaved ? 'Remove course' : 'Save course'}">
-                            <c:choose>
-                                <c:when test="${isSaved}">
-                                    ★
-                                </c:when>
-                                <c:otherwise>
-                                    ☆
-                                </c:otherwise>
-                            </c:choose>
-                        </button>
+                            <input type="hidden" name="courseId" value="${course.id}">
 
-                    </form>
+                            <button class="save-btn" title="${isSaved ? 'Remove course' : 'Save course'}">
+                                <c:choose>
+                                    <c:when test="${isSaved}">
+                                        ★
+                                    </c:when>
+                                    <c:otherwise>
+                                        ☆
+                                    </c:otherwise>
+                                </c:choose>
+                            </button>
+
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </c:forEach>
+            </c:forEach>
+        </div>
     </div>
 </div>
+
+</div>
+
+
 
 </body>
 </html>

@@ -108,3 +108,72 @@ body {
 .save-btn:hover {
     transform: scale(1.2);
 }
+
+/* ALL COURSES HEADER ROW */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px; /* replaces the h2 bottom spacing */
+}
+
+.section-header h2 {
+    margin: 0;
+}
+
+/* Search/filter form */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-bar input,
+.filter-bar select {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    outline: none;
+    background: white;
+}
+
+.filter-bar button {
+    background: #4a6cf7;
+    border: none;
+    padding: 8px 14px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.filter-bar button:hover {
+    background: #2f52e0;
+}
+
+.clear-btn {
+    text-decoration: none;
+    color: #4a6cf7;
+    font-size: 14px;
+}
+
+.clear-btn:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filter-bar {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .filter-bar input {
+        flex: 1;
+        min-width: 200px;
+    }
+}
