@@ -63,6 +63,7 @@ public class CourseService {
             // Save updates (join table updated automatically)
             userRepository.save(user);
         }
+
     }
 
     // Removes a saved course from a user
@@ -114,4 +115,34 @@ public class CourseService {
         }
         return map;
     }
+
+    public List<Course> searchCourses(String query, String category) {
+        // Check if a search keyword was provided (not null and not empty)
+        boolean hasQuery = query != null && !query.trim().isEmpty();
+        // Check if a category filter was provided (not null and not empty)
+        boolean hasCategory = category != null && !category.trim().isEmpty();
+
+        // Filter by category and search for keyword in title
+        if (hasQuery && hasCategory) {
+            return courseRepository.findByCategoryIgnoreCaseAndTitleContainingIgnoreCase(
+                    category.trim(),
+                    query.trim()
+            );
+        }
+
+        // Search in title or description
+        if (hasQuery) {
+            String q = query.trim();
+            return courseRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(q, q);
+        }
+
+        // Return all courses in that category
+        if (hasCategory) {
+            return courseRepository.findByCategoryIgnoreCase(category.trim());
+        }
+
+        return courseRepository.findAll();
+    }
 }
+
+

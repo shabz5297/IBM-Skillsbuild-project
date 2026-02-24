@@ -55,12 +55,15 @@ public class DashboardController {
 
     // Loads the dashboard/home page
     @GetMapping("/home")
-    public String dashboard(Authentication authentication, Model model) {
+    public String dashboard(Authentication authentication,
+                            @RequestParam(value = "query", required = false) String query,
+                            @RequestParam(value = "category", required = false) String category,
+                            Model model) {
 
         // Get the currently logged-in user
         User user = getLoggedInUser(authentication);
 
-        // Get the user's saved courses (or empty list if not logged in)
+        // Get the user's saved courses
         List<Course> savedCourses = user != null
                 ? courseService.getSavedCourses(user.getId())
                 : List.of();
@@ -85,8 +88,9 @@ public class DashboardController {
         // Send data to the JSP page
         model.addAttribute("savedCourseIds", savedCourseIds);
         model.addAttribute("savedCourses", savedCourses);
-        model.addAttribute("courses", courseService.getAllCourses());
+        model.addAttribute("courses", courseService.searchCourses(query, category));
         model.addAttribute("user", user);
+
 
         // Return the JSP page name (home.jsp)
         return "home";
