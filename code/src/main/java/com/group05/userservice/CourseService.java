@@ -25,6 +25,8 @@ public class CourseService {
     private final UserRepo userRepository;
     private final CourseCompletionRepo courseCompletionRepo;
 
+    private static final int POINTS_PER_COMPLETION = 10;
+
     // Constructor injection of repositories
     public CourseService(CourseRepo courseRepository,
                          UserRepo userRepository,
@@ -99,6 +101,9 @@ public class CourseService {
 
         CourseCompletion completion = new CourseCompletion(user, course, LocalDateTime.now());
         courseCompletionRepo.save(completion);
+
+        user.addPoints(POINTS_PER_COMPLETION); // award points for leaderboard
+        userRepository.save(user); // persist points
     }
 
     public Set<Long> getCompletedCourseIds(Long userId) {

@@ -38,6 +38,31 @@ body {
     padding: 30px;
 }
 
+/* ===== NEW STYLES START: Quick stats row (Level / Points / Rank) ===== */
+.quick-stats {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+}
+.stat-card {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 12px 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.stat-label {
+    font-size: 12px;
+    color: #666;
+}
+.stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 4px;
+}
+/* ===== NEW STYLES END: Quick stats row ===== */
+
 /* COURSE SECTION */
 .course-section {
     padding: 30px;
@@ -175,6 +200,59 @@ body {
 .clear-btn:hover {
     text-decoration: underline;
 }
+
+.leaderboard-subtitle {
+    color: #666;
+    font-size: 14px;
+}
+.leaderboard-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #eee;
+}
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.leaderboard-table th,
+.leaderboard-table td {
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+.rank-cell {
+    font-weight: 700;
+    width: 60px;
+}
+.highlight-row {
+    background: #eef3ff;
+}
+.muted {
+    color: #777;
+    font-size: 12px;
+    margin-left: 6px;
+}
+.badge-list {
+    display: inline-flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.badge-pill {
+    background: #f5f7fb;
+    border: 1px solid #e6e9f2;
+    border-radius: 999px;
+    padding: 3px 8px;
+    font-size: 12px;
+}
+.leaderboard-footer {
+    margin-top: 10px;
+    color: #444;
+    font-size: 14px;
+}
+
 
 @media (max-width: 700px) {
     .section-header {

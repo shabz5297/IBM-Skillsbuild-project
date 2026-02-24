@@ -31,10 +31,99 @@
         </c:if>
         👋
     </h1>
+    // leaderboard labels
+    <c:if test="${user != null}">
+        <div class="quick-stats">
+            <div class="stat-card">
+                <div class="stat-label">Level</div>
+                <div class="stat-value">${user.level}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Points</div>
+                <div class="stat-value">${user.points}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Your Rank</div>
+                <div class="stat-value">
+                    <c:choose>
+                        <c:when test="${userRank != null}">#${userRank}</c:when>
+                        <c:otherwise>—</c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+        </div>
+    </c:if>
 </div>
 
 <!-- YOUR COURSES SECTION -->
 <div class="course-section">
+    <!-- Global leaderboard section-->
+    <div class="section-header">
+        <h2>Global Leaderboard</h2>
+        <span class="leaderboard-subtitle">Top students by points</span>
+    </div>
+
+    <div class="leaderboard-card">
+        <table class="leaderboard-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Student</th>
+                <th>Level</th>
+                <th>Points</th>
+                <th>Badges</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="u" items="${leaderboardTop}" varStatus="status">
+                <tr class="${user != null && u.id == user.id ? 'highlight-row' : ''}">
+                    <td class="rank-cell">#${status.index + 1}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${u.displayName != null && u.displayName ne ''}">
+                                ${u.displayName}
+                                <span class="muted">(@${u.username})</span>
+                            </c:when>
+                            <c:otherwise>
+                                ${u.username}
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td>${u.level}</td>
+                    <td>${u.points}</td>
+                    <td>
+                        <c:set var="badgeCount" value="${u.badges != null ? u.badges.size() : 0}" />
+                        <c:choose>
+                            <c:when test="${badgeCount == 0}">
+                                <span class="muted">None</span>
+                            </c:when>
+                            <c:otherwise>
+                                <span class="badge-list">
+                                    <c:forEach var="b" items="${u.badges}" varStatus="bStatus">
+                                        <c:if test="${bStatus.index < 3}">
+                                            <span class="badge-pill">${b.name}</span>
+                                        </c:if>
+                                    </c:forEach>
+                                    <c:if test="${badgeCount > 3}">
+                                        <span class="muted">+${badgeCount - 3}</span>
+                                    </c:if>
+                                </span>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+
+        <c:if test="${user != null && userRank != null && userRank > 10}">
+            <div class="leaderboard-footer">
+                You’re currently <strong>#${userRank}</strong>. Keep completing courses to climb!
+            </div>
+        </c:if>
+    </div>
+</div>
+
     <h2>Your Courses</h2>
     <div class="course-grid">
         <c:forEach var="course" items="${savedCourses}">

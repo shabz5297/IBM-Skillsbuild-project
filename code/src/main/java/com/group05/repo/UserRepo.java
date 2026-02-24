@@ -4,6 +4,8 @@ import com.group05.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserRepo extends JpaRepository <User, Long> {
 
@@ -11,4 +13,7 @@ public interface UserRepo extends JpaRepository <User, Long> {
     // extend repo to find users by provider id
     User findByProviderAndProviderId(String provider, String providerId);
     User findByEmail(String email);
+
+    // implementing leaderboard ordering
+    List<User> findAllByOrderByPointsDescLevelDescUsernameAsc();
 }
