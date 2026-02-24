@@ -25,6 +25,7 @@ public class User {
     private String displayName;
     private String bio;
     private String profilePicture;
+    private int progress;
 
     @ManyToMany
     private List<Badge> badges = new ArrayList<>();
@@ -62,4 +63,11 @@ public class User {
 
     public List<Badge> getBadges() { return badges; }
     public void setBadges(List<Badge> badges) { this.badges = badges; }
+
+    public int getProgress() {
+        return progress;
+    }
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
 }
