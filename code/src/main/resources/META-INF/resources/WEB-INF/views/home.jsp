@@ -1,22 +1,149 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-    <title>Home</title>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
 </head>
+
 <body>
 
-<div class="container">
+<!-- TOPBAR -->
+<div class="topbar">
+    <div class="left">
+        <form action="${pageContext.request.contextPath}/logout" method="post">
+            <button class="logout-btn">Logout</button>
+        </form>
+    </div>
+    <div class="right">
+        <a href="${pageContext.request.contextPath}/profile" class="profile-btn">Profile ⚙</a>
+    </div>
+</div>
 
-    <h2>Welcome to the Home Page</h2>
+<!-- DASHBOARD HEADER -->
+<div class="dashboard-header">
+    <h1>
+        Welcome back
+        <c:if test="${user != null}">
+            , ${user.username}
+        </c:if>
+        👋
+    </h1>
+</div>
 
-    <p class="subtitle">You are logged in</p>
+<!-- YOUR COURSES SECTION -->
+<div class="course-section">
+    <h2>Your Courses</h2>
+    <div class="course-grid">
+        <c:forEach var="course" items="${savedCourses}">
+            <div class="course-card saved">
+                <h3>${course.title}</h3>
+                <p class="category">${course.category}</p>
+                <p>${course.description}</p>
+                <div class="course-actions">
+                    <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
+                    <!-- REMOVE BUTTON -->
+                    <form action="${pageContext.request.contextPath}/removeCourse" method="post">
+                        <input type="hidden" name="courseId" value="${course.id}" />
+                        <button type="submit" class="trash-btn">🗑</button>
+                    </form>
 
-    <form action="${pageContext.request.contextPath}/logout" method="post">
-        <button type="submit" class="logout-btn">Logout</button>
-    </form>
+                    <c:set var="isCompleted" value="${completedCourseIds.contains(course.id)}" />
 
+                    <c:choose>
+                        <c:when test="${isCompleted}">
+                            <span class="completed-badge">
+                                Completed ✅
+                                <c:if test="${completionTimestamps[course.id] != null}">
+                                    <small>(${completionTimestamps[course.id]})</small>
+                                </c:if>
+                            </span>
+                        </c:when>
+                        <c:otherwise>
+                            <form action="${pageContext.request.contextPath}/completeCourse"
+                                  method="post"
+                                  class="complete-form">
+                                <input type="hidden" name="courseId" value="${course.id}" />
+                                <button type="submit" class="complete-btn">
+                                    Mark Completed
+                                </button>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
+
+                </div>
+            </div>
+        </c:forEach>
+
+        <c:if test="${empty savedCourses}">
+            <p>No courses saved yet. Click the ⭐ button on any course below to add it here!</p>
+        </c:if>
+    </div>
+</div>
+
+<!-- ALL COURSES SECTION -->
+<div class="course-section">
+    <h2>All Courses</h2>
+    <div class="course-grid">
+        <c:forEach var="course" items="${courses}">
+            <div class="course-card">
+                <h3>${course.title}</h3>
+                <p class="category">${course.category}</p>
+                <p>${course.description}</p>
+                <div class="course-actions">
+                    <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
+
+                    <!-- Save button (star) -->
+                    <c:set var="isSaved" value="${savedCourseIds.contains(course.id)}" />
+
+                    <form action="${pageContext.request.contextPath}/${isSaved ? 'removeCourse' : 'saveCourse'}"
+                          method="post"
+                          class="save-form">
+
+                        <input type="hidden" name="courseId" value="${course.id}">
+
+                        <button class="save-btn" title="${isSaved ? 'Remove course' : 'Save course'}">
+                            <c:choose>
+                                <c:when test="${isSaved}">
+                                    ★
+                                </c:when>
+                                <c:otherwise>
+                                    ☆
+                                </c:otherwise>
+                            </c:choose>
+                        </button>
+
+                    </form>
+
+                    <c:set var="isCompleted" value="${completedCourseIds.contains(course.id)}" />
+
+                    <c:choose>
+                        <c:when test="${isCompleted}">
+                            <span class="completed-badge">
+                                Completed ✅
+                                <c:if test="${completionTimestamps[course.id] != null}">
+                                    <small>(${completionTimestamps[course.id]})</small>
+                                </c:if>
+                            </span>
+                        </c:when>
+                        <c:otherwise>
+                            <form action="${pageContext.request.contextPath}/completeCourse"
+                                  method="post"
+                                  class="complete-form">
+                                <input type="hidden" name="courseId" value="${course.id}" />
+                                <button type="submit" class="complete-btn">
+                                    Mark Completed
+                                </button>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
+
+                </div>
+            </div>
+        </c:forEach>
+    </div>
 </div>
 
 </body>

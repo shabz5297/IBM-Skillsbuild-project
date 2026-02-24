@@ -18,6 +18,13 @@ public class UserService {
 
     //register a user
     public void registerUser(String username, String password){
+        validateUsername(username);
+        validatePassword(password);
+
+        //stop duplicate usernames
+        if (userRepo.findByUsername(username) != null) {
+            throw new IllegalArgumentException("Username is already taken.");
+        }
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
@@ -32,7 +39,36 @@ public class UserService {
         userRepo.save(user);
     }
 
+    private void validateUsername(String username) {
+        if (username == null || username.isBlank()) {
+            throw new IllegalArgumentException("Username is required.");
+        }
+        if (username.length() < 3 || username.length() > 30) {
+            throw new IllegalArgumentException("Username must be 3–30 characters.");
+        }
+        if (!username.matches("^[A-Za-z0-9._-]+$")) {
+            throw new IllegalArgumentException("Username can only contain letters, numbers, ., _, -");
+        }
+    }
 
+    private void validatePassword(String password) {
+        if (password == null) {
+            throw new IllegalArgumentException("Password is required.");
+        }
+        if (password.length() < 8 || password.length() > 72) {
+            throw new IllegalArgumentException("Password must be at least 8 characters.");
+        }
+        boolean hasLower = password.matches(".*[a-z].*");
+        boolean hasUpper = password.matches(".*[A-Z].*");
+        boolean hasDigit = password.matches(".*\\d.*");
+        boolean hasSymbol = password.matches(".*[^A-Za-z0-9].*");
+
+        if (!(hasLower && hasUpper && hasDigit && hasSymbol)) {
+            throw new IllegalArgumentException(
+                    "Password must include uppercase, lowercase, number, and symbol."
+            );
+        }
+    }
 
 
 }

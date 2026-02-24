@@ -1,9 +1,12 @@
 package com.group05.controller;
 
+import com.group05.model.User;
 import com.group05.userservice.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
@@ -28,19 +31,21 @@ public class PageController {
 
     //submission
     @PostMapping("/register")
-    public String registerUser(@RequestParam String username, @RequestParam String password){
-        userService.registerUser(username,password);
-        return "redirect:/login";}
+    public String registerUser(@RequestParam String username,
+                               @RequestParam String password,
+                               Model model) {
+        try {
+            userService.registerUser(username, password);
+            return "redirect:/login";
+        } catch (IllegalArgumentException ex) {
+            model.addAttribute("error", ex.getMessage());
+            return "register";
+        }
+    }
 
     //login page
     @GetMapping("/login")
     public String login() {return "login";}
-
-    // Home page after successful login
-    @GetMapping("/home")
-    public String home() {
-        return "home";
-    }
 
     //Profile Page
     @GetMapping("/profile/{id}")
