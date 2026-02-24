@@ -18,7 +18,19 @@
 
 ---
 
-### 2. View Courses
+### 2. OAuth2 Social Login
+**User Story:**  
+- As a Student, I want to log in using an OAuth2 provider (GitHub) so that I can access the app quickly without creating a separate password.
+
+**Acceptance Criteria:**  
+- Users can initiate login via a supported OAuth2 provider.  
+- The system successfully authenticates users through the provider. 
+- A new account is created automatically if the user logs in via OAuth2 for the first time. 
+- Existing users are linked to their OAuth2 identity when emails match.
+- Users are logged into the app after successful OAuth2 authentication
+- User session persists until logout or session expiration.
+
+### 3. View Courses
 **User Story:**  
 - As a Student, I want to see a list or grid of available IBM SkillsBuild courses so that I can choose which course to start.
 
@@ -31,7 +43,7 @@
 
 ---
 
-### 3. User Profile Management
+### 4. User Profile Management
 **User Story:**  
 - As a Student, I want to view and update my profile information so that my account details are accurate and personalized.
 
@@ -43,7 +55,7 @@
 
 ---
 
-### 4. Search & Filter Courses
+### 5. Search & Filter Courses
 **User Story:**  
 - As a Student, I want to search and filter IBM SkillsBuild courses by keywords and categories so that I can quickly find relevant courses.
 
@@ -55,7 +67,7 @@
 
 ---
 
-### 5. Secure Password Management
+### 6. Secure Password Management
 **User Story:**  
 - As a Student, I want my password to be securely stored and managed so that my account is protected.
 
@@ -67,7 +79,7 @@
 
 ---
 
-### 6. Record Course Completion 
+### 7. Record Course Completion 
 **User Story:**  
 - As a Student, I want the app to record when I complete an IBM SkillsBuild course so that my learning progress is tracked within the web app.
 
@@ -80,11 +92,7 @@
 
 ---
 
-## Sprint 2
-
----
-
-### 1. Leaderboard
+### 8. Leaderboard
 **User Story:**  
 - As a Student, I want to have a global leaderboard so that I can track my progress compared to other students and feel motivated to complete more courses.
 
@@ -92,11 +100,15 @@
 - Leaderboard displays the top students globally based on points or level.  
 - The logged-in user’s position is clearly highlighted.  
 - Leaderboard updates automatically when a student completes a course or earns points.  
-- Leaderboard shows student name, level, points, and earned badges.  
+- Leaderboard shows student name, level, points, and earned badges. 
 
 ---
 
-### 2. Levels
+## Sprint 2
+
+---
+
+### 1. Levels
 **User Story:**  
 - As a Student, I want to have levels that indicate my progress so that I can feel a sense of accomplishment as I complete more courses.
 
@@ -108,7 +120,7 @@
 
 ---
 
-### 3. Streaks
+### 2. Streaks
 **User Story:**  
 - As a Student, I want to track my learning streak so that I am encouraged to return daily and maintain consistency.
 
