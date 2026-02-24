@@ -4,6 +4,7 @@ import com.group05.model.Course;
 import com.group05.model.User;
 import com.group05.repo.UserRepo;
 import com.group05.userservice.CourseService;
+import com.group05.userservice.LeaderboardService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +20,13 @@ public class DashboardController {
 
     private final CourseService courseService;
     private final UserRepo userRepo;
+    private final LeaderboardService leaderboardService;
 
     // Constructor injection: Spring automatically provides the required services/repositories
-    public DashboardController(CourseService courseService, UserRepo userRepo) {
+    public DashboardController(CourseService courseService, UserRepo userRepo, LeaderboardService leaderboardService) {
         this.courseService = courseService;
         this.userRepo = userRepo;
+        this.leaderboardService = leaderboardService;
     }
 
     // Helper method to determine the currently logged-in user
@@ -90,6 +93,9 @@ public class DashboardController {
         model.addAttribute("savedCourses", savedCourses);
         model.addAttribute("courses", courseService.searchCourses(query, category));
         model.addAttribute("user", user);
+        //fetches 10 top ranking users globally and the students current rank
+        model.addAttribute("leaderboardTop", leaderboardService.getTopStudents(10));
+        model.addAttribute("userRank", user != null ? leaderboardService.getUserRank(user.getId()) : null);
 
 
         // Return the JSP page name (home.jsp)
