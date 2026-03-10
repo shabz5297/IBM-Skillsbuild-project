@@ -175,6 +175,16 @@
                 <!-- review section -->
                 <div class="review-section">
                     <h4>Average Rating</h4>
+                    <p class="review-stars">
+                        <c:choose>
+                            <c:when test="${averageRatings[course.id] >= 4.5}">★★★★★</c:when>
+                            <c:when test="${averageRatings[course.id] >= 3.5}">★★★★☆</c:when>
+                            <c:when test="${averageRatings[course.id] >= 2.5}">★★★☆☆</c:when>
+                            <c:when test="${averageRatings[course.id] >= 1.5}">★★☆☆☆</c:when>
+                            <c:when test="${averageRatings[course.id] >= 0.5}">★☆☆☆☆</c:when>
+                            <c:otherwise>☆☆☆☆☆</c:otherwise>
+                        </c:choose>
+                    </p>
                     <p>${averageRatings[course.id]}</p>
 
                     <h4>Reviews</h4>
@@ -185,7 +195,16 @@
                         <c:otherwise>
                             <c:forEach var="review" items="${reviewsByCourseId[course.id]}">
                                 <div class="review-box">
-                                    <p><strong>Rating:</strong> ${review.rating}/5</p>
+                                    <p class="review-stars">
+                                        <c:choose>
+                                            <c:when test="${review.rating == 1}">★☆☆☆☆</c:when>
+                                            <c:when test="${review.rating == 2}">★★☆☆☆</c:when>
+                                            <c:when test="${review.rating == 3}">★★★☆☆</c:when>
+                                            <c:when test="${review.rating == 4}">★★★★☆</c:when>
+                                            <c:when test="${review.rating == 5}">★★★★★</c:when>
+                                            <c:otherwise>☆☆☆☆☆</c:otherwise>
+                                        </c:choose>
+                                    </p>
                                     <p><strong>Comment:</strong> ${review.comment}</p>
                                     <p><small>${review.createdAt}</small></p>
                                 </div>
@@ -199,14 +218,15 @@
                             <input type="hidden" name="courseId" value="${course.id}" />
 
                             <label for="rating-saved-${course.id}">Rating:</label>
-                            <select name="rating" id="rating-saved-${course.id}" required>
-                                <option value="">Select rating</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
+                            <div class="star-rating" data-course-id="${course.id}">
+                                <span class="star" data-value="1">☆</span>
+                                <span class="star" data-value="2">☆</span>
+                                <span class="star" data-value="3">☆</span>
+                                <span class="star" data-value="4">☆</span>
+                                <span class="star" data-value="5">☆</span>
+
+                                <input type="hidden" name="rating" id="rating-${course.id}" required>
+                            </div>
 
                             <label for="comment-saved-${course.id}">Comment:</label>
                             <textarea name="comment" id="comment-saved-${course.id}" rows="4" required></textarea>
@@ -310,7 +330,42 @@
 
 </div>
 
+<!-- javascript for review feature -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".star-rating").forEach(function (ratingBox) {
+            const stars = ratingBox.querySelectorAll(".star");
+            const courseId = ratingBox.getAttribute("data-course-id");
+            const hiddenInput = document.getElementById("rating-" + courseId);
 
+            function paintStars(selectedValue) {
+                stars.forEach(function (star) {
+                    const starValue = parseInt(star.getAttribute("data-value"));
+                    star.textContent = starValue <= selectedValue ? "★" : "☆";
+                });
+            }
+
+            stars.forEach(function (star) {
+                star.addEventListener("mouseover", function () {
+                    const hoverValue = parseInt(star.getAttribute("data-value"));
+                    paintStars(hoverValue);
+                });
+
+                star.addEventListener("click", function () {
+                    const selectedValue = parseInt(star.getAttribute("data-value"));
+                    hiddenInput.value = selectedValue;
+                    ratingBox.setAttribute("data-selected", selectedValue);
+                    paintStars(selectedValue);
+                });
+            });
+
+            ratingBox.addEventListener("mouseleave", function () {
+                const selectedValue = parseInt(ratingBox.getAttribute("data-selected")) || 0;
+                paintStars(selectedValue);
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
