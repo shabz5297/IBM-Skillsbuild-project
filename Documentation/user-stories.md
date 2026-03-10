@@ -119,6 +119,7 @@
 - Experience points increase when courses are completed.  
 - Level upgrades occur automatically when defined thresholds are reached.  
 - The current level is visible on the dashboard, profile, and leaderboard.  
+- Levels are shown as a progress bar with XP
 
 ---
 
@@ -140,7 +141,83 @@
 
 **Acceptance Criteria:**  
 - Badges are awarded for course completion, level progression, or streak milestones.  
-- Earned badges are displayed on the user profile and dashboard.  
+- Earned badges are displayed on the user profile and dashboard. 
+
+---
+
+### 4. Side Menu Navigation
+**User Story:**
+- As a student, I want a persistent side navigation menu on the dashboard so that I can efficiently access the Courses, Leaderboard, Achievements, and Reviews sections of the platform.
+
+**Acceptance Criteria:**
+- The dashboard displays a persistent side navigation menu.
+- The menu contains links to Courses, Leaderboard, Achievements, and Reviews.
+- Selecting a menu item loads the corresponding page.
+- The active page is clearly indicated in the menu.
+- The menu is displayed consistently on all dashboard-related pages.
+- The menu includes IBM SkillsBuild branding and logo.
+- The menu layout remains usable across different screen sizes.
+
+### 5. Theme Toggle
+
+**User Story:**
+- As a student, I want to toggle between light mode and dark mode on the dashboard so that I can personalise the interface for comfort and accessibility.
+
+**Acceptance Criteria:**
+- A theme toggle control is available on the dashboard.
+- Users can switch between light and dark themes.
+- The selected theme is applied to all dashboard-related pages.
+- The chosen theme persists during navigation and page refresh.
+- All text, buttons, cards, and navigation components remain readable in both themes.
+- The interface clearly indicates the currently selected theme.
+
+### 6. Course Review Feature
+
+**User Story:**
+- As a student, I want to leave a comment and a rating on a course after I have completed it so that I can suggest improvements or encourage others to complete the course.
+
+**Acceptance Criteria:**
+- A review section is available for each course.
+- Students can submit a rating using a star rating system.
+- Students can write a text comment alongside the rating.
+- Reviews can only be submitted after the student has marked the course as completed.
+- A student can only submit one review per course.
+- Submitted reviews are displayed for all users to see.
+- The course displays an average rating based on submitted reviews.
+- Reviews display the rating, comment, and timestamp of when the review was submitted.
+
+---
+
+### 7. Course Completion Goals
+
+**User Story:**
+- As a student, I want to set goals for course completion (such as completing one course within a day, or three courses across a week) with rewards for achieving them so that I can increase my productivity and complete more courses.
+
+**Acceptance Criteria:**
+- Students can create a goal specifying the number of courses to complete within a defined time period.
+- The dashboard displays the student’s active goals.
+- The system tracks course completions toward the goal automatically.
+- Progress towards each goal is visually displayed on the dashboard.
+- When a goal is achieved, the student receives a reward such as points, badges, or level progression.
+- The dashboard displays a notification when a goal has been completed.
+- Expired goals are marked as incomplete if the target is not achieved within the time period.
+
+---
+
+### 8. Adding Friends 
+
+**User Story:**
+- As a student, I want to add friends so that our accounts can be linked and overall course progress can be compared.
+
+**Acceptance Criteria:**
+- Students can search for other users by username.
+- Students can send and receive friend requests.
+- Users can accept or decline friend requests.
+- Accepted friends appear in the student’s friends list.
+- A friends leaderboard displays the progress, points, or completed courses of connected friends.
+- The leaderboard ranks friends based on their points or completed courses.
+- The friends leaderboard is accessible from the dashboard navigation menu.
+
 - Users can view badge descriptions via hover or click interaction.  
 - Badge data is stored in the backend and persists across sessions.  
 
