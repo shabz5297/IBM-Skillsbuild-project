@@ -5,6 +5,7 @@ import com.group05.model.User;
 import com.group05.repo.UserRepo;
 import com.group05.userservice.CourseService;
 import com.group05.userservice.LeaderboardService;
+import com.group05.userservice.ReviewService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,12 +22,14 @@ public class DashboardController {
     private final CourseService courseService;
     private final UserRepo userRepo;
     private final LeaderboardService leaderboardService;
+    private final ReviewService reviewService;
 
     // Constructor injection: Spring automatically provides the required services/repositories
-    public DashboardController(CourseService courseService, UserRepo userRepo, LeaderboardService leaderboardService) {
+    public DashboardController(CourseService courseService, UserRepo userRepo, LeaderboardService leaderboardService, ReviewService reviewService) {
         this.courseService = courseService;
         this.userRepo = userRepo;
         this.leaderboardService = leaderboardService;
+        this.reviewService = reviewService;
     }
 
     // Helper method to determine the currently logged-in user
@@ -82,6 +85,8 @@ public class DashboardController {
                 ? courseService.getCompletedCourseIds(user.getId())
                 : Set.of();
 
+        List<Course> courses = courseService.searchCourses(query, category);
+
         model.addAttribute("completionTimestamps",
                 user != null ? courseService.getCompletionTimestamps(user.getId()) : java.util.Map.of()
         );
@@ -97,6 +102,34 @@ public class DashboardController {
         model.addAttribute("leaderboardTop", leaderboardService.getTopStudents(10));
         model.addAttribute("userRank", user != null ? leaderboardService.getUserRank(user.getId()) : null);
 
+        model.addAttribute("reviewSuccess", false);
+        model.addAttribute("reviewError", null);
+
+        model.addAttribute("reviewsByCourseId", courses.stream()
+                .collect(Collectors.toMap(
+                        Course::getId,
+                        course -> reviewService.getReviewsForCourse(course.getId())
+                )));
+
+        model.addAttribute("averageRatings", courses.stream()
+                .collect(Collectors.toMap(
+                        Course::getId,
+                        course -> reviewService.getAverageRating(course.getId())
+                )));
+
+        model.addAttribute("reviewableCourseIds", user != null
+                ? courses.stream()
+                .filter(course -> reviewService.canUserReview(user.getId(), course.getId()))
+                .map(Course::getId)
+                .collect(Collectors.toSet())
+                : Set.of());
+
+        model.addAttribute("reviewedCourseIds", user != null
+                ? courses.stream()
+                .filter(course -> reviewService.hasUserReviewed(user.getId(), course.getId()))
+                .map(Course::getId)
+                .collect(Collectors.toSet())
+                : Set.of());
 
         // Return the JSP page name (home.jsp)
         return "home";
@@ -142,6 +175,26 @@ public class DashboardController {
             courseService.markCourseCompleted(user.getId(), courseId);
         }
         return "redirect:/home";
+    }
+
+    @PostMapping("/addReview")
+    public String addReview(@RequestParam Long courseId,
+                            @RequestParam int rating,
+                            @RequestParam String comment,
+                            Authentication authentication) {
+
+        User user = getLoggedInUser(authentication);
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        try {
+            reviewService.addReview(user.getId(), courseId, rating, comment);
+            return "redirect:/home?reviewSuccess=true";
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            return "redirect:/home?reviewError=true";
+        }
     }
 
     // Loads the profile page
