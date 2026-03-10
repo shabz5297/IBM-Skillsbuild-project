@@ -31,7 +31,7 @@
         </c:if>
         👋
     </h1>
-    // leaderboard labels
+    <!-- leaderboard labels -->
     <c:if test="${user != null}">
         <div class="quick-stats">
             <div class="stat-card">
@@ -54,6 +54,15 @@
         </div>
     </c:if>
 </div>
+
+<!--review form label-->
+<c:if test="${param.reviewSuccess == 'true'}">
+    <p style="color: green; text-align: center;">Review submitted successfully.</p>
+</c:if>
+
+<c:if test="${param.reviewError == 'true'}">
+    <p style="color: red; text-align: center;">Could not submit review.</p>
+</c:if>
 
 <!-- YOUR COURSES SECTION -->
 <div class="course-section">
@@ -161,7 +170,58 @@
                             </form>
                         </c:otherwise>
                     </c:choose>
+                </div>
 
+                <!-- review section -->
+                <div class="review-section">
+                    <h4>Average Rating</h4>
+                    <p>${averageRatings[course.id]}</p>
+
+                    <h4>Reviews</h4>
+                    <c:choose>
+                        <c:when test="${empty reviewsByCourseId[course.id]}">
+                            <p>No reviews yet.</p>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach var="review" items="${reviewsByCourseId[course.id]}">
+                                <div class="review-box">
+                                    <p><strong>Rating:</strong> ${review.rating}/5</p>
+                                    <p><strong>Comment:</strong> ${review.comment}</p>
+                                    <p><small>${review.createdAt}</small></p>
+                                </div>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <c:if test="${reviewableCourseIds.contains(course.id)}">
+                        <h4>Leave a Review</h4>
+                        <form action="${pageContext.request.contextPath}/addReview" method="post">
+                            <input type="hidden" name="courseId" value="${course.id}" />
+
+                            <label for="rating-saved-${course.id}">Rating:</label>
+                            <select name="rating" id="rating-saved-${course.id}" required>
+                                <option value="">Select rating</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+
+                            <label for="comment-saved-${course.id}">Comment:</label>
+                            <textarea name="comment" id="comment-saved-${course.id}" rows="4" required></textarea>
+
+                            <button type="submit">Submit Review</button>
+                        </form>
+                    </c:if>
+
+                    <c:if test="${completedCourseIds.contains(course.id) and reviewedCourseIds.contains(course.id)}">
+                        <p>You have already reviewed this course.</p>
+                    </c:if>
+
+                    <c:if test="${not completedCourseIds.contains(course.id)}">
+                        <p>Complete this course to leave a review.</p>
+                    </c:if>
                 </div>
             </div>
         </c:forEach>
