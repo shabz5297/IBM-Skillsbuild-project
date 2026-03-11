@@ -7,29 +7,20 @@
 </head>
 <body class="auth-bg">
 
-<div class="container auth-card">
+<div class="auth-card">
     <h1>SkillsBuild</h1>
-    <h2>Create your account</h2>
+    <h2>Build Your Skills</h2>
+    <p class="muted">Sign up to begin earning badges.</p>
 
     <% if (request.getAttribute("error") != null) { %>
     <p class="alert error"><%= request.getAttribute("error") %></p>
     <% } %>
 
-
-    <div class="game-preview">
-        <div class="badges">
-            <span class="badge">Build</span>
-            <span class="badge locked">Your</span>
-            <span class="badge locked">Skills</span>
-        </div>
-        <p class="small muted">Sign up to begin earning badges.</p>
-    </div>
-
     <form action="${pageContext.request.contextPath}/register" method="post">
-        <p>Username:</p>
+        <label>Username:</label>
         <input name="username" required>
 
-        <p>Password:</p>
+        <label>Password:</label>
         <input type="password"
                name="password"
                required
@@ -38,16 +29,15 @@
                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,72}$"
                title="Password must be at least 8 characters and include: uppercase, lowercase, number, and symbol.">
 
-        <p>Confirm Password:</p>
+        <label>Confirm Password:</label>
         <input type="password" name="confirmPassword" required>
 
         <button class="btn primary" type="submit">Register</button>
     </form>
 
-    <p class="small muted">
-        Already have an account?
+    <p class="small muted">Already have an account?</p>
         <a href="${pageContext.request.contextPath}/login">Back to login</a>
-    </p>
+
 </div>
 
 </body>
