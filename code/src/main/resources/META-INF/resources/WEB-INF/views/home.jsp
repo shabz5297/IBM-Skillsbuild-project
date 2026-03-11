@@ -235,7 +235,7 @@
                                                 </c:choose>
                                             </p>
                                             <p><strong>Comment:</strong> ${review.comment}</p>
-                                            <p><small>${review.createdAt}</small></p>
+                                            <p><small>${review.timeAgo}</small></p>
                                         </div>
                                     </c:forEach>
                                 </c:otherwise>
