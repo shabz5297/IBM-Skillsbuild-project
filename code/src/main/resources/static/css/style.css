@@ -114,16 +114,31 @@ label {
     display: grid;
     place-items: center;
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background: #f4f6fb;
+    background-color: #0e1117;
+    overflow: hidden;
+    position: relative;
+}
+
+.auth-bg::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cg fill='none' stroke='%2322d3ee' stroke-width='2.5' stroke-linecap='round' opacity='0.18'%3E%3Cpath d='M20 80 Q60 20 100 80 Q140 140 180 80'/%3E%3Cpath d='M200 40 Q230 80 260 40 Q290 0 320 40'/%3E%3Cpath d='M340 100 Q370 40 410 90 Q440 130 480 80'/%3E%3Cpath d='M500 30 Q530 70 560 30'/%3E%3Cpath d='M10 180 Q50 120 90 180 Q130 240 170 180'/%3E%3Cpath d='M210 160 Q250 100 290 160 Q330 220 370 160'/%3E%3Cpath d='M400 140 Q440 80 480 140 Q510 190 550 140'/%3E%3Cpath d='M30 280 Q80 220 130 280 Q160 320 200 270'/%3E%3Cpath d='M240 260 Q270 200 310 260 Q350 320 390 260'/%3E%3Cpath d='M420 240 Q460 180 500 240 Q530 290 570 240'/%3E%3Cpath d='M15 380 Q55 320 95 380 Q135 440 175 380'/%3E%3Cpath d='M205 360 Q245 300 285 360 Q325 420 365 360'/%3E%3Cpath d='M395 340 Q435 280 475 340 Q515 400 555 340'/%3E%3Cpath d='M25 480 Q65 420 105 480 Q145 540 185 480'/%3E%3Cpath d='M215 460 Q255 400 295 460 Q335 520 375 460'/%3E%3Cpath d='M405 440 Q445 380 485 440 Q525 500 565 440'/%3E%3Cpath d='M50 560 Q90 500 130 560 Q160 600 200 555'/%3E%3Cpath d='M230 540 Q270 480 310 540 Q350 590 390 540'/%3E%3Cpath d='M60 30 Q60 80 110 80 Q160 80 160 30'/%3E%3Cpath d='M300 500 Q340 450 380 500 Q410 540 450 500'/%3E%3Cpath d='M480 520 Q510 470 550 510'/%3E%3Cpath d='M100 320 Q100 370 150 370 Q200 370 200 320 Q200 270 150 270 Q100 270 100 320'/%3E%3Cpath d='M440 380 Q460 340 500 360 Q530 380 520 420 Q500 450 470 430'/%3E%3Cpath d='M270 80 Q270 120 310 130 Q350 140 360 100'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 600px 600px;
+    z-index: 0;
+    pointer-events: none;
 }
 
 .auth-card {
     width: 360px;
-    background: white;
-    border: 1px solid rgba(0,0,0,0.12);
+    background: #161b22;
+    border: 1px solid #2a3245;
     border-radius: 14px;
-    padding: 20px;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+    padding: 28px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 1;
 }
 
 .auth-card h1 {
@@ -202,4 +217,75 @@ input:focus {
 .alert.success {
     background: rgba(0,180,0,0.06);
     border: 1px solid rgba(0,180,0,0.18);
+}
+
+.auth-bg .auth-card h1 {
+    color: #e6edf3;
+}
+
+.auth-bg .muted {
+    color: #8b949e;
+}
+
+.auth-bg label {
+    color: #8b949e;
+}
+
+.auth-bg input {
+    background: #0e1117;
+    border: 1px solid #2a3245;
+    color: #e6edf3;
+}
+
+.auth-bg input:focus {
+    border-color: #22d3ee;
+    box-shadow: 0 0 0 4px rgba(34,211,238,0.1);
+}
+
+.auth-bg .btn {
+    background: #1c2333;
+    border: 1px solid #2a3245;
+    color: #e6edf3;
+}
+
+.auth-bg .btn.primary {
+    background: #22d3ee;
+    color: #0e1117;
+    border-color: #22d3ee;
+    font-weight: 700;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.auth-bg .btn.primary:hover {
+    background: #06b6d4;
+    border-color: #06b6d4;
+    transform: translateY(-1px);
+}
+
+.auth-bg .btn.oauth:hover {
+    background: #212840;
+}
+
+.auth-bg .divider {
+    color: #6e7681;
+}
+
+.auth-bg a {
+    color: #22d3ee;
+}
+
+.auth-bg a:hover {
+    color: #06b6d4;
+}
+
+.auth-bg .auth-card h2 {
+    color: #e6edf3;
+}
+
+.auth-bg .auth-card p {
+    color: #8b949e;
+}
+
+.auth-bg .auth-card form p {
+    color: #8b949e;
 }
