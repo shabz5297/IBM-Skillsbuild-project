@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,17 @@ public class DashboardController {
         this.userRepo = userRepo;
         this.leaderboardService = leaderboardService;
         this.reviewService = reviewService;
+    }
+
+    private String timeAgo(java.time.LocalDateTime dateTime) {
+        java.time.Duration duration = java.time.Duration.between(dateTime, java.time.LocalDateTime.now());
+        long seconds = duration.getSeconds();
+        if (seconds < 60)           return "just now";
+        if (seconds < 3600)         return (seconds / 60) + "m ago";
+        if (seconds < 86400)        return (seconds / 3600) + "h ago";
+        if (seconds < 604800)       return (seconds / 86400) + "d ago";
+        if (seconds < 2592000)      return (seconds / 604800) + "w ago";
+        return (seconds / 2592000) + "mo ago";
     }
 
     // Helper method to determine the currently logged-in user
@@ -87,9 +99,13 @@ public class DashboardController {
 
         List<Course> courses = courseService.searchCourses(query, category);
 
-        model.addAttribute("completionTimestamps",
-                user != null ? courseService.getCompletionTimestamps(user.getId()) : java.util.Map.of()
-        );
+        Map<Long, String> completionTimestampsFormatted = new java.util.HashMap<>();
+        if (user != null) {
+            courseService.getCompletionTimestamps(user.getId()).forEach((courseId, dateTime) -> {
+                completionTimestampsFormatted.put(courseId, timeAgo(dateTime));
+            });
+        }
+        model.addAttribute("completionTimestamps", completionTimestampsFormatted);
 
         model.addAttribute("completedCourseIds", completedCourseIds);
 
