@@ -39,8 +39,6 @@ public class User {
     @Column(nullable = false)
     private int level = 1;
 
-    public User() {}
-
     public Set<Course> getSavedCourses() {
         return savedCourses;
     }
@@ -55,6 +53,19 @@ public class User {
 
     private Set<Course> savedCourses = new HashSet<>();
     private int progress=0;
+
+    //Friends field for friends tab
+    @ManyToMany
+    @JoinTable(
+            name = "user_friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private Set<User> friends = new HashSet<>();
+
+
+    //no argument constructor to create entity objects
+    public User(){}
 
     // Getters and Setters
     public Long getId() {return id;}
@@ -84,46 +95,28 @@ public class User {
     public String getProfilePicture() {return profilePicture;}
     public void setProfilePicture(String profilePicture) {this.profilePicture = profilePicture;}
 
-    public int getProgress() {
-        return progress;
-    }
 
-    public void setProgress(int progress) {
-        this.progress = progress;
-    }
+    public int getProgress() {return progress;}
+    public void setProgress(int progress) {this.progress = progress;}
 
-    public List<Badge> getBadges() {
-        return badges;
-    }
+    public List<Badge> getBadges() {return badges;}
+    public void setBadges(List<Badge> badges) {this.badges = badges;}
 
-    public void setBadges(List<Badge> badges) {
-        this.badges = badges;
-    }
+    //Friends tab
+    public Set<User> getFriends() {return friends;}
+    public void setFriends(Set<User> friends) {this.friends = friends;}
 
     // handles points and levelling system for leaderboard
-    public int getPoints() {
-        return points;
-    }
+    public int getPoints() {return points;}
 
-    public void setPoints(int points) {
-        this.points = Math.max(0, points);
-        this.level = calculateLevelFromPoints(this.points);
-    }
+    public void setPoints(int points) {this.points = Math.max(0, points);
+        this.level = calculateLevelFromPoints(this.points);}
 
-    public int getLevel() {
-        return level;
-    }
+    public int getLevel() {return level;}
+    public void setLevel(int level) {this.level = Math.max(1, level);}
 
-    public void setLevel(int level) {
-        this.level = Math.max(1, level);
-    }
+    public void addPoints(int delta) {this.points = Math.max(0, this.points + delta);
+        this.level = calculateLevelFromPoints(this.points);}
 
-    public void addPoints(int delta) {
-        this.points = Math.max(0, this.points + delta);
-        this.level = calculateLevelFromPoints(this.points);
-    }
-
-    private int calculateLevelFromPoints(int points) {
-        return (points / 100) + 1;
-    }
+    private int calculateLevelFromPoints(int points) {return (points / 100) + 1;}
 }
