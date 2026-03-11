@@ -50,6 +50,9 @@
         <a href="#all-courses" class="nav-item">
             <span class="nav-icon">🔍</span> Browse
         </a>
+        <a href="${pageContext.request.contextPath}/friends" class="nav-item">
+            <span class="nav-icon">👥</span> Friends
+        </a>
     </aside>
 
     <main class="main-content" id="dashboard">

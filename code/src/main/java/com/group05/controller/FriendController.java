@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/profile/friends")
+@RequestMapping("/friends")
 
 public class FriendController {
 
@@ -35,14 +35,14 @@ public class FriendController {
                 redirectAttributes.addAttribute("friends", friendService.getFriend(auth.getName()));
                 return "friends";
             }
-            return "redirect:/profile/friends";
+            return "redirect:/friends";
         }
 
         @PostMapping("/remove")
         public String removeFriend(@RequestParam String username, Authentication auth,
                                    RedirectAttributes redirectAttributes) {
             friendService.removeFriend(auth.getName(), username);
-            return "redirect:/profile/friends";
+            return "redirect:/friends";
         }
     }
 
