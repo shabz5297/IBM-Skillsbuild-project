@@ -1,115 +1,205 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Edit Your Profile</title>
+    <title>Edit Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --bg-primary: #0e1117;
+            --bg-secondary: #161b22;
+            --bg-card: #1c2333;
+            --border: #2a3245;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-muted: #6e7681;
+            --accent-cyan: #22d3ee;
+            --accent-blue: #4a6cf7;
+        }
+
+        body.light-mode {
+            --bg-primary: #f5f7fb;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --text-muted: #9ca3af;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #f7f7f7;
-            margin: 0;
-            padding: 0;
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .home-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            padding: 9px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .home-button:hover {
+            color: var(--text-primary);
+            border-color: var(--accent-cyan);
+            background: var(--bg-secondary);
         }
 
         .profile-card {
             max-width: 600px;
-            margin: 60px auto;
-            background: white;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            padding: 32px;
         }
 
         .profile-header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 28px;
         }
 
         .profile-header h2 {
-            margin: 0;
-            font-size: 24px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
         label {
-            font-weight: bold;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
         .form-input {
             width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            border: 2px solid #e0e0e0;
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
             margin-bottom: 18px;
             font-size: 14px;
-            transition: 0.2s ease;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: border-color 0.2s;
         }
 
         .form-input:focus {
-            border-color: #58cc02;
+            border-color: var(--accent-cyan);
             outline: none;
+            box-shadow: 0 0 0 4px rgba(34,211,238,0.08);
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        input[type="file"].form-input {
+            padding: 10px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .avatar-preview-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #imagePreview {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--border);
+            background: var(--bg-secondary);
         }
 
         .save-button {
             width: 100%;
-            background: #58cc02;
+            background: var(--accent-cyan);
             border: none;
             padding: 12px;
-            border-radius: 12px;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
+            border-radius: 10px;
+            color: #0e1117;
+            font-weight: 700;
+            font-size: 15px;
+            font-family: 'DM Sans', sans-serif;
             cursor: pointer;
-            transition: 0.2s ease;
+            transition: background 0.2s, transform 0.1s;
         }
 
         .save-button:hover {
-            background: #46a302;
+            background: #06b6d4;
+            transform: translateY(-1px);
         }
 
         .back-link {
             display: block;
             text-align: center;
-            margin-top: 20px;
-            color: #666;
+            margin-top: 18px;
+            color: var(--text-muted);
             text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
         }
 
         .back-link:hover {
-            text-decoration: underline;
+            color: var(--accent-cyan);
         }
-
-        .home-button {
-            display: inline-block;
-            margin-top: 15px;
-            background: lightgreen;
-            color: white;
-            padding: 10px 16px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        .home-button:hover {
-            background: darkgreen;
-        }
-
     </style>
 </head>
 
 <body>
-<a href="/home" class="home-button">🏠 Home</a>
+
+<div style="max-width: 600px; margin: 0 auto; display: flex; align-items: center; gap: 12px; margin-bottom: 24px;">
+    <a href="/home" class="home-button" style="margin-bottom: 0;">← Back to Dashboard</a>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️ Light</button>
+</div>
+
 <div class="profile-card">
 
     <div class="profile-header">
         <h2>Level Up Your Profile ✨</h2>
     </div>
 
-    <form action="/profile/${user.id}/edit"
-          method="post"
-          enctype="multipart/form-data">
+    <form action="/profile/${user.id}/edit" method="post" enctype="multipart/form-data">
 
         <label>Display Name</label>
         <input type="text" name="displayName"
@@ -132,30 +222,33 @@
                class="form-input"
                id="imageInput"/>
 
-        <div style="text-align: center; margin-bottom:20px;">
-
-        <img id="imagePreview"
-             src="${user.profilePicture}"
-             style="width:120px;
-                    height:120px;
-                    border-radius:50%;
-                    margin-top: 10px;
-                    object-fit: cover;
-                    border: 3px solid #e0e0e0;" />
+        <div class="avatar-preview-wrapper">
+            <img id="imagePreview"
+                 src="${user.profilePicture}"
+                 alt="Profile preview"/>
         </div>
 
-
-        <button type="submit" class="save-button">
-            Save Changes
-        </button>
+        <button type="submit" class="save-button">Save Changes</button>
 
     </form>
 
-    <a href="/profile/${user.id}" class="back-link">
-        ← Back to Profile
-    </a>
+    <a href="/profile/${user.id}" class="back-link">← Back to Profile</a>
 
 </div>
+<script>
+    function toggleTheme() {
+        const isLight = document.body.classList.toggle('light-mode');
+        document.getElementById('themeToggle').textContent = isLight ? '🌙 Dark' : '☀️ Light';
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    }
+
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light-mode');
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('themeToggle').textContent = '🌙 Dark';
+        });
+    }
+</script>
 <script>
     const imageInput = document.getElementById("imageInput");
     const imagePreview = document.getElementById("imagePreview");
