@@ -9,40 +9,62 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/friends")
-
 public class FriendController {
 
-        private final FriendService friendService;
+    private final FriendService friendService;
 
-        public FriendController(FriendService friendService) {
-            this.friendService = friendService;
-        }
-
-        @GetMapping
-        public String friendPage(Authentication auth, Model model) {
-            String username = auth.getName();
-            model.addAttribute("friends", friendService.getFriend(username));
-            return "friends";
-        }
-
-        @PostMapping("/add")
-        public String addFriend(@RequestParam String username, Authentication auth,
-                                RedirectAttributes redirectAttributes) {
-            try {
-                friendService.addFriend(auth.getName(), username);
-            } catch (IllegalArgumentException e) {
-                redirectAttributes.addAttribute("error", e.getMessage());
-                redirectAttributes.addAttribute("friends", friendService.getFriend(auth.getName()));
-                return "friends";
-            }
-            return "redirect:/friends";
-        }
-
-        @PostMapping("/remove")
-        public String removeFriend(@RequestParam String username, Authentication auth,
-                                   RedirectAttributes redirectAttributes) {
-            friendService.removeFriend(auth.getName(), username);
-            return "redirect:/friends";
-        }
+    public FriendController(FriendService friendService) {
+        this.friendService = friendService;
     }
 
+    @GetMapping
+    public String friendPage(Authentication auth, Model model) {
+        String username = auth.getName();
+        model.addAttribute("friends", friendService.getFriends(username));
+        model.addAttribute("pendingRequests", friendService.getPendingRequests(username));
+        return "friends";
+    }
+
+    @PostMapping("/request")
+    public String sendRequest(@RequestParam String username,
+                              Authentication auth,
+                              RedirectAttributes redirectAttributes) {
+        try {
+            friendService.sendFriendRequest(auth.getName(), username);
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/friends";
+    }
+
+    @PostMapping("/accept")
+    public String acceptRequest(@RequestParam Long requestId,
+                                Authentication auth,
+                                RedirectAttributes redirectAttributes) {
+        try {
+            friendService.acceptFriendRequest(requestId, auth.getName());
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/friends";
+    }
+
+    @PostMapping("/decline")
+    public String declineRequest(@RequestParam Long requestId,
+                                 Authentication auth,
+                                 RedirectAttributes redirectAttributes) {
+        try {
+            friendService.declineFriendRequest(requestId, auth.getName());
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/friends";
+    }
+
+    @PostMapping("/remove")
+    public String removeFriend(@RequestParam String username,
+                               Authentication auth) {
+        friendService.removeFriend(auth.getName(), username);
+        return "redirect:/friends";
+    }
+}

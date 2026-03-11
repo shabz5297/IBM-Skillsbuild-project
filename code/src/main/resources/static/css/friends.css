@@ -128,3 +128,47 @@
     background: #ff4d4d15;
     color: #ff6b6b;
 }
+
+.friend-action-row {
+    margin-top: 16px;
+    display: flex;
+    gap: 10px;
+}
+
+.friend-action-row form {
+    flex: 1;
+}
+
+.friend-accept,
+.friend-decline {
+    width: 100%;
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.friend-accept {
+    border: 1px solid #22c55e55;
+    background: #22c55e15;
+    color: #22c55e;
+}
+
+.friend-accept:hover {
+    background: #22c55e25;
+    border-color: #22c55e;
+}
+
+.friend-decline {
+    border: 1px solid #ff4d4d55;
+    background: #ff4d4d15;
+    color: #ff6b6b;
+}
+
+.friend-decline:hover {
+    background: #ff4d4d25;
+    border-color: #ff4d4d;
+}
