@@ -3,7 +3,7 @@
 <head>
     <title>Edit Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/edit-profile.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/editprofile.css">
 </head>
 
 <body>
