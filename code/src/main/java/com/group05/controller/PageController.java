@@ -88,7 +88,7 @@ public class PageController {
             Path filePath = Paths.get(uploadDir, fileName);
             Files.write(filePath, file.getBytes());
 
-            user.setProfilePicture("/uploads/" + fileName);
+            user.setProfilePicture("/" + fileName);
         }
 
         userService.save(user);

@@ -1,223 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Profile</title>
-
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f7f9fc;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 50px auto;
-            padding: 20px;
-        }
-
-        .home-button {
-            display: inline-block;
-            margin-bottom: 20px;
-            background: lightgreen;
-            color: white;
-            padding: 10px 16px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        .home-button:hover {
-            background: darkgreen;
-        }
-
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-        }
-
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            animation: fadeIn 0.6s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .avatar {
-            width: 100px;
-            height: 100px;
-            background-color: #58cc02;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            color: white;
-            font-weight: bold;
-            overflow: hidden;
-        }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .username {
-            font-size: 28px;
-            margin: 0;
-        }
-
-        .handle {
-            color: #888;
-        }
-
-        .bio {
-            margin-top: 15px;
-            font-size: 16px;
-            color: #444;
-        }
-
-        .edit-btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: #58cc02;
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: 0.2s;
-        }
-
-        .edit-btn:hover {
-            background: #46a302;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            text-align: center;
-        }
-
-        .stat h3 {
-            margin: 0;
-            color: #58cc02;
-        }
-
-        .progress-container {
-            margin-top: 20px;
-        }
-
-        .progress-bar-bg {
-            background: #e0e0e0;
-            height: 12px;
-            border-radius: 10px;
-        }
-
-        .progress-bar-fill {
-            height: 12px;
-            background: #58cc02;
-            border-radius: 10px;
-            transition: width 0.6s ease;
-        }
-
-        .progress-text {
-            margin-top: 5px;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .badges-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .badge-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 15px 20px;
-            font-weight: 600;
-            color: #2e7d32;
-            border: 2px solid #e8f5e9;
-            transition: 0.2s ease;
-        }
-
-        .badge-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
-
-        .level-title {
-            margin-top: 8px;
-            font-weight: bold;
-            color: #ff9800;
-            font-size: 14px;
-        }
-
-        .badge-card.locked {
-            filter: grayscale(100%);
-            opacity: 0.5;
-            border: 2px dashed #ddd;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .badge-card.locked:hover {
-            opacity: 0.7;
-            filter: grayscale(80%);
-            cursor: not-allowed;
-        }
-
-        .badge-card.locked::after {
-            content: attr(data-lock-text);
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #333;
-            color: white;
-            font-size: 12px;
-            padding: 5px 10px;
-            border-radius: 8px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: 0.2s ease;
-        }
-
-        .badge-card.locked:hover::after {
-            opacity: 1;
-        }
-
-        .badge-card:not(.locked) {
-            animation: unlockPop 0.4s ease;
-        }
-
-        @keyframes unlockPop {
-            from { transform: scale(0.95); }
-            to { transform: scale(1); }
-        }
-
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/profile.css">
 </head>
 
 <body>
@@ -363,6 +150,12 @@
                 <p>No badges earned yet.</p>
             </c:if>
         </div>
+
+    <!--Friends tab --->
+    <div class="card">
+        <a href="${pageContext.request.contextPath}/profile/friends" class="friends-btn">
+            Friends
+        </a>
     </div>
 
 </div>
