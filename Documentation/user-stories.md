@@ -141,6 +141,7 @@
 **Acceptance Criteria:**  
 - Badges are awarded for course completion, level progression, or streak milestones.  
 - Earned badges are displayed on the user profile and dashboard.  
+- Users can view badge descriptions via hover or click interaction.  
 
 ---
 
@@ -217,6 +218,24 @@
 - The leaderboard ranks friends based on their points or completed courses.
 - The friends leaderboard is accessible from the dashboard navigation menu.
 
-- Users can view badge descriptions via hover or click interaction.  
+---
+
+### 9. Flashcards and Notes for Courses 
+
+**User Story:**
+- As a Student, I want to create personal notes and flashcards for the courses I am studying so that I can review important concepts and reinforce my learning.
+
+**Acceptance Criteria:**
+- Students can create notes linked to a specific course.
+- Students can create flashcards with a front (question) and back (answer).
+- Flashcards and notes are saved to the student’s account and linked to the selected course.
+- Students can view, edit, and delete their notes or flashcards.
+- Flashcards can be reviewed in a study mode where the student can flip the card to reveal the answer.
+- Notes and flashcards persist after logout and login.
+- The dashboard or course page displays a section where users can access their notes and flashcards.
+
+
+
+
 - Badge data is stored in the backend and persists across sessions.  
 
