@@ -30,12 +30,12 @@
 
     <aside class="sidebar">
         <a href="${pageContext.request.contextPath}/home" class="nav-item">
-            <span class="nav-icon">⊞</span> Dashboard
+            <span class="nav-icon">🏠</span> Home
         </a>
         <a href="${pageContext.request.contextPath}/home#your-courses" class="nav-item">
             <span class="nav-icon">📖</span> My Courses
         </a>
-        <a href="${pageContext.request.contextPath}/home#all-courses" class="nav-item">
+        <a href="${pageContext.request.contextPath}/browse" class="nav-item">
             <span class="nav-icon">🔍</span> Browse
         </a>
         <a href="${pageContext.request.contextPath}/leaderboard" class="nav-item">

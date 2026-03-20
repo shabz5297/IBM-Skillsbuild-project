@@ -118,5 +118,5 @@ public class User {
     public void addPoints(int delta) {this.points = Math.max(0, this.points + delta);
         this.level = calculateLevelFromPoints(this.points);}
 
-    private int calculateLevelFromPoints(int points) {return (points / 100) + 1;}
+    private int calculateLevelFromPoints(int points) {return (points / 30);}
 }
