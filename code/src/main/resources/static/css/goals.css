@@ -1,9 +1,3 @@
-/* ══════════════════════════════════════════════
-   GOALS PAGE  —  goals.css
-   Extends home.css variables; no standalone :root needed.
-   ══════════════════════════════════════════════ */
-
-/* ── Create card ───────────────────────────────────────────────── */
 .goal-create-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -100,7 +94,7 @@
     color: var(--text-muted);
 }
 
-/* ── Count pill ────────────────────────────────────────────────── */
+/* ── Count pill */
 .goal-count-pill {
     font-size: 13px;
     font-weight: 600;
@@ -112,7 +106,7 @@
     margin-left: 8px;
 }
 
-/* ── Goal grid ─────────────────────────────────────────────────── */
+/* ── Goal grid */
 .goal-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -140,7 +134,7 @@
     box-shadow: 0 0 20px rgba(34, 211, 238, 0.1);
 }
 
-/* ── Goal card header ──────────────────────────────────────────── */
+/* ── Goal card header */
 .goal-card-header {
     display: flex;
     justify-content: space-between;
@@ -165,7 +159,7 @@
     color: var(--accent-yellow);
 }
 
-/* ── Goal title ────────────────────────────────────────────────── */
+/* ── Goal title */
 .goal-title {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 16px;
@@ -178,7 +172,7 @@
     font-size: 20px;
 }
 
-/* ── Progress bar ──────────────────────────────────────────────── */
+/* ── Progress bar  */
 .goal-progress-wrap {
     display: flex;
     flex-direction: column;
@@ -207,13 +201,13 @@
     color: var(--text-muted);
 }
 
-/* ── Deadline ──────────────────────────────────────────────────── */
+/* ── Deadline */
 .goal-deadline {
     font-size: 12px;
     color: var(--text-muted);
 }
 
-/* ── Delete button ─────────────────────────────────────────────── */
+/* ── Delete button */
 .goal-delete-btn {
     width: 100%;
     background: transparent;
@@ -232,7 +226,7 @@
     border-color: #ff4d4d;
 }
 
-/* ── Empty state ───────────────────────────────────────────────── */
+/* ── Empty state  */
 .goal-empty {
     background: var(--bg-card);
     border: 1px dashed var(--border);

@@ -28,7 +28,7 @@ public class GoalController {
         this.userRepo = userRepo;
     }
 
-    // ── Goals page ───────────────────────────────────────────────────────────
+    // Goals page
 
     @GetMapping
     public String goalsPage(Authentication authentication, Model model) {
@@ -60,7 +60,7 @@ public class GoalController {
         return "goals";
     }
 
-    // ── Create goal ──────────────────────────────────────────────────────────
+    // Create goal
 
     @PostMapping("/create")
     public String createGoal(@RequestParam int targetCount,
@@ -80,7 +80,7 @@ public class GoalController {
         return "redirect:/goals";
     }
 
-    // ── Delete goal ──────────────────────────────────────────────────────────
+    // Delete goal
 
     @PostMapping("/delete")
     public String deleteGoal(@RequestParam Long goalId,
@@ -92,7 +92,7 @@ public class GoalController {
         return "redirect:/goals";
     }
 
-    // ── Helper ───────────────────────────────────────────────────────────────
+    // Helper
 
     private User getLoggedInUser(Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) return null;

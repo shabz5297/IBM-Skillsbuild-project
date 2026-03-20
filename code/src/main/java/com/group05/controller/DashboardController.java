@@ -114,7 +114,7 @@ public class DashboardController {
             });
         }
 
-        // ── Goal progress for dashboard widget ────────────────────
+        // Goal progress for dashboard widget
         List<Goal> activeGoals = user != null
                 ? goalService.getActiveGoals(user) : List.of();
 
@@ -219,7 +219,7 @@ public class DashboardController {
         if (user != null) {
             courseService.markCourseCompleted(user.getId(), courseId);
 
-            // Check whether any goal has now been fulfilled
+            // Check whether any goal has now been completed
             boolean goalAchieved = goalService.checkGoalsOnCompletion(user.getId());
             if (goalAchieved) {
                 return "redirect:/home?goalCompleted=true";

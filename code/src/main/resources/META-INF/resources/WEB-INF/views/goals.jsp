@@ -33,7 +33,7 @@
 
 <div class="page-wrapper">
 
-    <!-- ═══════════════════════ SIDEBAR ════════════════════════════ -->
+    <!-- SIDEBAR -->
     <aside class="sidebar">
         <a href="${pageContext.request.contextPath}/home" class="nav-item">
             <span class="nav-icon">🏠</span> Home
@@ -58,7 +58,7 @@
         </a>
     </aside>
 
-    <!-- ═══════════════════════ MAIN ════════════════════════════════ -->
+    <!--  MAIN  -->
     <main class="main-content">
 
         <!-- Page header -->
@@ -110,7 +110,7 @@
             </form>
         </div>
 
-        <!-- ── Active Goals ─────────────────────────────────────── -->
+        <!-- Active Goals  -->
         <div class="course-section" style="margin-top:32px">
             <div class="section-header">
                 <h2>🔥 Active Goals <span class="goal-count-pill">${activeGoals.size()}/3</span></h2>
