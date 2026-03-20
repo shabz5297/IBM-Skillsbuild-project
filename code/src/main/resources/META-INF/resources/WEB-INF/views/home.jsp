@@ -39,12 +39,12 @@
 
     <aside class="sidebar">
         <a href="#dashboard" class="nav-item active">
-            <span class="nav-icon">⊞</span> Dashboard
+            <span class="nav-icon">🏠</span> Home
         </a>
         <a href="#your-courses" class="nav-item">
             <span class="nav-icon">📖</span> My Courses
         </a>
-        <a href="#all-courses" class="nav-item">
+        <a href="/browse" class="nav-item">
             <span class="nav-icon">🔍</span> Browse
         </a>
         <a href="/leaderboard" class="nav-item">
@@ -223,75 +223,6 @@
                 </c:if>
             </div>
         </div>
-
-        <!-- ALL COURSES SECTION -->
-        <div class="course-section" id="all-courses">
-            <div class="section-header">
-                <h2>All Courses</h2>
-                <form action="${pageContext.request.contextPath}/home" method="get" class="filter-bar">
-                    <input type="text" name="query" placeholder="Search..." value="${param.query}" />
-                    <select name="category">
-                        <option value="">All</option>
-                        <option value="AI" ${param.category == 'AI' ? 'selected' : ''}>AI</option>
-                        <option value="Cloud" ${param.category == 'Cloud' ? 'selected' : ''}>Cloud</option>
-                        <option value="Data Science" ${param.category == 'Data Science' ? 'selected' : ''}>Data Science</option>
-                        <option value="Security" ${param.category == 'Security' ? 'selected' : ''}>Security</option>
-                        <option value="Development" ${param.category == 'Development' ? 'selected' : ''}>Development</option>
-                        <option value="Business" ${param.category == 'Business' ? 'selected' : ''}>Business</option>
-                        <option value="Emerging Tech" ${param.category == 'Emerging Tech' ? 'selected' : ''}>Emerging Tech</option>
-                    </select>
-                    <button type="submit">Search</button>
-                </form>
-            </div>
-
-            <c:if test="${empty courses}">
-                <p style="color: var(--text-muted); font-size: 14px;">No courses found. Try a different search or clear filters.</p>
-            </c:if>
-
-            <div class="course-grid">
-                <c:forEach var="course" items="${courses}">
-                    <div class="course-card">
-                        <h3>${course.title}</h3>
-                        <p class="category">${course.category}</p>
-                        <p>${course.description}</p>
-
-                        <div class="course-actions">
-                            <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
-
-                            <c:set var="isSaved" value="${savedCourseIds.contains(course.id)}" />
-                            <form action="${pageContext.request.contextPath}/${isSaved ? 'removeCourse' : 'saveCourse'}" method="post" class="save-form">
-                                <input type="hidden" name="courseId" value="${course.id}" />
-                                <button type="submit" class="save-btn" title="${isSaved ? 'Remove course' : 'Save course'}">
-                                    <c:choose>
-                                        <c:when test="${isSaved}">⭐</c:when>
-                                        <c:otherwise>☆</c:otherwise>
-                                    </c:choose>
-                                </button>
-                            </form>
-
-                            <c:set var="isCompleted" value="${completedCourseIds.contains(course.id)}" />
-                            <c:choose>
-                                <c:when test="${isCompleted}">
-                                    <span class="completed-badge">
-                                        Completed ✅
-                                        <c:if test="${completionTimestamps[course.id] != null}">
-                                            <small>(${completionTimestamps[course.id]})</small>
-                                        </c:if>
-                                    </span>
-                                </c:when>
-                                <c:otherwise>
-                                    <form action="${pageContext.request.contextPath}/completeCourse" method="post" class="complete-form">
-                                        <input type="hidden" name="courseId" value="${course.id}" />
-                                        <button type="submit" class="complete-btn">Mark Completed</button>
-                                    </form>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-        </div>
-
     </main>
 </div>
 
