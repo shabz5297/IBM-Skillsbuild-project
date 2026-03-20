@@ -38,22 +38,19 @@
 <div class="page-wrapper">
 
     <aside class="sidebar">
-        <a href="#dashboard" class="nav-item active">
+        <a href="${pageContext.request.contextPath}/home" class="nav-item active">
             <span class="nav-icon">🏠</span> Home
         </a>
-        <a href="#your-courses" class="nav-item">
+        <a href="${pageContext.request.contextPath}/home#your-courses" class="nav-item">
             <span class="nav-icon">📖</span> My Courses
         </a>
-        <a href="/browse" class="nav-item">
+        <a href="${pageContext.request.contextPath}/browse" class="nav-item">
             <span class="nav-icon">🔍</span> Browse
         </a>
-
-
-        <a href="/leaderboard" class="nav-item">
-        <a href="/goals" class="nav-item">
+        <a href="${pageContext.request.contextPath}/goals" class="nav-item">
             <span class="nav-icon">🎯</span> Goals
         </a>
-        <a href="#leaderboard" class="nav-item">
+        <a href="${pageContext.request.contextPath}/leaderboard" class="nav-item">
             <span class="nav-icon">🏆</span> Leaderboard
         </a>
         <a href="${pageContext.request.contextPath}/friends" class="nav-item">

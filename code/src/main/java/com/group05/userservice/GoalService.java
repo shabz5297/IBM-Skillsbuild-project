@@ -36,7 +36,6 @@ public class GoalService {
     }
 
     public List<Goal> getActiveGoals(User user) {
-        expireOverdueGoals(user);
         return goalRepo.findByUserAndStatus(user, Goal.GoalStatus.ACTIVE);
     }
 
@@ -56,6 +55,8 @@ public class GoalService {
 
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found."));
+
+        expireOverdueGoals(user);
 
         long activeCount = goalRepo.findByUserAndStatus(user, Goal.GoalStatus.ACTIVE).size();
         if (activeCount >= 3) {
@@ -109,7 +110,7 @@ public class GoalService {
         });
     }
 
-    private void expireOverdueGoals(User user) {
+    public void expireOverdueGoals(User user) {
         LocalDateTime now = LocalDateTime.now();
         List<Goal> active = goalRepo.findByUserAndStatus(user, Goal.GoalStatus.ACTIVE);
         for (Goal goal : active) {

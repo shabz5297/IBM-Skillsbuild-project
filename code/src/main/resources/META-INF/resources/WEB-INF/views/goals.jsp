@@ -7,17 +7,17 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>My Goals – LearnQuest</title>
-    <link rel="stylesheet" href="/css/home.css"/>
-    <link rel="stylesheet" href="/css/goals.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/goals.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
 </head>
 <body>
 
 <!-- ═══════════════════════════ TOP BAR ═══════════════════════════ -->
 <nav class="topbar">
-    <a href="/home" class="brand">
-        <div class="brand-icon">🎓</div>
-        LearnQuest
+    <a href="${pageContext.request.contextPath}/home" class="brand">
+        <div class="brand-icon">🔥</div>
+        IBM SkillsBuild
     </a>
     <div class="right">
         <button class="theme-toggle" onclick="toggleTheme()">🌙 Theme</button>
@@ -35,10 +35,27 @@
 
     <!-- ═══════════════════════ SIDEBAR ════════════════════════════ -->
     <aside class="sidebar">
-        <a href="/home"    class="nav-item"><span class="nav-icon">🏠</span> Dashboard</a>
-        <a href="/goals"   class="nav-item active"><span class="nav-icon">🎯</span> Goals</a>
-        <a href="/friends" class="nav-item"><span class="nav-icon">👥</span> Friends</a>
-        <a href="/profile/${user.id}" class="nav-item"><span class="nav-icon">👤</span> Profile</a>
+        <a href="${pageContext.request.contextPath}/home" class="nav-item">
+            <span class="nav-icon">🏠</span> Home
+        </a>
+        <a href="${pageContext.request.contextPath}/browse" class="nav-item">
+            <span class="nav-icon">🔍</span> Browse
+        </a>
+        <a href="${pageContext.request.contextPath}/goals" class="nav-item active">
+            <span class="nav-icon">🎯</span> Goals
+        </a>
+        <a href="${pageContext.request.contextPath}/leaderboard" class="nav-item">
+            <span class="nav-icon">🏆</span> Leaderboard
+        </a>
+        <a href="${pageContext.request.contextPath}/friends" class="nav-item">
+            <span class="nav-icon">👥</span> Friends
+        </a>
+        <a href="${pageContext.request.contextPath}/achievements" class="nav-item">
+            <span class="nav-icon">🎖️</span> Achievements
+        </a>
+        <a href="${pageContext.request.contextPath}/profile/${user.id}" class="nav-item">
+            <span class="nav-icon">👤</span> Profile
+        </a>
     </aside>
 
     <!-- ═══════════════════════ MAIN ════════════════════════════════ -->
@@ -140,8 +157,7 @@
 
                                 <!-- Deadline -->
                                 <div class="goal-deadline">
-                                    ⏰ Deadline: <fmt:formatDate value="${goal.deadline}" pattern="dd MMM yyyy HH:mm" type="both"/>
-                                        <%-- Thymeleaf-free: format done in JSP EL for LocalDateTime via toString --%>
+                                    ⏰ Deadline: ${goal.deadlineFormatted}
                                 </div>
 
                                 <!-- Delete form -->

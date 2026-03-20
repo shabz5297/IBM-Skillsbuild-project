@@ -2,6 +2,7 @@ package com.group05.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "goals")
@@ -77,6 +78,9 @@ public class Goal {
     public void setCreatedAt(LocalDateTime d) { this.createdAt = d; }
     public LocalDateTime getDeadline()        { return deadline; }
     public void setDeadline(LocalDateTime d)  { this.deadline = d; }
+    public String getDeadlineFormatted() {
+        return deadline.format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm"));
+    }
     public GoalStatus getStatus()             { return status; }
     public void setStatus(GoalStatus s)       { this.status = s; }
     public int getPointsReward()              { return pointsReward; }
