@@ -44,14 +44,17 @@
         <a href="#your-courses" class="nav-item">
             <span class="nav-icon">📖</span> My Courses
         </a>
-        <a href="#leaderboard" class="nav-item">
-            <span class="nav-icon">🏆</span> Leaderboard
-        </a>
         <a href="#all-courses" class="nav-item">
             <span class="nav-icon">🔍</span> Browse
         </a>
+        <a href="/leaderboard" class="nav-item">
+            <span class="nav-icon">🏆</span> Leaderboard
+        </a>
         <a href="${pageContext.request.contextPath}/friends" class="nav-item">
             <span class="nav-icon">👥</span> Friends
+        </a>
+        <a href="${pageContext.request.contextPath}/achievements" class="nav-item">
+            <span class="nav-icon">🎖️</span> Achievements
         </a>
     </aside>
 
@@ -72,13 +75,21 @@
                         </div>
                         <div class="stat-value">${user.points}</div>
                     </div>
-                    <div class="stat-card orange">
+                    <div class="stat-card green">
                         <div class="stat-header">
-                            <span class="stat-icon orange">🔥</span>
+                            <span class="stat-icon green">🚀</span>
                             <span class="stat-label">Level</span>
                         </div>
                         <div class="stat-value">${user.level}</div>
                         <div class="stat-sub">Keep completing courses to level up</div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-header">
+                            <span class="stat-icon orange">🔥</span>
+                            <span class="stat-label">Streak</span>
+                        </div>
+                        <div class="stat-value">1</div>
+                        <div class="stat-sub">Keep your streak alive!</div>
                     </div>
                     <div class="stat-card blue">
                         <div class="stat-header">
@@ -97,72 +108,6 @@
                     </div>
                 </div>
             </c:if>
-        </div>
-
-        <!-- LEADERBOARD SECTION -->
-        <div class="course-section" id="leaderboard">
-            <div class="section-header">
-                <h2>Global Leaderboard</h2>
-                <span class="leaderboard-subtitle">Top students by points</span>
-            </div>
-
-            <div class="leaderboard-card">
-                <table class="leaderboard-table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Student</th>
-                        <th>Level</th>
-                        <th>Points</th>
-                        <th>Badges</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="u" items="${leaderboardTop}" varStatus="status">
-                        <tr class="${user != null && u.id == user.id ? 'highlight-row' : ''}">
-                            <td class="rank-cell">#${status.index + 1}</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${u.displayName != null && u.displayName ne ''}">
-                                        ${u.displayName}
-                                        <span class="muted">(@${u.username})</span>
-                                    </c:when>
-                                    <c:otherwise>${u.username}</c:otherwise>
-                                </c:choose>
-                            </td>
-                            <td>${u.level}</td>
-                            <td>${u.points}</td>
-                            <td>
-                                <c:set var="badgeCount" value="${u.badges != null ? u.badges.size() : 0}" />
-                                <c:choose>
-                                    <c:when test="${badgeCount == 0}">
-                                        <span class="muted">None</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="badge-list">
-                                            <c:forEach var="b" items="${u.badges}" varStatus="bStatus">
-                                                <c:if test="${bStatus.index < 3}">
-                                                    <span class="badge-pill">${b.name}</span>
-                                                </c:if>
-                                            </c:forEach>
-                                            <c:if test="${badgeCount > 3}">
-                                                <span class="muted">+${badgeCount - 3}</span>
-                                            </c:if>
-                                        </span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-
-                <c:if test="${user != null && userRank != null && userRank > 10}">
-                    <div class="leaderboard-footer">
-                        You're currently <strong>#${userRank}</strong>. Keep completing courses to climb!
-                    </div>
-                </c:if>
-            </div>
         </div>
 
         <!-- YOUR COURSES SECTION -->
@@ -291,6 +236,9 @@
                         <option value="Cloud" ${param.category == 'Cloud' ? 'selected' : ''}>Cloud</option>
                         <option value="Data Science" ${param.category == 'Data Science' ? 'selected' : ''}>Data Science</option>
                         <option value="Security" ${param.category == 'Security' ? 'selected' : ''}>Security</option>
+                        <option value="Development" ${param.category == 'Development' ? 'selected' : ''}>Development</option>
+                        <option value="Business" ${param.category == 'Business' ? 'selected' : ''}>Business</option>
+                        <option value="Emerging Tech" ${param.category == 'Emerging Tech' ? 'selected' : ''}>Emerging Tech</option>
                     </select>
                     <button type="submit">Search</button>
                 </form>
@@ -409,4 +357,3 @@
 
 </body>
 </html>
-```

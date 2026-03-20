@@ -15,6 +15,8 @@ public interface CourseRepo extends JpaRepository<Course, Long> {
     // filter by category
     List<Course> findByCategoryIgnoreCase(String category);
 
+    boolean existsByTitle(String title);
+
     // filter by category + keyword in title
     List<Course> findByCategoryIgnoreCaseAndTitleContainingIgnoreCase(String category, String title);
 }
