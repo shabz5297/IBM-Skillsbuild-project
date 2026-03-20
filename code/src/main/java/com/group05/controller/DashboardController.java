@@ -114,10 +114,7 @@ public class DashboardController {
         model.addAttribute("savedCourses", savedCourses);
         model.addAttribute("courses", courseService.searchCourses(query, category));
         model.addAttribute("user", user);
-        //fetches 10 top ranking users globally and the students current rank
-        model.addAttribute("leaderboardTop", leaderboardService.getTopStudents(10));
         model.addAttribute("userRank", user != null ? leaderboardService.getUserRank(user.getId()) : null);
-
         model.addAttribute("reviewSuccess", false);
         model.addAttribute("reviewError", null);
 
