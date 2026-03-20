@@ -4,40 +4,33 @@ import com.group05.model.Course;
 import com.group05.model.User;
 import com.group05.repo.UserRepo;
 import com.group05.userservice.CourseService;
-import com.group05.userservice.GoalService;
-import com.group05.model.Goal;
 import com.group05.userservice.LeaderboardService;
 import com.group05.userservice.ReviewService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Controller // Marks this class as a Spring MVC controller that handles web requests
-public class DashboardController {
+@Controller
+public class BrowseController {
 
     private final CourseService courseService;
     private final UserRepo userRepo;
     private final LeaderboardService leaderboardService;
     private final ReviewService reviewService;
 
-    private final GoalService goalService;
-
     // Constructor injection: Spring automatically provides the required services/repositories
-    public DashboardController(CourseService courseService, UserRepo userRepo, LeaderboardService leaderboardService, ReviewService reviewService, GoalService goalService) {
+    public BrowseController(CourseService courseService, UserRepo userRepo, LeaderboardService leaderboardService, ReviewService reviewService) {
         this.courseService = courseService;
         this.userRepo = userRepo;
         this.leaderboardService = leaderboardService;
         this.reviewService = reviewService;
-
-        this.goalService = goalService;
     }
 
     private String timeAgo(java.time.LocalDateTime dateTime) {
@@ -78,14 +71,11 @@ public class DashboardController {
         return userRepo.findByUsername(username);
     }
 
-    // Loads the dashboard/home page
-    @GetMapping("/home")
-    public String dashboard(Authentication authentication,
-                            @RequestParam(value = "query", required = false) String query,
-                            @RequestParam(value = "category", required = false) String category,
-                            @RequestParam(value = "goalCompleted", required = false) String goalCompleted,
-                            Model model) {
-
+    @GetMapping("/browse")
+    public String browse(Authentication authentication,
+                         @RequestParam(value = "query", required = false) String query,
+                         @RequestParam(value = "category", required = false) String category,
+                         Model model) {
         // Get the currently logged-in user
         User user = getLoggedInUser(authentication);
 
@@ -113,22 +103,6 @@ public class DashboardController {
                 completionTimestampsFormatted.put(courseId, timeAgo(dateTime));
             });
         }
-
-        // ── Goal progress for dashboard widget ────────────────────
-        List<Goal> activeGoals = user != null
-                ? goalService.getActiveGoals(user) : List.of();
-
-        Map<Long, Integer> goalProgressMap = new HashMap<>();
-        Map<Long, Integer> goalPercentMap  = new HashMap<>();
-
-        for (Goal goal : activeGoals) {
-            int progress = goalService.getProgressForGoal(goal);
-            int percent  = (int) Math.min(100,
-                    (progress * 100.0 / goal.getTargetCount()));
-            goalProgressMap.put(goal.getId(), progress);
-            goalPercentMap.put(goal.getId(),  percent);
-        }
-
         model.addAttribute("completionTimestamps", completionTimestampsFormatted);
 
         model.addAttribute("completedCourseIds", completedCourseIds);
@@ -168,92 +142,6 @@ public class DashboardController {
                 .collect(Collectors.toSet())
                 : Set.of());
 
-        // Goals widget data
-        model.addAttribute("activeGoals",     activeGoals);
-        model.addAttribute("goalProgressMap", goalProgressMap);
-        model.addAttribute("goalPercentMap",  goalPercentMap);
-
-        // Notification: a goal was just completed via course completion
-        model.addAttribute("goalJustCompleted", "true".equals(goalCompleted));
-
-        // Return the JSP page name (home.jsp)
-        return "home";
+        return "browse";
     }
-
-    // Handles saving/favouriting a course
-    @PostMapping("/saveCourse")
-    public String saveCourse(@RequestParam Long courseId, Authentication authentication) {
-
-        // Get logged-in user
-        User user = getLoggedInUser(authentication);
-
-        // Save course only if user exists
-        if (user != null) {
-            courseService.saveCourseForUser(user.getId(), courseId);
-        }
-
-        // Redirect back to dashboard so changes show
-        return "redirect:/home";
-    }
-
-    // Handles removing a saved course
-    @PostMapping("/removeCourse")
-    public String removeCourse(@RequestParam("courseId") Long courseId,
-                               Authentication authentication) {
-
-        // Get logged-in user
-        User user = getLoggedInUser(authentication);
-
-        // Remove course only if user exists
-        if (user != null) {
-            courseService.removeCourseForUser(user.getId(), courseId);
-        }
-
-        // Redirect back to dashboard
-        return "redirect:/home";
-    }
-
-    @PostMapping("/completeCourse")
-    public String completeCourse(@RequestParam Long courseId, Authentication authentication) {
-        User user = getLoggedInUser(authentication);
-        if (user != null) {
-            courseService.markCourseCompleted(user.getId(), courseId);
-
-            // Check whether any goal has now been fulfilled
-            boolean goalAchieved = goalService.checkGoalsOnCompletion(user.getId());
-            if (goalAchieved) {
-                return "redirect:/home?goalCompleted=true";
-            }
-
-        }
-        return "redirect:/home";
-    }
-
-    @PostMapping("/addReview")
-    public String addReview(@RequestParam Long courseId,
-                            @RequestParam int rating,
-                            @RequestParam String comment,
-                            Authentication authentication) {
-
-        User user = getLoggedInUser(authentication);
-
-        if (user == null) {
-            return "redirect:/login";
-        }
-
-        try {
-            reviewService.addReview(user.getId(), courseId, rating, comment);
-            return "redirect:/home?reviewSuccess=true";
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            return "redirect:/home?reviewError=true";
-        }
-    }
-
-    // Loads the profile page
-    @GetMapping("/profile")
-        public String profile(Authentication authentication, Model model) {
-            User user = getLoggedInUser(authentication);
-            model.addAttribute("user", user);
-            return "profile";
-        }
 }

@@ -218,8 +218,6 @@ body {
 .stat-card.orange:hover { border-color: var(--accent-orange); box-shadow: 0 0 20px #f9731618; }
 .stat-card.blue  { border-color: #4a6cf744; }
 .stat-card.blue:hover { border-color: var(--accent-blue); box-shadow: 0 0 20px #4a6cf718; }
-.stat-card.green { border-color: #22c55e44; }
-.stat-card.green:hover { border-color: var(--accent-green); box-shadow: 0 0 20px #22c55e18; }
 
 .stat-header {
     display: flex;
@@ -233,7 +231,6 @@ body {
 .stat-icon.cyan   { color: var(--accent-cyan); }
 .stat-icon.orange { color: var(--accent-orange); }
 .stat-icon.blue   { color: var(--accent-blue); }
-.stat-icon.green { color: var(--accent-green); }
 
 .stat-label {
     font-size: 14px;

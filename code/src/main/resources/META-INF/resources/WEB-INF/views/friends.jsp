@@ -18,6 +18,7 @@
     </div>
 
     <div class="right">
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️ Light</button>
         <form action="${pageContext.request.contextPath}/logout" method="post">
             <button class="logout-btn">Logout</button>
         </form>
@@ -29,19 +30,22 @@
 
     <aside class="sidebar">
         <a href="${pageContext.request.contextPath}/home" class="nav-item">
-            <span class="nav-icon">⊞</span> Dashboard
+            <span class="nav-icon">🏠</span> Home
         </a>
         <a href="${pageContext.request.contextPath}/home#your-courses" class="nav-item">
             <span class="nav-icon">📖</span> My Courses
         </a>
-        <a href="${pageContext.request.contextPath}/home#leaderboard" class="nav-item">
-            <span class="nav-icon">🏆</span> Leaderboard
-        </a>
-        <a href="${pageContext.request.contextPath}/home#all-courses" class="nav-item">
+        <a href="${pageContext.request.contextPath}/browse" class="nav-item">
             <span class="nav-icon">🔍</span> Browse
+        </a>
+        <a href="${pageContext.request.contextPath}/leaderboard" class="nav-item">
+            <span class="nav-icon">🏆</span> Leaderboard
         </a>
         <a href="${pageContext.request.contextPath}/friends" class="nav-item active">
             <span class="nav-icon">👥</span> Friends
+        </a>
+        <a href="${pageContext.request.contextPath}/achievements" class="nav-item">
+            <span class="nav-icon">🎖️</span> Achievements
         </a>
     </aside>
 
@@ -226,5 +230,19 @@
     </main>
 </div>
 
+<script>
+    function toggleTheme() {
+        const isLight = document.body.classList.toggle('light-mode');
+        document.getElementById('themeToggle').textContent = isLight ? '🌙 Dark' : '☀️ Light';
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    }
+
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light-mode');
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('themeToggle').textContent = '🌙 Dark';
+        });
+    }
+</script>
 </body>
 </html>

@@ -47,6 +47,9 @@ public class PageController {
     @GetMapping("/login")
     public String login() {return "login";}
 
+    @GetMapping("/")
+    public String login2() {return "login";}
+
     //Profile Page
     @GetMapping("/profile/{id}")
     public String profile(@PathVariable Long id, Model model) {
