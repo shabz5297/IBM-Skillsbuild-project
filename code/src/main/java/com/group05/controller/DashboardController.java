@@ -4,6 +4,8 @@ import com.group05.model.Course;
 import com.group05.model.User;
 import com.group05.repo.UserRepo;
 import com.group05.userservice.CourseService;
+import com.group05.userservice.GoalService;
+import com.group05.model.Goal;
 import com.group05.userservice.LeaderboardService;
 import com.group05.userservice.ReviewService;
 import org.springframework.security.core.Authentication;
@@ -12,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,12 +28,16 @@ public class DashboardController {
     private final LeaderboardService leaderboardService;
     private final ReviewService reviewService;
 
+    private final GoalService goalService;
+
     // Constructor injection: Spring automatically provides the required services/repositories
-    public DashboardController(CourseService courseService, UserRepo userRepo, LeaderboardService leaderboardService, ReviewService reviewService) {
+    public DashboardController(CourseService courseService, UserRepo userRepo, LeaderboardService leaderboardService, ReviewService reviewService, GoalService goalService) {
         this.courseService = courseService;
         this.userRepo = userRepo;
         this.leaderboardService = leaderboardService;
         this.reviewService = reviewService;
+
+        this.goalService = goalService;
     }
 
     private String timeAgo(java.time.LocalDateTime dateTime) {
@@ -76,6 +83,7 @@ public class DashboardController {
     public String dashboard(Authentication authentication,
                             @RequestParam(value = "query", required = false) String query,
                             @RequestParam(value = "category", required = false) String category,
+                            @RequestParam(value = "goalCompleted", required = false) String goalCompleted,
                             Model model) {
 
         // Get the currently logged-in user
@@ -105,6 +113,22 @@ public class DashboardController {
                 completionTimestampsFormatted.put(courseId, timeAgo(dateTime));
             });
         }
+
+        // ── Goal progress for dashboard widget ────────────────────
+        List<Goal> activeGoals = user != null
+                ? goalService.getActiveGoals(user) : List.of();
+
+        Map<Long, Integer> goalProgressMap = new HashMap<>();
+        Map<Long, Integer> goalPercentMap  = new HashMap<>();
+
+        for (Goal goal : activeGoals) {
+            int progress = goalService.getProgressForGoal(goal);
+            int percent  = (int) Math.min(100,
+                    (progress * 100.0 / goal.getTargetCount()));
+            goalProgressMap.put(goal.getId(), progress);
+            goalPercentMap.put(goal.getId(),  percent);
+        }
+
         model.addAttribute("completionTimestamps", completionTimestampsFormatted);
 
         model.addAttribute("completedCourseIds", completedCourseIds);
@@ -146,6 +170,14 @@ public class DashboardController {
                 .map(Course::getId)
                 .collect(Collectors.toSet())
                 : Set.of());
+
+        // Goals widget data
+        model.addAttribute("activeGoals",     activeGoals);
+        model.addAttribute("goalProgressMap", goalProgressMap);
+        model.addAttribute("goalPercentMap",  goalPercentMap);
+
+        // Notification: a goal was just completed via course completion
+        model.addAttribute("goalJustCompleted", "true".equals(goalCompleted));
 
         // Return the JSP page name (home.jsp)
         return "home";
@@ -189,6 +221,13 @@ public class DashboardController {
         User user = getLoggedInUser(authentication);
         if (user != null) {
             courseService.markCourseCompleted(user.getId(), courseId);
+
+            // Check whether any goal has now been fulfilled
+            boolean goalAchieved = goalService.checkGoalsOnCompletion(user.getId());
+            if (goalAchieved) {
+                return "redirect:/home?goalCompleted=true";
+            }
+
         }
         return "redirect:/home";
     }

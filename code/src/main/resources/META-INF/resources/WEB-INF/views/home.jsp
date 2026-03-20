@@ -44,6 +44,9 @@
         <a href="#your-courses" class="nav-item">
             <span class="nav-icon">📖</span> My Courses
         </a>
+        <a href="/goals" class="nav-item">
+            <span class="nav-icon">🎯</span> Goals
+        </a>
         <a href="#leaderboard" class="nav-item">
             <span class="nav-icon">🏆</span> Leaderboard
         </a>
@@ -56,6 +59,13 @@
     </aside>
 
     <main class="main-content" id="dashboard">
+
+        <c:if test="${goalJustCompleted}">
+            <div class="flash-success" style="display:flex;align-items:center;gap:10px;font-size:15px;padding:14px 20px;">
+                🏆 <strong>Goal Achieved!</strong> You earned bonus points and a badge. Keep it up!
+                <a href="/goals" style="margin-left:auto;color:var(--accent-cyan);font-size:13px;text-decoration:none;">View Goals →</a>
+            </div>
+        </c:if>
 
         <div class="dashboard-header">
             <h1>
@@ -97,6 +107,45 @@
                     </div>
                 </div>
             </c:if>
+
+            <c:if test="${not empty activeGoals}">
+                <div class="course-section" style="margin-bottom:32px">
+                    <div class="section-header">
+                        <h2>🎯 Active Goals</h2>
+                        <a href="/goals" style="font-size:13px;color:var(--accent-cyan);text-decoration:none;">Manage Goals →</a>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:10px;">
+                        <c:forEach var="goal" items="${activeGoals}">
+                            <c:set var="pct" value="${goalPercentMap[goal.id]}"/>
+                            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;">
+                                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                        <span style="font-size:14px;font-weight:600;color:var(--text-primary);">
+                            ${goal.periodLabel}: Complete <strong>${goal.targetCount}</strong> course<c:if test="${goal.targetCount > 1}">s</c:if>
+                        </span>
+                                    <span style="font-size:12px;color:var(--accent-yellow);">🏆 +${goal.pointsReward} pts</span>
+                                </div>
+                                <div style="background:#ffffff0d;border-radius:999px;height:8px;overflow:hidden;">
+                                    <div style="height:8px;border-radius:999px;background:linear-gradient(90deg,var(--accent-cyan),#0891b2);width:${pct}%;transition:width 0.6s ease;"></div>
+                                </div>
+                                <div style="font-size:11px;color:var(--text-muted);margin-top:5px;">
+                                        ${goalProgressMap[goal.id]} / ${goal.targetCount} completed (${pct}%)
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+            </c:if>
+            <c:if test="${empty activeGoals}">
+                <div class="course-section" style="margin-bottom:32px">
+                    <div class="section-header">
+                        <h2>🎯 Goals</h2>
+                    </div>
+                    <div style="background:var(--bg-card);border:1px dashed var(--border);border-radius:12px;padding:20px;text-align:center;color:var(--text-muted);font-size:14px;">
+                        No active goals. <a href="/goals" style="color:var(--accent-cyan);text-decoration:none;">Set a goal →</a>
+                    </div>
+                </div>
+            </c:if>
+
         </div>
 
         <!-- LEADERBOARD SECTION -->
