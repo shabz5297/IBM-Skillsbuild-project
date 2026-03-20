@@ -1,0 +1,297 @@
+.goal-create-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+}
+
+.goal-create-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 18px;
+}
+
+.goal-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.goal-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 140px;
+}
+
+.goal-form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+.goal-input {
+    padding: 9px 12px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.goal-input:focus {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.08);
+}
+
+.goal-input option {
+    background: var(--bg-card);
+}
+
+.reward-badge {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #eab30815;
+    border: 1px solid #eab30833;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-yellow);
+    white-space: nowrap;
+}
+
+.goal-submit-btn {
+    padding: 10px 22px;
+    background: var(--accent-cyan);
+    color: #0e1117;
+    border: none;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+}
+
+.goal-submit-btn:hover {
+    background: #06b6d4;
+    transform: translateY(-1px);
+}
+
+.goal-hint {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* ── Count pill */
+.goal-count-pill {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #22d3ee15;
+    color: var(--accent-cyan);
+    border: 1px solid #22d3ee33;
+    margin-left: 8px;
+}
+
+/* ── Goal grid */
+.goal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+}
+
+.goal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.active-goal {
+    border-color: #22d3ee33;
+}
+
+.active-goal:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.1);
+}
+
+/* ── Goal card header */
+.goal-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.goal-period-badge {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #4a6cf715;
+    color: var(--accent-blue);
+    border: 1px solid #4a6cf733;
+}
+
+.goal-reward-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-yellow);
+}
+
+/* ── Goal title */
+.goal-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.goal-title strong {
+    color: var(--accent-cyan);
+    font-size: 20px;
+}
+
+/* ── Progress bar  */
+.goal-progress-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.goal-progress-bar {
+    background: #ffffff0d;
+    border-radius: 999px;
+    height: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.goal-progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent-cyan), #0891b2);
+    transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.goal-progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* ── Deadline */
+.goal-deadline {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* ── Delete button */
+.goal-delete-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #ff4d4d44;
+    color: #ff6b6b;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.goal-delete-btn:hover {
+    background: #ff4d4d15;
+    border-color: #ff4d4d;
+}
+
+/* ── Empty state  */
+.goal-empty {
+    background: var(--bg-card);
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+    padding: 36px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.goal-empty-icon {
+    font-size: 36px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+/* ── History list ──────────────────────────────────────────────── */
+.goal-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.goal-history-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    font-size: 14px;
+}
+
+.history-completed {
+    border-color: #22c55e33;
+    background: #22c55e08;
+}
+
+.history-expired {
+    border-color: #ff4d4d22;
+    background: #ff4d4d06;
+    opacity: 0.75;
+}
+
+.history-status-icon { font-size: 18px; }
+
+.history-desc {
+    flex: 1;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.history-reward {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-yellow);
+}
+
+.history-expired .history-reward {
+    color: var(--text-muted);
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .goal-form-row { flex-direction: column; }
+    .goal-grid     { grid-template-columns: 1fr; }
+}

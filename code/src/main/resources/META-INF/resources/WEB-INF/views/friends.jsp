@@ -38,6 +38,9 @@
         <a href="${pageContext.request.contextPath}/browse" class="nav-item">
             <span class="nav-icon">🔍</span> Browse
         </a>
+        <a href="${pageContext.request.contextPath}/goals" class="nav-item">
+            <span class="nav-icon">🎯</span> Goals
+        </a>
         <a href="${pageContext.request.contextPath}/leaderboard" class="nav-item">
             <span class="nav-icon">🏆</span> Leaderboard
         </a>
