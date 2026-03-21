@@ -20,6 +20,7 @@ public class Course {
     private String category;
     private String description;
     private String link;
+    private boolean completed = false;
 
     // Empty constructor
     public Course() {}

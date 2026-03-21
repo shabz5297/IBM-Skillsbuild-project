@@ -38,24 +38,37 @@
 <div class="page-wrapper">
 
     <aside class="sidebar">
-        <a href="#dashboard" class="nav-item active">
-            <span class="nav-icon">⊞</span> Dashboard
+        <a href="${pageContext.request.contextPath}/home" class="nav-item active">
+            <span class="nav-icon">🏠</span> Home
         </a>
-        <a href="#your-courses" class="nav-item">
+        <a href="${pageContext.request.contextPath}/home#your-courses" class="nav-item">
             <span class="nav-icon">📖</span> My Courses
         </a>
-        <a href="#leaderboard" class="nav-item">
-            <span class="nav-icon">🏆</span> Leaderboard
-        </a>
-        <a href="#all-courses" class="nav-item">
+        <a href="${pageContext.request.contextPath}/browse" class="nav-item">
             <span class="nav-icon">🔍</span> Browse
+        </a>
+        <a href="${pageContext.request.contextPath}/goals" class="nav-item">
+            <span class="nav-icon">🎯</span> Goals
+        </a>
+        <a href="${pageContext.request.contextPath}/leaderboard" class="nav-item">
+            <span class="nav-icon">🏆</span> Leaderboard
         </a>
         <a href="${pageContext.request.contextPath}/friends" class="nav-item">
             <span class="nav-icon">👥</span> Friends
         </a>
+        <a href="${pageContext.request.contextPath}/achievements" class="nav-item">
+            <span class="nav-icon">🎖️</span> Achievements
+        </a>
     </aside>
 
     <main class="main-content" id="dashboard">
+
+        <c:if test="${goalJustCompleted}">
+            <div class="flash-success" style="display:flex;align-items:center;gap:10px;font-size:15px;padding:14px 20px;">
+                🏆 <strong>Goal Achieved!</strong> You earned bonus points and a badge. Keep it up!
+                <a href="/goals" style="margin-left:auto;color:var(--accent-cyan);font-size:13px;text-decoration:none;">View Goals →</a>
+            </div>
+        </c:if>
 
         <div class="dashboard-header">
             <h1>
@@ -72,13 +85,21 @@
                         </div>
                         <div class="stat-value">${user.points}</div>
                     </div>
-                    <div class="stat-card orange">
+                    <div class="stat-card green">
                         <div class="stat-header">
-                            <span class="stat-icon orange">🔥</span>
+                            <span class="stat-icon green">🚀</span>
                             <span class="stat-label">Level</span>
                         </div>
                         <div class="stat-value">${user.level}</div>
                         <div class="stat-sub">Keep completing courses to level up</div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-header">
+                            <span class="stat-icon orange">🔥</span>
+                            <span class="stat-label">Streak</span>
+                        </div>
+                        <div class="stat-value">1</div>
+                        <div class="stat-sub">Keep your streak alive!</div>
                     </div>
                     <div class="stat-card blue">
                         <div class="stat-header">
@@ -97,72 +118,45 @@
                     </div>
                 </div>
             </c:if>
-        </div>
 
-        <!-- LEADERBOARD SECTION -->
-        <div class="course-section" id="leaderboard">
-            <div class="section-header">
-                <h2>Global Leaderboard</h2>
-                <span class="leaderboard-subtitle">Top students by points</span>
-            </div>
-
-            <div class="leaderboard-card">
-                <table class="leaderboard-table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Student</th>
-                        <th>Level</th>
-                        <th>Points</th>
-                        <th>Badges</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="u" items="${leaderboardTop}" varStatus="status">
-                        <tr class="${user != null && u.id == user.id ? 'highlight-row' : ''}">
-                            <td class="rank-cell">#${status.index + 1}</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${u.displayName != null && u.displayName ne ''}">
-                                        ${u.displayName}
-                                        <span class="muted">(@${u.username})</span>
-                                    </c:when>
-                                    <c:otherwise>${u.username}</c:otherwise>
-                                </c:choose>
-                            </td>
-                            <td>${u.level}</td>
-                            <td>${u.points}</td>
-                            <td>
-                                <c:set var="badgeCount" value="${u.badges != null ? u.badges.size() : 0}" />
-                                <c:choose>
-                                    <c:when test="${badgeCount == 0}">
-                                        <span class="muted">None</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="badge-list">
-                                            <c:forEach var="b" items="${u.badges}" varStatus="bStatus">
-                                                <c:if test="${bStatus.index < 3}">
-                                                    <span class="badge-pill">${b.name}</span>
-                                                </c:if>
-                                            </c:forEach>
-                                            <c:if test="${badgeCount > 3}">
-                                                <span class="muted">+${badgeCount - 3}</span>
-                                            </c:if>
-                                        </span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-
-                <c:if test="${user != null && userRank != null && userRank > 10}">
-                    <div class="leaderboard-footer">
-                        You're currently <strong>#${userRank}</strong>. Keep completing courses to climb!
+            <c:if test="${not empty activeGoals}">
+                <div class="course-section" style="margin-bottom:32px">
+                    <div class="section-header">
+                        <h2>🎯 Active Goals</h2>
+                        <a href="/goals" style="font-size:13px;color:var(--accent-cyan);text-decoration:none;">Manage Goals →</a>
                     </div>
-                </c:if>
-            </div>
+                    <div style="display:flex;flex-direction:column;gap:10px;">
+                        <c:forEach var="goal" items="${activeGoals}">
+                            <c:set var="pct" value="${goalPercentMap[goal.id]}"/>
+                            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;">
+                                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                        <span style="font-size:14px;font-weight:600;color:var(--text-primary);">
+                            ${goal.periodLabel}: Complete <strong>${goal.targetCount}</strong> course<c:if test="${goal.targetCount > 1}">s</c:if>
+                        </span>
+                                    <span style="font-size:12px;color:var(--accent-yellow);">🏆 +${goal.pointsReward} pts</span>
+                                </div>
+                                <div style="background:#ffffff0d;border-radius:999px;height:8px;overflow:hidden;">
+                                    <div style="height:8px;border-radius:999px;background:linear-gradient(90deg,var(--accent-cyan),#0891b2);width:${pct}%;transition:width 0.6s ease;"></div>
+                                </div>
+                                <div style="font-size:11px;color:var(--text-muted);margin-top:5px;">
+                                        ${goalProgressMap[goal.id]} / ${goal.targetCount} completed (${pct}%)
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+            </c:if>
+            <c:if test="${empty activeGoals}">
+                <div class="course-section" style="margin-bottom:32px">
+                    <div class="section-header">
+                        <h2>🎯 Goals</h2>
+                    </div>
+                    <div style="background:var(--bg-card);border:1px dashed var(--border);border-radius:12px;padding:20px;text-align:center;color:var(--text-muted);font-size:14px;">
+                        No active goals. <a href="/goals" style="color:var(--accent-cyan);text-decoration:none;">Set a goal →</a>
+                    </div>
+                </div>
+            </c:if>
+
         </div>
 
         <!-- YOUR COURSES SECTION -->
@@ -278,72 +272,6 @@
                 </c:if>
             </div>
         </div>
-
-        <!-- ALL COURSES SECTION -->
-        <div class="course-section" id="all-courses">
-            <div class="section-header">
-                <h2>All Courses</h2>
-                <form action="${pageContext.request.contextPath}/home" method="get" class="filter-bar">
-                    <input type="text" name="query" placeholder="Search..." value="${param.query}" />
-                    <select name="category">
-                        <option value="">All</option>
-                        <option value="AI" ${param.category == 'AI' ? 'selected' : ''}>AI</option>
-                        <option value="Cloud" ${param.category == 'Cloud' ? 'selected' : ''}>Cloud</option>
-                        <option value="Data Science" ${param.category == 'Data Science' ? 'selected' : ''}>Data Science</option>
-                        <option value="Security" ${param.category == 'Security' ? 'selected' : ''}>Security</option>
-                    </select>
-                    <button type="submit">Search</button>
-                </form>
-            </div>
-
-            <c:if test="${empty courses}">
-                <p style="color: var(--text-muted); font-size: 14px;">No courses found. Try a different search or clear filters.</p>
-            </c:if>
-
-            <div class="course-grid">
-                <c:forEach var="course" items="${courses}">
-                    <div class="course-card">
-                        <h3>${course.title}</h3>
-                        <p class="category">${course.category}</p>
-                        <p>${course.description}</p>
-
-                        <div class="course-actions">
-                            <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
-
-                            <c:set var="isSaved" value="${savedCourseIds.contains(course.id)}" />
-                            <form action="${pageContext.request.contextPath}/${isSaved ? 'removeCourse' : 'saveCourse'}" method="post" class="save-form">
-                                <input type="hidden" name="courseId" value="${course.id}" />
-                                <button type="submit" class="save-btn" title="${isSaved ? 'Remove course' : 'Save course'}">
-                                    <c:choose>
-                                        <c:when test="${isSaved}">⭐</c:when>
-                                        <c:otherwise>☆</c:otherwise>
-                                    </c:choose>
-                                </button>
-                            </form>
-
-                            <c:set var="isCompleted" value="${completedCourseIds.contains(course.id)}" />
-                            <c:choose>
-                                <c:when test="${isCompleted}">
-                                    <span class="completed-badge">
-                                        Completed ✅
-                                        <c:if test="${completionTimestamps[course.id] != null}">
-                                            <small>(${completionTimestamps[course.id]})</small>
-                                        </c:if>
-                                    </span>
-                                </c:when>
-                                <c:otherwise>
-                                    <form action="${pageContext.request.contextPath}/completeCourse" method="post" class="complete-form">
-                                        <input type="hidden" name="courseId" value="${course.id}" />
-                                        <button type="submit" class="complete-btn">Mark Completed</button>
-                                    </form>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-        </div>
-
     </main>
 </div>
 
@@ -409,4 +337,3 @@
 
 </body>
 </html>
-```
