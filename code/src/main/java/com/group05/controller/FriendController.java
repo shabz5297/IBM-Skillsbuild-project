@@ -18,6 +18,14 @@ public class FriendController {
         this.friendService = friendService;
     }
 
+    // Helper method for github login
+    private String getUsername(Authentication auth) {
+        if (auth.getPrincipal() instanceof org.springframework.security.oauth2.core.user.OAuth2User oauthUser) {
+            return oauthUser.getAttribute("login");
+        }
+        return auth.getName();
+    }
+
     @GetMapping
     public String friendPage(Authentication auth, Model model) {
         String username = auth.getName();
