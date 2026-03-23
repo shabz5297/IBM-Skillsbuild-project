@@ -20,6 +20,6 @@ public interface UserRepo extends JpaRepository <User, Long> {
     User findByUsername(String username);
 
 
-    //added optional value for friends tab to not iterfere with the regular find by user method
+    //added optional value for friends tab to not interfere with the regular find by user method
     Optional<User> findOptionalByUsername(String username);
 }

@@ -95,7 +95,6 @@ public class User {
     public String getProfilePicture() {return profilePicture;}
     public void setProfilePicture(String profilePicture) {this.profilePicture = profilePicture;}
 
-
     public int getProgress() {return progress;}
     public void setProgress(int progress) {this.progress = progress;}
 
