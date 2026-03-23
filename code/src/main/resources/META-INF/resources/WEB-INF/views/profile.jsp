@@ -163,7 +163,7 @@
             <div class="badge-card ${!hasSocializer ? 'locked' : ''}"
                  data-lock-text="Unlock after a sent/received friend request">
                 🤝 Socializer
-                <c:if test="${!hasExplorer}">
+                <c:if test="${!hasSocializer}">
                     <span class="lock">🔒</span>
                 </c:if>
             </div>

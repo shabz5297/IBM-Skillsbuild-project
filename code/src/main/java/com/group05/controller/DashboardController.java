@@ -2,12 +2,15 @@ package com.group05.controller;
 
 import com.group05.model.Course;
 import com.group05.model.User;
+import com.group05.model.Badge;
+import com.group05.repo.BadgeRepo;
 import com.group05.repo.UserRepo;
 import com.group05.userservice.CourseService;
 import com.group05.userservice.GoalService;
 import com.group05.model.Goal;
 import com.group05.userservice.LeaderboardService;
 import com.group05.userservice.ReviewService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,17 +31,17 @@ public class DashboardController {
     private final UserRepo userRepo;
     private final LeaderboardService leaderboardService;
     private final ReviewService reviewService;
-
     private final GoalService goalService;
+    private final BadgeRepo badgeRepo;
 
     // Constructor injection: Spring automatically provides the required services/repositories
-    public DashboardController(CourseService courseService, UserRepo userRepo, LeaderboardService leaderboardService, ReviewService reviewService, GoalService goalService) {
+    public DashboardController(CourseService courseService, UserRepo userRepo, LeaderboardService leaderboardService, ReviewService reviewService, GoalService goalService, BadgeRepo badgeRepo) {
         this.courseService = courseService;
         this.userRepo = userRepo;
         this.leaderboardService = leaderboardService;
         this.reviewService = reviewService;
-
         this.goalService = goalService;
+        this.badgeRepo = badgeRepo;
     }
 
     private String timeAgo(java.time.LocalDateTime dateTime) {
@@ -84,10 +88,28 @@ public class DashboardController {
                             @RequestParam(value = "query", required = false) String query,
                             @RequestParam(value = "category", required = false) String category,
                             @RequestParam(value = "goalCompleted", required = false) String goalCompleted,
+                            HttpServletRequest request,
                             Model model) {
 
         // Get the currently logged-in user
         User user = getLoggedInUser(authentication);
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        //Badge and Streak popups
+        String badgeCelebration = (String) request.getSession().getAttribute("badgeCelebration");
+        if (badgeCelebration != null) {
+            request.getSession().removeAttribute("badgeCelebration");
+            model.addAttribute("badgeCelebration", badgeCelebration);
+        }
+        Boolean streakCelebration = (Boolean) request.getSession().getAttribute("streakCelebration");
+        if (streakCelebration != null) {
+            request.getSession().removeAttribute("streakCelebration");
+            model.addAttribute("streakCelebration", streakCelebration);
+        }
+
 
         // Get the user's saved courses
         List<Course> savedCourses = user != null
@@ -96,14 +118,12 @@ public class DashboardController {
 
         // Create a set of saved course IDs for quick lookup in the JSP
         // Used to decide whether a star should be filled or empty
-        Set<Long> savedCourseIds = user != null
-                ? user.getSavedCourses().stream().map(Course::getId).collect(Collectors.toSet())
-                : Set.of();
+        Set<Long> savedCourseIds =
+                 user.getSavedCourses().stream().map(Course::getId).collect(Collectors.toSet());
 
         // NEW: Completed course IDs + timestamps for UI
-        Set<Long> completedCourseIds = user != null
-                ? courseService.getCompletedCourseIds(user.getId())
-                : Set.of();
+        Set<Long> completedCourseIds =
+                 courseService.getCompletedCourseIds(user.getId());
 
         List<Course> courses = courseService.searchCourses(query, category);
 
@@ -136,7 +156,7 @@ public class DashboardController {
         // Send data to the JSP page
         model.addAttribute("savedCourseIds", savedCourseIds);
         model.addAttribute("savedCourses", savedCourses);
-        model.addAttribute("courses", courseService.searchCourses(query, category));
+        model.addAttribute("courses", courses);
         model.addAttribute("user", user);
         model.addAttribute("userRank", user != null ? leaderboardService.getUserRank(user.getId()) : null);
         model.addAttribute("reviewSuccess", false);
@@ -187,10 +207,11 @@ public class DashboardController {
         // Get logged-in user
         User user = getLoggedInUser(authentication);
 
-        // Save course only if user exists
-        if (user != null) {
-            courseService.saveCourseForUser(user.getId(), courseId);
+        if (user == null) {
+            return "redirect:/login";
         }
+
+        courseService.saveCourseForUser(user.getId(), courseId);
 
         // Redirect back to dashboard so changes show
         return "redirect:/home";
@@ -214,10 +235,10 @@ public class DashboardController {
     }
 
     @PostMapping("/completeCourse")
-    public String completeCourse(@RequestParam Long courseId, Authentication authentication) {
+    public String completeCourse(@RequestParam Long courseId, Authentication authentication, HttpServletRequest request) {
         User user = getLoggedInUser(authentication);
         if (user != null) {
-            courseService.markCourseCompleted(user.getId(), courseId);
+            courseService.markCourseCompleted(user.getId(), courseId, request);
 
             // Check whether any goal has now been completed
             boolean goalAchieved = goalService.checkGoalsOnCompletion(user.getId());
@@ -251,8 +272,12 @@ public class DashboardController {
 
     // Loads the profile page
     @GetMapping("/profile")
-        public String profile(Authentication authentication, Model model) {
+        public String profile(Authentication authentication,
+                              HttpServletRequest request,
+                              Model model) {
             User user = getLoggedInUser(authentication);
+            request.getSession().removeAttribute("badgeCelebration");
+            request.getSession().removeAttribute("streakCelebration");
             model.addAttribute("user", user);
             return "profile";
         }

@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -6,6 +6,7 @@
     <title>Friends</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/achievements.css">
+    <meta charset="UTF-8">
 </head>
 <body>
 
@@ -62,55 +63,27 @@
             <!-- Badges Section -->
             <div class="card">
                 <h3>Achievements</h3>
-
                 <div class="badges-grid">
+                    <c:forEach var="badge" items="${user.badges}">
+                        <div class="badge-card unlocked">
 
-                    <!-- Beginner Badge -->
-                    <div class="badge-card ${user.progress < 25 ? 'locked' : ''}"
-                         data-lock-text="Unlock at 25%">
-                        🌱 Beginner
-                        <c:if test="${user.progress < 25}">
-                            <span class="lock">🔒</span>
-                        </c:if>
-                    </div>
+                            <c:choose>
+                                <c:when test="${badge.name == 'First Login'}">🎉</c:when>
+                                <c:when test="${badge.name == 'Beginner'}">🌱</c:when>
+                                <c:when test="${badge.name == 'Explorer'}">🚀</c:when>
+                                <c:when test="${badge.name == 'Socializer'}">🤝</c:when>
+                            </c:choose>
 
-                    <!-- Explorer Badge -->
-                    <div class="badge-card ${user.progress < 50 ? 'locked' : ''}"
-                         data-lock-text="Unlock at 50%">
-                        🚀 Explorer
-                        <c:if test="${user.progress < 50}">
-                            <span class="lock">🔒</span>
-                        </c:if>
-                    </div>
-
-                    <!-- Achiever Badge -->
-                    <div class="badge-card ${user.progress < 75 ? 'locked' : ''}"
-                         data-lock-text="Unlock at 75%">
-                        🔥 Achiever
-                        <c:if test="${user.progress < 75}">
-                            <span class="lock">🔒</span>
-                        </c:if>
-                    </div>
-
-                    <!-- Master Badge -->
-                    <div class="badge-card ${user.progress < 100 ? 'locked' : ''}"
-                         data-lock-text="Unlock at 100%">
-                        🏆 Master
-                        <c:if test="${user.progress < 100}">
-                            <span class="lock">🔒</span>
-                        </c:if>
-                    </div>
-
+                                ${badge.name}
+                        </div>
+                    </c:forEach>
                 </div>
-
                 <c:if test="${empty user.badges}">
-                    <p class="no-badges" style="margin-top: 16px;">No badges earned yet. Complete courses to unlock achievements!</p>
+                    <p class="no-badges">No badges earned yet.</p>
                 </c:if>
             </div>
+
         </div>
-
-</div>
-
     </main>
 </div>
 
@@ -128,6 +101,13 @@
         });
     }
 </script>
-
+<c:if test="${badgeCelebration != null}">
+    <div class="badge-popup">
+        🎉 New Badge: ${badgeCelebration}!
+    </div>
+    <script>
+        alert("🎉 You unlocked: ${badgeCelebration}!")
+    </script>
+</c:if>
 </body>
 </html>

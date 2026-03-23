@@ -1,6 +1,8 @@
 package com.group05.config;
 
+import com.group05.model.Badge;
 import com.group05.model.User;
+import com.group05.repo.BadgeRepo;
 import com.group05.repo.UserRepo;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,14 +15,17 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Map;
+import java.time.LocalDate;
 
 @Component
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private final UserRepo userRepo;
+    private final BadgeRepo badgeRepo;
 
-    public OAuth2LoginSuccessHandler(UserRepo userRepo) {
+    public OAuth2LoginSuccessHandler(UserRepo userRepo, BadgeRepo badgeRepo) {
         this.userRepo = userRepo;
+        this.badgeRepo = badgeRepo;
     }
 
     @Override
@@ -47,15 +52,44 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                 u.setProviderId(providerId);
                 u.setEmail(email);
                 // password stays null
+                u.setStreak(1);
+                u.setLastLogin(LocalDate.now());
+                //login badge
+                Badge firstLogin = badgeRepo.findByName("First Login");
+                if (firstLogin != null) {
+                    u.getBadges().add(firstLogin);
+                    request.getSession().setAttribute("badgeCelebration", "First Login");
+                }
+
+                request.getSession().setAttribute("streakCelebration", true);
                 userRepo.save(u);
+
             } else {
                 // optional: update email/username if changed
                 if (email != null) existing.setEmail(email);
                 if (username != null) existing.setUsername(username);
+                // streak logic for login
+                LocalDate today = LocalDate.now();
+                LocalDate lastLogin = existing.getLastLogin();
+                if (lastLogin != null) {
+                    if (lastLogin.plusDays(1).equals(today)) {
+                        existing.setStreak(existing.getStreak() + 1);
+                        request.getSession().setAttribute("streakCelebration", true);
+                    } else if (!lastLogin.equals(today)) {
+                        existing.setStreak(1);
+                        request.getSession().setAttribute("streakCelebration", true);
+                        System.out.println("STREAK POPUP TRIGGERED");
+                    }
+                } else  {
+                    existing.setStreak(1);
+                    request.getSession().setAttribute("streakCelebration", true);
+                }
+                existing.setLastLogin(today);
                 userRepo.save(existing);
             }
         }
 
         response.sendRedirect("/home");
     }
+
 }
