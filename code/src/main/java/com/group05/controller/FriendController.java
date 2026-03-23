@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @Controller
 @RequestMapping("/friends")
@@ -18,21 +17,21 @@ public class FriendController {
         this.friendService = friendService;
     }
 
+
+    // Helper method for github login
     private String getUsername(Authentication auth) {
         if (auth.getPrincipal() instanceof org.springframework.security.oauth2.core.user.OAuth2User oauthUser) {
-            return oauthUser.getAttribute("login"); // GitHub username
+            return oauthUser.getAttribute("login");
         }
-        return auth.getName(); // fallback for local users
+        return auth.getName();
     }
 
     @GetMapping
     public String friendPage(Authentication auth, Model model) {
         String username = getUsername(auth);
-
         model.addAttribute("friends", friendService.getFriends(username));
         model.addAttribute("pendingRequests", friendService.getPendingRequests(username));
         return "friends";
-
     }
 
     @PostMapping("/request")
@@ -64,7 +63,7 @@ public class FriendController {
                                  Authentication auth,
                                  RedirectAttributes redirectAttributes) {
         try {
-            friendService.declineFriendRequest(requestId, getUsername(auth));
+            friendService.declineFriendRequest(requestId, auth.getName());
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
