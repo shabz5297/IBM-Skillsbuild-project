@@ -17,9 +17,18 @@ public class FriendController {
         this.friendService = friendService;
     }
 
+
+    // Helper method for github login
+    private String getUsername(Authentication auth) {
+        if (auth.getPrincipal() instanceof org.springframework.security.oauth2.core.user.OAuth2User oauthUser) {
+            return oauthUser.getAttribute("login");
+        }
+        return auth.getName();
+    }
+
     @GetMapping
     public String friendPage(Authentication auth, Model model) {
-        String username = auth.getName();
+        String username = getUsername(auth);
         model.addAttribute("friends", friendService.getFriends(username));
         model.addAttribute("pendingRequests", friendService.getPendingRequests(username));
         return "friends";
@@ -30,7 +39,7 @@ public class FriendController {
                               Authentication auth,
                               RedirectAttributes redirectAttributes) {
         try {
-            friendService.sendFriendRequest(auth.getName(), username);
+            friendService.sendFriendRequest(getUsername(auth), username);
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -42,7 +51,7 @@ public class FriendController {
                                 Authentication auth,
                                 RedirectAttributes redirectAttributes) {
         try {
-            friendService.acceptFriendRequest(requestId, auth.getName());
+            friendService.acceptFriendRequest(requestId, getUsername(auth));
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -64,7 +73,7 @@ public class FriendController {
     @PostMapping("/remove")
     public String removeFriend(@RequestParam String username,
                                Authentication auth) {
-        friendService.removeFriend(auth.getName(), username);
+        friendService.removeFriend(getUsername(auth), username);
         return "redirect:/friends";
     }
 }
