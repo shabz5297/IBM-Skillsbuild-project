@@ -16,7 +16,9 @@
 <!-- ═══════════════════════════ TOP BAR ═══════════════════════════ -->
 <nav class="topbar">
     <a href="${pageContext.request.contextPath}/home" class="brand">
-        <div class="brand-icon">🔥</div>
+        <div class="brand-icon">
+            <img src="${pageContext.request.contextPath}/images/ibm-logo2.png" alt="IBM Logo"/>
+        </div>
         IBM SkillsBuild
     </a>
     <div class="right">
@@ -224,11 +226,17 @@
 
 <script>
     // ── Theme toggle ──────────────────────────────────────────────
+    /* ── Theme toggle (matches home.css logic) ── */
     function toggleTheme() {
         document.body.classList.toggle('light-mode');
+        const btn = document.querySelector('.theme-toggle');
+        btn.textContent = document.body.classList.contains('light-mode') ? '🌙 Dark' : '☀️ Light';
         localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
     }
-    if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light-mode');
+        document.querySelector('.theme-toggle').textContent = '🌙 Dark';
+    }
 
     // ── Animate progress bars on load ─────────────────────────────
     document.addEventListener('DOMContentLoaded', () => {

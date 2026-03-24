@@ -15,7 +15,9 @@
 <!-- minimal topbar -->
 <nav class="topbar">
     <a href="${pageContext.request.contextPath}/home" class="brand">
-        <div class="brand-icon">🔥</div>
+        <div class="brand-icon">
+            <img src="${pageContext.request.contextPath}/images/ibm-logo2.png" alt="IBM Logo"/>
+        </div>
         IBM SkillsBuild
     </a>
     <div class="right">

@@ -15,7 +15,9 @@
 <!-- ═══════════════════════════ TOP BAR ═══════════════════════════ -->
 <nav class="topbar">
     <a href="${pageContext.request.contextPath}/home" class="brand">
-        <div class="brand-icon">🔥</div>
+        <div class="brand-icon">
+            <img src="${pageContext.request.contextPath}/images/ibm-logo2.png" alt="IBM Logo"/>
+        </div>
         IBM SkillsBuild
     </a>
     <div class="right">
@@ -34,8 +36,11 @@
 
     <!-- ══════════════════════ SIDEBAR ══════════════════════ -->
     <aside class="sidebar">
-        <a href="${pageContext.request.contextPath}/home" class="nav-item">
+        <a href="${pageContext.request.contextPath}/home" class="nav-item active">
             <span class="nav-icon">🏠</span> Home
+        </a>
+        <a href="${pageContext.request.contextPath}/home#your-courses" class="nav-item">
+            <span class="nav-icon">📖</span> My Courses
         </a>
         <a href="${pageContext.request.contextPath}/browse" class="nav-item">
             <span class="nav-icon">🔍</span> Browse
@@ -51,9 +56,6 @@
         </a>
         <a href="${pageContext.request.contextPath}/achievements" class="nav-item">
             <span class="nav-icon">🎖️</span> Achievements
-        </a>
-        <a href="${pageContext.request.contextPath}/profile/${user.id}" class="nav-item">
-            <span class="nav-icon">👤</span> Profile
         </a>
     </aside>
 

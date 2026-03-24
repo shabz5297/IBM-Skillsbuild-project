@@ -24,7 +24,9 @@
 <div class="topbar">
     <div class="left">
         <a href="${pageContext.request.contextPath}/home" class="brand">
-            <div class="brand-icon">🔥</div>
+            <div class="brand-icon">
+                <img src="${pageContext.request.contextPath}/images/ibm-logo2.png" alt="IBM Logo"/>
+            </div>
             IBM SkillsBuild
         </a>
     </div>
@@ -289,17 +291,16 @@
 </div>
 
 <script>
+    /* ── Theme toggle (matches home.css logic) ── */
     function toggleTheme() {
-        const isLight = document.body.classList.toggle('light-mode');
-        document.getElementById('themeToggle').textContent = isLight ? '🌙 Dark' : '☀️ Light';
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        document.body.classList.toggle('light-mode');
+        const btn = document.querySelector('.theme-toggle');
+        btn.textContent = document.body.classList.contains('light-mode') ? '🌙 Dark' : '☀️ Light';
+        localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
     }
-
     if (localStorage.getItem('theme') === 'light') {
         document.body.classList.add('light-mode');
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('themeToggle').textContent = '🌙 Dark';
-        });
+        document.querySelector('.theme-toggle').textContent = '🌙 Dark';
     }
 
     document.addEventListener("DOMContentLoaded", function () {
