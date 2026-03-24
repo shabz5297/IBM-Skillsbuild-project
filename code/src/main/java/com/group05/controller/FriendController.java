@@ -63,7 +63,7 @@ public class FriendController {
                                  Authentication auth,
                                  RedirectAttributes redirectAttributes) {
         try {
-            friendService.declineFriendRequest(requestId, auth.getName());
+            friendService.declineFriendRequest(requestId, getUsername(auth));
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
