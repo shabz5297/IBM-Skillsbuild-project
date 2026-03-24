@@ -49,21 +49,24 @@ A security-related user story is also considered complete when:
 | User Story ID | User Story                   | DoD Category |
 |---------------|------------------------------|--------------|
 | US-S1-01      | Registration & Login         | DoD-B        |
-| US-S1-02      | View Courses                 | DoD-A        |
-| US-S1-03      | User Profile Management      | DoD-C        |
-| US-S1-04      | Search & Filter Courses      | DoD-A        |
-| US-S1-05      | Secure Password Management   | DoD-D        |
+| US-S1-02      | OAuth2 Social Login          | DoD-D        |
+| US-S1-03      | View Courses                 | DoD-A        |
+| US-S1-04      | User Profile Management      | DoD-C        |
+| US-S1-05      | Search & Filter Courses      | DoD-A        |
+| US-S1-06      | Secure Password Management   | DoD-D        |
+| US-S1-07      | Record Course Completion     | DoD-C        |
+| US-S1-08      | Leaderboard                  | DoD-B        |
 
 ### Sprint 2
 
 | User Story ID | User Story                   | DoD Category |
 |---------------|------------------------------|--------------|
-| US-S2-01      | Leaderboard                  | DoD-B        |
-| US-S2-02      | Levels                       | DoD-B        |
-| US-S2-03      | Streaks                      | DoD-B        |
-| US-S2-04      | Badges                       | DoD-B        |
-
-
-
-
-
+| US-S2-01      | Levels                       | DoD-B        |
+| US-S2-02      | Streaks                      | DoD-B        |
+| US-S2-03      | Badges                       | DoD-B        |
+| US-S2-04      | Side Menu Navigation         | DoD-A        |
+| US-S2-05      | Theme Toggle                 | DoD-A        |
+| US-S2-06      | Course Review Feature        | DoD-C        |
+| US-S2-07      | Course Completion Goals      | DoD-B        |
+| US-S2-08      | Adding Friends               | DoD-C        |
+| US-S2-09      | Flashcards and Notes         | DoD-C        |
