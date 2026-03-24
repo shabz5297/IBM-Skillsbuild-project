@@ -15,6 +15,10 @@ public class DataInitializer {
     CommandLineRunner initData(BadgeRepo badgeRepo) {
         return args -> {
 
+            if (badgeRepo.findByName("First Login") == null) {
+                badgeRepo.save(new Badge("First Login"));
+            }
+
             if (badgeRepo.findByName("Beginner") == null) {
                 badgeRepo.save(new Badge("Beginner"));
             }
