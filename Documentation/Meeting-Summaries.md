@@ -24,3 +24,16 @@ Attendees: Destiny-Alliah Colombo, Ousman Ndoye, Precious Aghamelu, Raenah Swaby
 ## Discussions
 
 We all attended the lab session and established the user stories that everyone would be working on moving forwards. We had to redo our repository so we made sure that everyone had access to the new cloned repository on IntelliJ. We all started working on our user stories in the lab, and established branching and merging etiquette.
+
+## Meeting 4: 03-03-26 
+Attendees: Destiny-Alliah Colombo, Precious Aghamelu
+
+## Discussions
+We discussed how many user stories we were planning to do for sprint 2 with our supervisor and shared some ideas with our group. Those that couldn't make it also shared ideas via our groupchat and we added our finalised ideas to the user-stories.md.
+
+## Meeting 5: 17-03-26 
+Attendees: Destiny-Alliah Colombo, Ousman Ndoye
+
+## Discussions
+In this meeting, we discussed the progress we have made on our user stories and any problems we were encountering. We made sure to message the others in the group who couldn't make it regarding the progress we have made as well. We also discussed potentially changing the flashcards user story for an avatars user story and shared this idea with the group via our groupchat.
+
