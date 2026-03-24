@@ -132,41 +132,54 @@
 
         <div class="badges-grid">
             <!-- First Login Badge -->
-            <div class="badge-card ${!hasFirstLogin ? 'locked' : ''}"
+            <div class="badge-card ${hasFirstLogin ? 'badge-card.earned' : 'badge-card.locked'}"
                  data-lock-text="Unlocks after first login">
                 🎉 First Login
                 <c:if test="${!hasFirstLogin}">
                     <span class="lock">🔒</span>
                 </c:if>
+                <c:if test="${hasFirstLogin}">
+                    <span class="badge-card.earned"></span>
+                </c:if>
             </div>
 
             <!-- Beginner Badge -->
-            <div class="badge-card ${!hasBeginner ? 'locked' : ''}"
+            <div class="badge-card ${hasBeginner ? 'badge-card.earned' : 'badge-card.locked'}"
                  data-lock-text="Unlocks after 1 completed course">
                 🌱 Beginner
                 <c:if test="${!hasBeginner}">
-                    <span class="lock">🔒</span>
+                    <span class="badge-card.locked">🔒</span>
+                </c:if>
+                <c:if test="${hasBeginner}">
+                    <span class="badge-card.earned"
                 </c:if>
             </div>
 
             <!-- Explorer Badge -->
-            <div class="badge-card ${!hasExplorer ? 'locked' : ''}"
+            <div class="badge-card ${hasExplorer ? 'badge-card.earned' : 'badge-card.locked'}"
                  data-lock-text="Unlocks after 3 completed courses">
                 🚀 Explorer
                 <c:if test="${!hasExplorer}">
-                    <span class="lock">🔒</span>
+                    <span class="badge-card.locked">🔒</span>
+                </c:if>
+                <c:if test="${hasExplorer}">
+                    <span class="badge-card.earned"></span>
                 </c:if>
             </div>
 
 
             <!-- Socializer Badge -->
-            <div class="badge-card ${!hasSocializer ? 'locked' : ''}"
+            <div class="badge-card ${hasSocializer ? 'earned' : 'locked'}"
                  data-lock-text="Unlock after a sent/received friend request">
                 🤝 Socializer
                 <c:if test="${!hasSocializer}">
-                    <span class="lock">🔒</span>
+                    <span class="badge-card.locked">🔒</span>
+                </c:if>
+                <c:if test="${hasSocializer}">
+                    <span class="badge-card.earned"></span>
                 </c:if>
             </div>
+
 
 
             <!-- Badges from the Database -->
