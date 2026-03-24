@@ -115,7 +115,7 @@
 - As a Student, I want to have levels that indicate my progress so that I can feel a sense of accomplishment as I complete more courses.
 
 **Acceptance Criteria:**  
-- Users start at a “Beginner” level by default.  
+- Users start at level 0 by default.  
 - Experience points increase when courses are completed.  
 - Level upgrades occur automatically when defined thresholds are reached.  
 - The current level is visible on the dashboard, profile, and leaderboard.  
@@ -151,12 +151,9 @@
 
 **Acceptance Criteria:**
 - The dashboard displays a persistent side navigation menu.
-- The menu contains links to Courses, Leaderboard, Achievements, and Reviews.
-- Selecting a menu item loads the corresponding page.
-- The active page is clearly indicated in the menu.
+- The menu contains links to Home, Browse Courses, Leaderboard and Friends Page
 - The menu is displayed consistently on all dashboard-related pages.
 - The menu includes IBM SkillsBuild branding and logo.
-- The menu layout remains usable across different screen sizes.
 
 ### 5. Theme Toggle
 
