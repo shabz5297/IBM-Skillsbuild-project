@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Friends</title>
+    <title>Leaderboard</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/leaderboard.css">
 </head>
@@ -18,11 +18,13 @@
     </div>
 
     <div class="right">
-        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️ Light</button>
+        <button class="theme-toggle" onclick="toggleTheme()">☀️ Light</button>
+        <c:if test="${user != null}">
+            <a href="/profile/${user.id}" class="profile-btn">👤 ${user.username}</a>
+        </c:if>
         <form action="${pageContext.request.contextPath}/logout" method="post">
             <button class="logout-btn">Logout</button>
         </form>
-        <a href="${pageContext.request.contextPath}/profile" class="profile-btn">Profile ⚙</a>
     </div>
 </div>
 

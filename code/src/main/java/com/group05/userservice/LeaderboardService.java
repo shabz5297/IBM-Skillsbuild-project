@@ -5,6 +5,7 @@ import com.group05.repo.UserRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 // leaderboard logic, showing users current rank and top users
 @Service
@@ -30,4 +31,6 @@ public class LeaderboardService {
         }
         return null;
     }
+
+
 }

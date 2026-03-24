@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>My Goals – LearnQuest</title>
+    <title>Goals</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/goals.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
@@ -20,7 +20,7 @@
         IBM SkillsBuild
     </a>
     <div class="right">
-        <button class="theme-toggle" onclick="toggleTheme()">🌙 Theme</button>
+        <button class="theme-toggle" onclick="toggleTheme()">☀️ Light</button>
         <c:if test="${user != null}">
             <a href="/profile/${user.id}" class="profile-btn">👤 ${user.username}</a>
         </c:if>
@@ -38,6 +38,9 @@
         <a href="${pageContext.request.contextPath}/home" class="nav-item">
             <span class="nav-icon">🏠</span> Home
         </a>
+        <a href="${pageContext.request.contextPath}/home#your-courses" class="nav-item">
+            <span class="nav-icon">📖</span> My Courses
+        </a>
         <a href="${pageContext.request.contextPath}/browse" class="nav-item">
             <span class="nav-icon">🔍</span> Browse
         </a>
@@ -52,9 +55,6 @@
         </a>
         <a href="${pageContext.request.contextPath}/achievements" class="nav-item">
             <span class="nav-icon">🎖️</span> Achievements
-        </a>
-        <a href="${pageContext.request.contextPath}/profile/${user.id}" class="nav-item">
-            <span class="nav-icon">👤</span> Profile
         </a>
     </aside>
 

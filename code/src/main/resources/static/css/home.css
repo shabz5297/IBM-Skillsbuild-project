@@ -127,6 +127,7 @@ body {
 .page-wrapper {
     display: flex;
     flex: 1;
+    min-height: calc(100vh - 65px); /* ADD THIS */
 }
 
 .sidebar {
@@ -140,6 +141,7 @@ body {
     position: sticky;
     top: 65px;
     height: calc(100vh - 65px);
+    min-height: 100%; /* ADD THIS */
     overflow-y: auto;
 }
 
@@ -721,3 +723,14 @@ body {
 html, body {
     max-width: 100%;
     overflow-x:  hidden; }
+
+/* Ensure sidebar stretches with content */
+html, body {
+    height: 100%;
+}
+.page-wrapper {
+    min-height: calc(100% - 65px);
+}
+.sidebar {
+    min-height: calc(100% - 65px);
+}
