@@ -212,13 +212,15 @@
         }
     });
 </script>
-<c:if test="${badgeCelebration != null}">
-    <div class="badge-popup">
-        🎉 New Badge: ${badgeCelebration}!
-    </div>
-    <script>
-        alert("🎉 You unlocked: ${badgeCelebration}!")
-    </script>
+<c:if test="${not empty badgeCelebrations}">
+    <c:forEach var="badge" items="${badgeCelebrations}">
+        <div class="badge-popup">
+            🎉 New Badge: ${badge}!
+        </div>
+        <script>
+            alert("🎉 You unlocked: ${badge}!")
+        </script>
+    </c:forEach>
 </c:if>
 </body>
 </html>

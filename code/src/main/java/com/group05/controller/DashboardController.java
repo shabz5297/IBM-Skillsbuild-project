@@ -267,13 +267,19 @@ public class DashboardController {
 
     // Loads the profile page
     @GetMapping("/profile")
-        public String profile(Authentication authentication,
-                              HttpServletRequest request,
-                              Model model) {
-            User user = getLoggedInUser(authentication);
-            request.getSession().removeAttribute("badgeCelebration");
-            request.getSession().removeAttribute("streakCelebration");
-            model.addAttribute("user", user);
-            return "profile";
+    public String profile(Authentication authentication,
+                          HttpServletRequest request,
+                          Model model) {
+
+        User user = getLoggedInUser(authentication);
+        model.addAttribute("user", user);
+        Object badges = request.getSession().getAttribute("badgeCelebrations");
+        if (badges != null) {
+            model.addAttribute("badgeCelebrations", badges);
+            request.getSession().removeAttribute("badgeCelebrations");
         }
+        request.getSession().removeAttribute("streakCelebration");
+
+        return "profile";
+    }
 }
