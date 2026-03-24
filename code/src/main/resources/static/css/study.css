@@ -1,0 +1,677 @@
+/* ═══════════════════════════════════════════════════════════════
+   study.css  –  Notes & Flashcards Study Hub
+   Extends home.css (CSS variables must be loaded first)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Page header ────────────────────────────────────────────── */
+.study-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.study-hero-text h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.study-hero-text p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.study-mode-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    background: var(--accent-cyan);
+    color: #0e1117;
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.study-mode-btn:hover {
+    background: #06b6d4;
+    transform: translateY(-1px);
+    text-decoration: none;
+    color: #0e1117;
+}
+
+/* ── Tab switcher ───────────────────────────────────────────── */
+.study-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 4px;
+    width: fit-content;
+    margin-bottom: 24px;
+}
+
+.study-tab {
+    padding: 9px 22px;
+    border-radius: 9px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.study-tab.active {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.study-tab:hover:not(.active) {
+    color: var(--text-primary);
+    background: var(--bg-card-hover);
+}
+
+/* ── Tab panels ─────────────────────────────────────────────── */
+.study-panel { display: none; }
+.study-panel.active { display: block; }
+
+/* ── Create card (shared by notes + flashcards) ─────────────── */
+.study-create-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+}
+
+.study-create-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 18px;
+}
+
+.study-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.study-form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.study-input,
+.study-textarea {
+    padding: 9px 12px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.study-textarea {
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.55;
+}
+
+.study-input:focus,
+.study-textarea:focus {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.08);
+}
+
+.study-form-row {
+    display: flex;
+    gap: 14px;
+}
+
+.study-form-row .study-form-group {
+    flex: 1;
+}
+
+.study-submit-btn {
+    padding: 10px 22px;
+    background: var(--accent-cyan);
+    color: #0e1117;
+    border: none;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.study-submit-btn:hover {
+    background: #06b6d4;
+    transform: translateY(-1px);
+}
+
+/* ── Count pill ──────────────────────────────────────────────── */
+.study-count-pill {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #22d3ee15;
+    color: var(--accent-cyan);
+    border: 1px solid #22d3ee33;
+    margin-left: 8px;
+}
+
+/* ── Section heading row ────────────────────────────────────── */
+.study-section-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ── Notes grid ─────────────────────────────────────────────── */
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.note-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.note-card:hover {
+    transform: translateY(-2px);
+    border-color: #22d3ee33;
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.07);
+}
+
+.note-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.note-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.35;
+}
+
+.note-time {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.note-content {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+    /* clamp long notes */
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.note-content.expanded {
+    -webkit-line-clamp: unset;
+}
+
+.note-expand-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 12px;
+    color: var(--accent-cyan);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    text-align: left;
+}
+
+.note-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+/* ── Flashcard grid ─────────────────────────────────────────── */
+.flashcard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+/* flip card container */
+.fc-wrapper {
+    perspective: 900px;
+    height: 170px;
+}
+
+.fc-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.fc-wrapper.flipped .fc-inner {
+    transform: rotateY(180deg);
+}
+
+.fc-front,
+.fc-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    text-align: center;
+}
+
+.fc-front {
+    background: var(--bg-card);
+}
+
+.fc-back {
+    background: #22d3ee0d;
+    border-color: #22d3ee33;
+    transform: rotateY(180deg);
+}
+
+.fc-label {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.fc-back .fc-label {
+    color: var(--accent-cyan);
+}
+
+.fc-text {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.fc-flip-hint {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* card below the flip face: actions row */
+.fc-card-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.fc-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* ── Shared action buttons ──────────────────────────────────── */
+.btn-edit {
+    flex: 1;
+    padding: 7px 0;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-edit:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    background: #22d3ee0a;
+}
+
+.btn-delete {
+    flex: 1;
+    padding: 7px 0;
+    background: transparent;
+    border: 1px solid #ff4d4d44;
+    color: #ff6b6b;
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-delete:hover {
+    background: #ff4d4d15;
+    border-color: #ff4d4d;
+}
+
+/* ── Edit inline form (hidden by default) ───────────────────── */
+.edit-form {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.edit-form.open { display: flex; }
+
+.edit-form .study-submit-btn {
+    align-self: flex-end;
+    padding: 8px 18px;
+}
+
+.edit-cancel-btn {
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-end;
+}
+
+.edit-cancel-btn:hover {
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+}
+
+.edit-btn-row {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+/* ── Empty states ───────────────────────────────────────────── */
+.study-empty {
+    background: var(--bg-card);
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+    padding: 40px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.study-empty-icon {
+    font-size: 36px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* ── Flash messages ─────────────────────────────────────────── */
+.flash-success,
+.flash-error {
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.flash-success {
+    background: #22c55e10;
+    border: 1px solid #22c55e33;
+    color: var(--accent-green);
+}
+
+.flash-error {
+    background: #ff4d4d10;
+    border: 1px solid #ff4d4d33;
+    color: #ff6b6b;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STUDY REVIEW MODE  (study-review.jsp / full-screen flashcards)
+   ══════════════════════════════════════════════════════════════ */
+.review-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 40px 20px;
+    background: var(--bg-primary);
+}
+
+.review-header {
+    text-align: center;
+}
+
+.review-header h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.review-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.review-card-wrap {
+    perspective: 1200px;
+    width: min(520px, 90vw);
+    height: 280px;
+}
+
+.review-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.review-card-wrap.flipped .review-card-inner {
+    transform: rotateY(180deg);
+}
+
+.review-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    text-align: center;
+}
+
+.review-face.front {
+    background: var(--bg-card);
+}
+
+.review-face.back {
+    background: #22d3ee0d;
+    border-color: #22d3ee44;
+    transform: rotateY(180deg);
+}
+
+.review-face-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+}
+
+.review-face.back .review-face-label {
+    color: var(--accent-cyan);
+}
+
+.review-face-text {
+    font-size: 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.review-face .flip-hint {
+    position: absolute;
+    bottom: 14px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.review-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.review-nav-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.review-nav-btn:hover:not(:disabled) {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    background: #22d3ee0a;
+}
+
+.review-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.review-counter {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    min-width: 70px;
+    text-align: center;
+}
+
+.review-progress-bar {
+    width: min(520px, 90vw);
+    height: 6px;
+    background: var(--bg-card);
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.review-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-cyan), #0891b2);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+}
+
+.review-back-link {
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+}
+
+.review-back-link:hover {
+    color: var(--accent-cyan);
+    text-decoration: none;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .study-hero        { flex-direction: column; align-items: flex-start; }
+    .notes-grid        { grid-template-columns: 1fr; }
+    .flashcard-grid    { grid-template-columns: 1fr; }
+    .study-form-row    { flex-direction: column; }
+    .study-tabs        { width: 100%; }
+    .study-tab         { flex: 1; text-align: center; }
+}

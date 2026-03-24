@@ -184,6 +184,8 @@
 
                         <div class="course-actions">
                             <a class="start-btn" href="${course.link}" target="_blank">Start Course →</a>
+                            <a class="start-btn" href="${pageContext.request.contextPath}/study/${course.id}"
+                               style="background:var(--accent-blue);">📚 Study</a>
 
                             <form action="${pageContext.request.contextPath}/removeCourse" method="post">
                                 <input type="hidden" name="courseId" value="${course.id}" />
