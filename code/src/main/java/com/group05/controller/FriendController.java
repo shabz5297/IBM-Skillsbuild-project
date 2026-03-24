@@ -1,5 +1,7 @@
 package com.group05.controller;
 
+import com.group05.model.User;
+import com.group05.repo.UserRepo;
 import com.group05.userservice.FriendService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
@@ -13,9 +15,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class FriendController {
 
     private final FriendService friendService;
+    private final UserRepo userRepo;
 
-    public FriendController(FriendService friendService) {
+    public FriendController(FriendService friendService, UserRepo userRepo) {
         this.friendService = friendService;
+        this.userRepo = userRepo;
     }
 
     // Helper method for github login
@@ -29,8 +33,11 @@ public class FriendController {
     @GetMapping
     public String friendPage(Authentication auth, Model model) {
         String username = auth.getName();
+        User user = userRepo.findByUsername(username);
+
         model.addAttribute("friends", friendService.getFriends(username));
         model.addAttribute("pendingRequests", friendService.getPendingRequests(username));
+        model.addAttribute("user", user);
         return "friends";
     }
 

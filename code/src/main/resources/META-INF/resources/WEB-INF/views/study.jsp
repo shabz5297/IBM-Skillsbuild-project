@@ -19,7 +19,7 @@
         IBM SkillsBuild
     </a>
     <div class="right">
-        <button class="theme-toggle" onclick="toggleTheme()">🌙 Theme</button>
+        <button class="theme-toggle" onclick="toggleTheme()">☀️ Light</button>
         <c:if test="${user != null}">
             <a href="${pageContext.request.contextPath}/profile/${user.id}" class="profile-btn">👤 ${user.username}</a>
         </c:if>

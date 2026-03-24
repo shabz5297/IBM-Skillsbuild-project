@@ -57,8 +57,24 @@
     <main class="main-content">
         <div class="course-section" id="leaderboard">
             <div class="section-header">
-                <h2>Global Leaderboard</h2>
-                <span class="leaderboard-subtitle">Top students by points</span>
+                <div>
+                    <h2>${filterTitle}</h2>
+                    <span class="leaderboard-subtitle">${filterSubtitle}</span>
+                </div>
+                <div class="leaderboard-filters">
+                    <c:choose>
+                        <c:when test="${currentFilter == 'friends'}">
+                            <a href="${pageContext.request.contextPath}/leaderboard?filter=global" class="filter-btn">🌍 Global</a>
+                            <button class="filter-btn active" disabled>👥 Friends</button>
+                        </c:when>
+                        <c:otherwise>
+                            <button class="filter-btn active" disabled>🌍 Global</button>
+                            <c:if test="${user != null}">
+                                <a href="${pageContext.request.contextPath}/leaderboard?filter=friends" class="filter-btn">👥 Friends</a>
+                            </c:if>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </div>
 
             <div class="leaderboard-card">
@@ -74,7 +90,7 @@
                     </thead>
                     <tbody>
                     <c:forEach var="u" items="${leaderboardTop}" varStatus="status">
-                        <tr class="${user != null && u.id == user.id ? 'highlight-row' : ''}">
+                        <tr class="${user != null and u.id == user.id ? 'highlight-row' : ''}">
                             <td class="rank-cell">#${status.index + 1}</td>
                             <td>
                                 <c:choose>
@@ -112,11 +128,23 @@
                     </tbody>
                 </table>
 
-                <c:if test="${user != null && userRank != null && userRank > 10}">
-                    <div class="leaderboard-footer">
-                        You're currently <strong>#${userRank}</strong>. Keep completing courses to climb!
-                    </div>
-                </c:if>
+                <c:choose>
+                    <c:when test="${currentFilter == 'friends' and user != null and userRank != null and userRank > 10}">
+                        <div class="leaderboard-footer">
+                            You're ranked <strong>#${userRank}</strong> among your friends.
+                        </div>
+                    </c:when>
+                    <c:when test="${currentFilter == 'global' and user != null and userRank != null and userRank > 10}">
+                        <div class="leaderboard-footer">
+                            You're currently <strong>#${userRank}</strong> globally. Keep completing courses to climb!
+                        </div>
+                    </c:when>
+                    <c:when test="${currentFilter == 'friends' && empty leaderboardTop}">
+                        <div class="leaderboard-footer">
+                            No friends yet? <a href="${pageContext.request.contextPath}/friends">Add friends →</a> to see them here!
+                        </div>
+                    </c:when>
+                </c:choose>
             </div>
         </div>
 

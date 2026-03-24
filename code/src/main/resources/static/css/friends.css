@@ -184,4 +184,7 @@
     transition: background 0.2s;
     display: flex; align-items: center; gap: 6px;
 }
-.profile-btn:hover { background: #3a5ce0; }
+
+.profile-btn:hover {
+    background: #3a5ce0;
+}
