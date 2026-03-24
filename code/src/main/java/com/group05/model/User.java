@@ -1,13 +1,15 @@
 package com.group05.model;
 
 import jakarta.persistence.*;
+import jakarta.persistence.FetchType;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -30,7 +32,13 @@ public class User {
     private String bio;
     private String profilePicture;
 
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name ="user_badges",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "badge_id")
+    )
     private List<Badge> badges = new ArrayList<>();
 
     @Column(nullable = false)
@@ -118,4 +126,13 @@ public class User {
         this.level = calculateLevelFromPoints(this.points);}
 
     private int calculateLevelFromPoints(int points) {return (points / 30);}
+
+    //streaks
+    private int streak;
+    public int getStreak() {return streak;}
+    public void setStreak(int streak) {this.streak = streak;}
+
+    private LocalDate lastLogin;
+    public LocalDate getLastLogin() {return lastLogin;}
+    public void setLastLogin(LocalDate lastLogin) {this.lastLogin = lastLogin;}
 }

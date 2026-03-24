@@ -1,6 +1,7 @@
 package com.group05.controller;
 
 import com.group05.userservice.FriendService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,6 @@ public class FriendController {
         this.friendService = friendService;
     }
 
-
     // Helper method for github login
     private String getUsername(Authentication auth) {
         if (auth.getPrincipal() instanceof org.springframework.security.oauth2.core.user.OAuth2User oauthUser) {
@@ -28,7 +28,7 @@ public class FriendController {
 
     @GetMapping
     public String friendPage(Authentication auth, Model model) {
-        String username = getUsername(auth);
+        String username = auth.getName();
         model.addAttribute("friends", friendService.getFriends(username));
         model.addAttribute("pendingRequests", friendService.getPendingRequests(username));
         return "friends";
@@ -39,7 +39,7 @@ public class FriendController {
                               Authentication auth,
                               RedirectAttributes redirectAttributes) {
         try {
-            friendService.sendFriendRequest(getUsername(auth), username);
+            friendService.sendFriendRequest(auth.getName(), username);
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -49,9 +49,9 @@ public class FriendController {
     @PostMapping("/accept")
     public String acceptRequest(@RequestParam Long requestId,
                                 Authentication auth,
-                                RedirectAttributes redirectAttributes) {
+                                RedirectAttributes redirectAttributes, HttpServletRequest request) {
         try {
-            friendService.acceptFriendRequest(requestId, getUsername(auth));
+            friendService.acceptFriendRequest(requestId, auth.getName(), request);
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -73,7 +73,7 @@ public class FriendController {
     @PostMapping("/remove")
     public String removeFriend(@RequestParam String username,
                                Authentication auth) {
-        friendService.removeFriend(getUsername(auth), username);
+        friendService.removeFriend(auth.getName(), username);
         return "redirect:/friends";
     }
 }

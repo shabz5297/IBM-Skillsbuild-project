@@ -359,12 +359,12 @@ body {
     display: inline-block;
     margin-bottom: 10px;
     font-weight: 600;
-    font-size: 13px;
-    color: var(--accent-orange);
-    background: #f9731615;
+    font-size: 14px;
+    color: #000;
+    background: linear-gradient(135deg, #facc15, #f59e0b);
     border: 1px solid #f9731633;
-    padding: 3px 10px;
-    border-radius: 999px;
+    padding: 6px 14px;
+    border-radius: 20px;
 }
 
 .bio {
@@ -517,4 +517,21 @@ body {
 .no-badges {
     color: var(--text-muted);
     font-size: 14px;
+}
+.badge-card.earned{
+    background: linear-gradient(135deg,#ffe08a,#ffd166);
+    border:2px solid #ffc933;
+    color:#7a5200;
+    font-weight:600;
+    animation: badgePop 0.4s ease;
+}
+
+.badge-card:first-child{
+    border: 2px solid #22c55e;
+}
+
+@keyframes badgePop{
+    0%{transform:scale(0.8);}
+    60%{transform:scale(1.1);}
+    100%{transform:scale(1);}
 }

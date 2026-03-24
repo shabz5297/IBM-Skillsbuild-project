@@ -3,6 +3,9 @@ package com.group05.userservice;
 import com.group05.model.Course;
 import com.group05.model.CourseCompletion;
 import com.group05.model.User;
+import com.group05.model.Badge;
+import com.group05.repo.BadgeRepo;
+import jakarta.servlet.http.HttpServletRequest;
 import com.group05.repo.CourseRepo;
 import com.group05.repo.CourseCompletionRepo;
 import com.group05.repo.UserRepo;
@@ -24,16 +27,19 @@ public class CourseService {
     private final CourseRepo courseRepository;
     private final UserRepo userRepository;
     private final CourseCompletionRepo courseCompletionRepo;
+    private final BadgeRepo badgeRepo;
 
     private static final int POINTS_PER_COMPLETION = 10;
 
     // Constructor injection of repositories
     public CourseService(CourseRepo courseRepository,
                          UserRepo userRepository,
-                         CourseCompletionRepo courseCompletionRepo) {
+                         CourseCompletionRepo courseCompletionRepo,
+                         BadgeRepo badgeRepo) {
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
         this.courseCompletionRepo = courseCompletionRepo;
+        this.badgeRepo = badgeRepo;
     }
 
     // Returns all courses stored in the database
@@ -86,7 +92,16 @@ public class CourseService {
     //Mark courses as completed for a user
 
     @Transactional
-    public void markCourseCompleted(Long userId, Long courseId) {
+    public void markCourseCompleted(Long userId, Long courseId, HttpServletRequest request) {
+        System.out.println("==== DEBUG START ====");
+        System.out.println("Incoming userId: " + userId);
+        System.out.println("Incoming courseId: " + courseId);
+
+        boolean exists = userRepository.existsById(userId);
+        System.out.println("User exists in DB: " + exists);
+        userRepository.findAll().forEach(u ->
+                System.out.println("DB USER -> id: " + u.getId() + ", username: " + u.getUsername()));
+        System.out.println("==== DEBUG END ====");
 
         // Prevent duplicate completions
         if (courseCompletionRepo.existsByUser_IdAndCourse_Id(userId, courseId)) {
@@ -94,7 +109,7 @@ public class CourseService {
         }
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found in DB (session stale)"));
 
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
@@ -103,7 +118,27 @@ public class CourseService {
         courseCompletionRepo.save(completion);
 
         user.addPoints(POINTS_PER_COMPLETION); // award points for leaderboard
-        userRepository.save(user); // persist points
+
+        int completedCount = courseCompletionRepo.findAllByUser_Id(userId).size(); //counting the courses
+
+        //Beginner Badge
+        if (completedCount == 1) {
+            Badge beginner = badgeRepo.findByName("Beginner");
+            if (beginner != null && !user.getBadges().contains(beginner)) {
+                user.getBadges().add(beginner);
+                request.getSession().setAttribute("badgeCelebration", "Beginner");
+            }
+        }
+
+        //Explorer Badge
+        if (completedCount == 3){
+            Badge explorer = badgeRepo.findByName("Explorer");
+            if (explorer != null && !user.getBadges().contains(explorer)) {
+                user.getBadges().add(explorer);
+                request.getSession().setAttribute("badgeCelebration", "Explorer");
+            }
+        }
+        userRepository.save(user); // saves everything
     }
 
     public Set<Long> getCompletedCourseIds(Long userId) {
