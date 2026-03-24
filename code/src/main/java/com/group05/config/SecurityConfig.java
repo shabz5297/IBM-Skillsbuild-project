@@ -14,12 +14,14 @@ import jakarta.servlet.DispatcherType;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final FormLoginSuccessHandler formLoginSuccessHandler;
     private final UserDetailsService userDetailsService;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
-    public SecurityConfig(UserDetailsService userDetailsService, OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler) {
+    public SecurityConfig(UserDetailsService userDetailsService, OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler, FormLoginSuccessHandler formLoginSuccessHandler) {
         this.userDetailsService = userDetailsService;
         this.oAuth2LoginSuccessHandler = oAuth2LoginSuccessHandler;
+        this.formLoginSuccessHandler = formLoginSuccessHandler;
     }
 
     @Bean
@@ -28,7 +30,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                        .requestMatchers("/css/**","/register", "/login", "/error", "/profile").permitAll()  // CRITICAL LINE
+                        .requestMatchers("/css/**","/register", "/login", "/error").permitAll()  // CRITICAL LINE
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth -> oauth
@@ -38,7 +40,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/home", true)
+                        .successHandler(formLoginSuccessHandler)
                         .permitAll()
                 )
                 .logout(logout -> logout

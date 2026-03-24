@@ -7,9 +7,19 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
 </head>
-
 <body>
+<!-- BADGES -->
+<div id="popup-container">
 
+        <div class="popup streak-popup" id="streak-popup" style="display: none">
+            🔥 ${user.streak} Day Streak!
+        </div>
+
+
+    <div class="popup badge-popup" id="badge-popup" style="display: none;">
+        🏆 ${badgeCelebration}
+    </div>
+</div>
 <!-- TOPBAR -->
 <div class="topbar">
     <div class="left">
@@ -95,11 +105,11 @@
                     </div>
                     <div class="stat-card orange">
                         <div class="stat-header">
-                            <span class="stat-icon orange">🔥</span>
+                            <span class="stat-icon fire-icon ${user.streak >=7?'streak-hot':''}">🔥</span>
                             <span class="stat-label">Streak</span>
                         </div>
-                        <div class="stat-value">1</div>
-                        <div class="stat-sub">Keep your streak alive!</div>
+                        <div class="stat-value">${user.streak}</div>
+                        <div class="stat-sub">Days in a row</div>
                     </div>
                     <div class="stat-card blue">
                         <div class="stat-header">
@@ -336,6 +346,58 @@
         });
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const badgeCelebration = "${badgeCelebration}";
+        const streakCelebration = "${streakCelebration}";
+
+        const badgePopup = document.getElementById('badge-popup');
+        const streakPopup = document.getElementById('streak-popup');
+
+        console.log("Badge:", badgeCelebration);
+        console.log("Streak:", streakCelebration);
+
+        // badge popup
+        if (badgeCelebration && badgeCelebration !== "null" && badgeCelebration !== "") {
+
+            badgePopup.style.display = "block";
+            badgePopup.innerText = "🏆 " + badgeCelebration + " unlocked!";
+            badgePopup.classList.add("show");
+
+            confetti({
+                particleCount: 150,
+                spread: 120,
+                origin: { y: 0.6 }
+            });
+
+            setTimeout(() => {
+                badgePopup.classList.remove("show");
+                badgePopup.style.display = "none";
+            }, 3000);
+        }
+
+        // streak popup
+        if (streakCelebration === "true") {
+
+            streakPopup.style.display = "block";
+            streakPopup.classList.add("show");
+
+            confetti({
+                particleCount: 150,
+                spread: 120,
+                origin: { y: 0.6 }
+            });
+
+            setTimeout(() => {
+                streakPopup.classList.remove("show");
+                streakPopup.style.display = "none";
+            }, 3000);
+        }
+
+    });
+</script>
 </body>
 </html>

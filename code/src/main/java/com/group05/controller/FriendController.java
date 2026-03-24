@@ -1,6 +1,7 @@
 package com.group05.controller;
 
 import com.group05.userservice.FriendService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,14 @@ public class FriendController {
 
     public FriendController(FriendService friendService) {
         this.friendService = friendService;
+    }
+
+    // Helper method for github login
+    private String getUsername(Authentication auth) {
+        if (auth.getPrincipal() instanceof org.springframework.security.oauth2.core.user.OAuth2User oauthUser) {
+            return oauthUser.getAttribute("login");
+        }
+        return auth.getName();
     }
 
     @GetMapping
@@ -40,9 +49,9 @@ public class FriendController {
     @PostMapping("/accept")
     public String acceptRequest(@RequestParam Long requestId,
                                 Authentication auth,
-                                RedirectAttributes redirectAttributes) {
+                                RedirectAttributes redirectAttributes, HttpServletRequest request) {
         try {
-            friendService.acceptFriendRequest(requestId, auth.getName());
+            friendService.acceptFriendRequest(requestId, auth.getName(), request);
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }

@@ -28,6 +28,18 @@
 
         <div class="profile-header">
 
+            <c:set var="hasBeginner" value="false"/>
+            <c:set var="hasExplorer" value="false"/>
+
+            <c:forEach var="badge" items="${user.badges}">
+                <c:if test="${badge.name == 'Beginner'}">
+                    <c:set var="hasBeginner" value="true"/>
+                </c:if>
+                <c:if test="${badge.name == 'Explorer'}">
+                    <c:set var="hasExplorer" value="true"/>
+                </c:if>
+            </c:forEach>
+
             <div class="avatar">
                 <c:choose>
                     <c:when test="${not empty user.profilePicture}">
@@ -47,10 +59,9 @@
 
                 <div class="level-title">
                     <c:choose>
-                        <c:when test="${user.progress < 25}">🌱 Beginner</c:when>
-                        <c:when test="${user.progress < 50}">🚀 Explorer</c:when>
-                        <c:when test="${user.progress < 75}">🔥 Achiever</c:when>
-                        <c:otherwise>🏆 Master</c:otherwise>
+                        <c:when test="${hasExplorer}">🚀 Explorer</c:when>
+                        <c:when test="${hasBeginner}">🌱 Beginner</c:when>
+                        <c:otherwise>🔒 No Badge Yet</c:otherwise>
                     </c:choose>
                 </div>
 
@@ -73,10 +84,11 @@
             </div>
             <div class="stat">
                 <h3>${user.points}</h3>
-                <p>XP</p>
+                <p>Points</p>
             </div>
             <div class="stat">
-                <h3>${user.level}</h3>
+                <h3>
+                    <span class="fire-icon">🔥</span>${user.level}</h3>
                 <p>Streak</p>
             </div>
         </div>
@@ -98,46 +110,67 @@
     <!-- Badges Section -->
     <div class="card">
         <h3>Achievements</h3>
+        <c:set var="hasBeginner" value="false"/>
+        <c:set var="hasExplorer" value="false"/>
+        <c:set var="hasSocializer" value="false"/>
+        <c:set var="hasFirstLogin" value="false"/>
+
+        <c:forEach var="badge" items="${user.badges}">
+            <c:if test="${badge.name == 'Beginner'}">
+                <c:set var="hasBeginner" value="true"/>
+            </c:if>
+            <c:if test="${badge.name == 'Explorer'}">
+                <c:set var="hasExplorer" value="true"/>
+            </c:if>
+            <c:if test="${badge.name == 'Socializer'}">
+                <c:set var="hasSocializer" value="true"/>
+            </c:if>
+            <c:if test="${badge.name == 'First Login'}">
+                <c:set var="hasFirstLogin" value="true"/>
+            </c:if>
+        </c:forEach>
 
         <div class="badges-grid">
+            <!-- First Login Badge -->
+            <div class="badge-card ${!hasFirstLogin ? 'locked' : ''}"
+                 data-lock-text="Unlocks after first login">
+                🎉 First Login
+                <c:if test="${!hasFirstLogin}">
+                    <span class="lock">🔒</span>
+                </c:if>
+            </div>
 
             <!-- Beginner Badge -->
-            <div class="badge-card ${user.progress < 25 ? 'locked' : ''}"
-                 data-lock-text="Unlock at 25%">
+            <div class="badge-card ${!hasBeginner ? 'locked' : ''}"
+                 data-lock-text="Unlocks after 1 completed course">
                 🌱 Beginner
-                <c:if test="${user.progress < 25}">
+                <c:if test="${!hasBeginner}">
                     <span class="lock">🔒</span>
                 </c:if>
             </div>
 
             <!-- Explorer Badge -->
-            <div class="badge-card ${user.progress < 50 ? 'locked' : ''}"
-                 data-lock-text="Unlock at 50%">
+            <div class="badge-card ${!hasExplorer ? 'locked' : ''}"
+                 data-lock-text="Unlocks after 3 completed courses">
                 🚀 Explorer
-                <c:if test="${user.progress < 50}">
+                <c:if test="${!hasExplorer}">
                     <span class="lock">🔒</span>
                 </c:if>
             </div>
 
-            <!-- Achiever Badge -->
-            <div class="badge-card ${user.progress < 75 ? 'locked' : ''}"
-                 data-lock-text="Unlock at 75%">
-                🔥 Achiever
-                <c:if test="${user.progress < 75}">
+
+            <!-- Socializer Badge -->
+            <div class="badge-card ${!hasSocializer ? 'locked' : ''}"
+                 data-lock-text="Unlock after a sent/received friend request">
+                🤝 Socializer
+                <c:if test="${!hasSocializer}">
                     <span class="lock">🔒</span>
                 </c:if>
             </div>
 
-            <!-- Master Badge -->
-            <div class="badge-card ${user.progress < 100 ? 'locked' : ''}"
-                 data-lock-text="Unlock at 100%">
-                🏆 Master
-                <c:if test="${user.progress < 100}">
-                    <span class="lock">🔒</span>
-                </c:if>
-            </div>
 
-        </div>
+            <!-- Badges from the Database -->
+            <div class="badge-grid" style="margin-top: 20px;"> </div>
 
             <c:if test="${empty user.badges}">
                 <p class="no-badges" style="margin-top: 16px;">No badges earned yet. Complete courses to unlock achievements!</p>
@@ -179,5 +212,13 @@
         }
     });
 </script>
+<c:if test="${badgeCelebration != null}">
+    <div class="badge-popup">
+        🎉 New Badge: ${badgeCelebration}!
+    </div>
+    <script>
+        alert("🎉 You unlocked: ${badgeCelebration}!")
+    </script>
+</c:if>
 </body>
 </html>
