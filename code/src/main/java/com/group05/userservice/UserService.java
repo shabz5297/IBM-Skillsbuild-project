@@ -1,5 +1,7 @@
 package com.group05.userservice;
+import com.group05.model.Badge;
 import com.group05.model.User;
+import com.group05.repo.BadgeRepo;
 import com.group05.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +14,9 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private BadgeRepo badgeRepo;
+
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
@@ -28,6 +33,10 @@ public class UserService {
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
+        Badge firstLogin = badgeRepo.findByName("First Login");
+        if (firstLogin == null) {
+            user.getBadges().add(firstLogin);
+        }
         userRepo.save(user);
     }
 
@@ -69,6 +78,7 @@ public class UserService {
             );
         }
     }
+
 
 
 }

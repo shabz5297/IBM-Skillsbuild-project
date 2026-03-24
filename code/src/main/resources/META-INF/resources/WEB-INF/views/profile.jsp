@@ -132,39 +132,39 @@
 
         <div class="badges-grid">
             <!-- First Login Badge -->
-            <div class="badge-card ${!hasFirstLogin ? 'locked' : ''}"
+            <div class="badge-card ${hasFirstLogin ? 'earned':'locked'}"
                  data-lock-text="Unlocks after first login">
                 🎉 First Login
-                <c:if test="${!hasFirstLogin}">
-                    <span class="lock">🔒</span>
+                <c:if test="${hasFirstLogin}">
+                    <span class="earned"></span>
                 </c:if>
             </div>
 
             <!-- Beginner Badge -->
-            <div class="badge-card ${!hasBeginner ? 'locked' : ''}"
+            <div class="badge-card ${hasBeginner ? 'earned':'locked'}"
                  data-lock-text="Unlocks after 1 completed course">
                 🌱 Beginner
-                <c:if test="${!hasBeginner}">
-                    <span class="lock">🔒</span>
+                <c:if test="${hasBeginner}">
+                    <span class="earned"></span>
                 </c:if>
             </div>
 
             <!-- Explorer Badge -->
-            <div class="badge-card ${!hasExplorer ? 'locked' : ''}"
+            <div class="badge-card ${hasExplorer ? 'earned':'locked'}"
                  data-lock-text="Unlocks after 3 completed courses">
                 🚀 Explorer
-                <c:if test="${!hasExplorer}">
-                    <span class="lock">🔒</span>
+                <c:if test="${hasExplorer}">
+                    <span class="earned"></span>
                 </c:if>
             </div>
 
 
             <!-- Socializer Badge -->
-            <div class="badge-card ${!hasSocializer ? 'locked' : ''}"
+            <div class="badge-card ${hasSocializer ? 'earned':'locked'}"
                  data-lock-text="Unlock after a sent/received friend request">
                 🤝 Socializer
-                <c:if test="${!hasSocializer}">
-                    <span class="lock">🔒</span>
+                <c:if test="${hasSocializer}">
+                    <span class="earned"></span>
                 </c:if>
             </div>
 

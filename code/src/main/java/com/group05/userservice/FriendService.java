@@ -107,19 +107,18 @@ public class FriendService {
             if (socializer != null && !receiver.getBadges().contains(socializer)) {
                 receiver.getBadges().add(socializer);
                 request.getSession().setAttribute("badgeCelebration", "Socializer");
-                userRepo.save(receiver);
             }
-
         }
+        userRepo.save(receiver);
         //Socializer Badge for the sender
         if (sender.getFriends().size() == 1){
             Badge socializer = badgeRepo.findByName("Socializer");
             if (socializer != null && !sender.getBadges().contains(socializer)) {
                 sender.getBadges().add(socializer);
                 request.getSession().setAttribute("badgeCelebration", "Socializer");
-                userRepo.save(sender);
             }
         }
+        userRepo.save(sender);
 
         friendRequest.setStatus(FriendRequestStatus.ACCEPTED);
         friendRequestRepo.save(friendRequest);
