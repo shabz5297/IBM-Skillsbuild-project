@@ -93,15 +93,6 @@ public class CourseService {
 
     @Transactional
     public void markCourseCompleted(Long userId, Long courseId, HttpServletRequest request) {
-        System.out.println("==== DEBUG START ====");
-        System.out.println("Incoming userId: " + userId);
-        System.out.println("Incoming courseId: " + courseId);
-
-        boolean exists = userRepository.existsById(userId);
-        System.out.println("User exists in DB: " + exists);
-        userRepository.findAll().forEach(u ->
-                System.out.println("DB USER -> id: " + u.getId() + ", username: " + u.getUsername()));
-        System.out.println("==== DEBUG END ====");
 
         // Prevent duplicate completions
         if (courseCompletionRepo.existsByUser_IdAndCourse_Id(userId, courseId)) {
@@ -117,28 +108,33 @@ public class CourseService {
         CourseCompletion completion = new CourseCompletion(user, course, LocalDateTime.now());
         courseCompletionRepo.save(completion);
 
-        user.addPoints(POINTS_PER_COMPLETION); // award points for leaderboard
+        user.addPoints(POINTS_PER_COMPLETION);
 
-        int completedCount = courseCompletionRepo.findAllByUser_Id(userId).size(); //counting the courses
+        List<String> badgeCelebrations = new ArrayList<>();
 
-        //Beginner Badge
+        int completedCount = courseCompletionRepo.findAllByUser_Id(userId).size();
+
+
         if (completedCount == 1) {
             Badge beginner = badgeRepo.findByName("Beginner");
             if (beginner != null && !user.getBadges().contains(beginner)) {
                 user.getBadges().add(beginner);
-                request.getSession().setAttribute("badgeCelebration", "Beginner");
-                userRepository.save(user);
+                badgeCelebrations.add("Beginner");
             }
         }
 
-        //Explorer Badge
+
         if (completedCount == 3){
             Badge explorer = badgeRepo.findByName("Explorer");
             if (explorer != null && !user.getBadges().contains(explorer)) {
                 user.getBadges().add(explorer);
-                request.getSession().setAttribute("badgeCelebration", "Explorer");
-                userRepository.save(user);
+                badgeCelebrations.add("Explorer");
             }
+        }
+
+
+        if (!badgeCelebrations.isEmpty()) {
+            request.getSession().setAttribute("badgeCelebrations", badgeCelebrations);
         }
     }
 

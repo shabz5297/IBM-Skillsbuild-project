@@ -34,7 +34,7 @@ public class UserService {
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         Badge firstLogin = badgeRepo.findByName("First Login");
-        if (firstLogin == null) {
+        if (firstLogin != null) {
             user.getBadges().add(firstLogin);
         }
         userRepo.save(user);

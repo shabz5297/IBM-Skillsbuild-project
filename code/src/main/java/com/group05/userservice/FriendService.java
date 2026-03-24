@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.ArrayList;
 
 @Service
 public class FriendService {
@@ -69,8 +70,6 @@ public class FriendService {
         if (requestAlreadyExists) {
             throw new IllegalArgumentException("A friend request is already pending");
         }
-        sender = userRepo.findById(sender.getId()).orElseThrow();
-        receiver = userRepo.findById(receiver.getId()).orElseThrow();
 
         FriendRequest request = new FriendRequest(sender, receiver);
         friendRequestRepo.save(request);
@@ -78,6 +77,7 @@ public class FriendService {
 
     @Transactional
     public void acceptFriendRequest(Long requestId, String currentUsername, HttpServletRequest request) {
+
         User receiver = userRepo.findOptionalByUsername(currentUsername)
                 .orElseThrow(() -> new IllegalArgumentException("Current user not found"));
 
@@ -90,40 +90,34 @@ public class FriendService {
 
         User sender = friendRequest.getSender();
 
-        if (!receiver.getFriends().contains(sender)) {
-            receiver.getFriends().add(sender);
+        receiver.getFriends().add(sender);
+        sender.getFriends().add(receiver);
+
+        List<String> badgeCelebrations = new ArrayList<>();
+        Badge socializer = badgeRepo.findByName("Socializer");
+
+        if (receiver.getFriends().size() == 1 &&
+                socializer != null &&
+                !receiver.getBadges().contains(socializer)) {
+
+            receiver.getBadges().add(socializer);
+            badgeCelebrations.add("Socializer");
         }
 
-        if (!sender.getFriends().contains(receiver)) {
-            sender.getFriends().add(receiver);
+        if (sender.getFriends().size() == 1 &&
+                socializer != null &&
+                !sender.getBadges().contains(socializer)) {
+
+            sender.getBadges().add(socializer);
+            badgeCelebrations.add("Socializer");
         }
 
-        userRepo.save(receiver);
-        userRepo.save(sender);
-
-        //Socializer Badge for the receiver
-        if (receiver.getFriends().size() == 1) {
-            Badge socializer = badgeRepo.findByName("Socializer");
-            if (socializer != null && !receiver.getBadges().contains(socializer)) {
-                receiver.getBadges().add(socializer);
-                request.getSession().setAttribute("badgeCelebration", "Socializer");
-            }
+        if (!badgeCelebrations.isEmpty()) {
+            request.getSession().setAttribute("badgeCelebrations", badgeCelebrations);
         }
-        userRepo.save(receiver);
-        //Socializer Badge for the sender
-        if (sender.getFriends().size() == 1){
-            Badge socializer = badgeRepo.findByName("Socializer");
-            if (socializer != null && !sender.getBadges().contains(socializer)) {
-                sender.getBadges().add(socializer);
-                request.getSession().setAttribute("badgeCelebration", "Socializer");
-            }
-        }
-        userRepo.save(sender);
 
         friendRequest.setStatus(FriendRequestStatus.ACCEPTED);
-        friendRequestRepo.save(friendRequest);
     }
-
     @Transactional
     public void declineFriendRequest(Long requestId, String currentUsername) {
         User receiver = userRepo.findOptionalByUsername(currentUsername)

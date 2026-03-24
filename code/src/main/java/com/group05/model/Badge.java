@@ -3,6 +3,7 @@ package com.group05.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "badge")
 public class Badge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +13,9 @@ public class Badge {
     private String description;
 
     public Badge() {}
+    public Badge(String name){
+        this.name = name;
+    }
 
     public Badge(String name, String description) {
         this.name = name;
