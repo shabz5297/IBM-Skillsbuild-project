@@ -127,6 +127,7 @@ public class CourseService {
             if (beginner != null && !user.getBadges().contains(beginner)) {
                 user.getBadges().add(beginner);
                 request.getSession().setAttribute("badgeCelebration", "Beginner");
+                userRepository.save(user);
             }
         }
 
@@ -136,9 +137,9 @@ public class CourseService {
             if (explorer != null && !user.getBadges().contains(explorer)) {
                 user.getBadges().add(explorer);
                 request.getSession().setAttribute("badgeCelebration", "Explorer");
+                userRepository.save(user);
             }
         }
-        userRepository.save(user); // saves everything
     }
 
     public Set<Long> getCompletedCourseIds(Long userId) {

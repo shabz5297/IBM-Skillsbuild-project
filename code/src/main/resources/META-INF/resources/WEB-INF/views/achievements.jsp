@@ -64,17 +64,17 @@
             <div class="card">
                 <h3>Achievements</h3>
                 <div class="badges-grid">
-                    <c:forEach var="badge" items="${user.badges}">
-                        <div class="badge-card unlocked">
+                    <c:forEach var="badge" items="${allbadges}">
+                        <div class="badge">
 
                             <c:choose>
-                                <c:when test="${badge.name == 'First Login'}">🎉</c:when>
-                                <c:when test="${badge.name == 'Beginner'}">🌱</c:when>
-                                <c:when test="${badge.name == 'Explorer'}">🚀</c:when>
-                                <c:when test="${badge.name == 'Socializer'}">🤝</c:when>
+                           <c:when test="${user.badges.contains(badge)}">
+                               <span>${badge.name}</span>
+                           </c:when>
+                           <c:otherwise>
+                               <span class="locked">${badge.name}</span>
+                           </c:otherwise>
                             </c:choose>
-
-                                ${badge.name}
                         </div>
                     </c:forEach>
                 </div>
@@ -101,13 +101,11 @@
         });
     }
 </script>
-<c:if test="${badgeCelebration != null}">
-    <div class="badge-popup">
-        🎉 New Badge: ${badgeCelebration}!
-    </div>
+<c:if test="${not empty badgeCelebration}">
     <script>
-        alert("🎉 You unlocked: ${badgeCelebration}!")
+        alert("You unlocked: ${badgeCelebration}");
     </script>
 </c:if>
+
 </body>
 </html>
