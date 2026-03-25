@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +31,6 @@ public class DashboardController {
     private final LeaderboardService leaderboardService;
     private final ReviewService reviewService;
     private final GoalService goalService;
-    private final BadgeRepo badgeRepo;
 
     // Constructor injection: Spring automatically provides the required services/repositories
     public DashboardController(CourseService courseService, UserRepo userRepo, LeaderboardService leaderboardService, ReviewService reviewService, GoalService goalService, BadgeRepo badgeRepo) {
@@ -41,7 +39,6 @@ public class DashboardController {
         this.leaderboardService = leaderboardService;
         this.reviewService = reviewService;
         this.goalService = goalService;
-        this.badgeRepo = badgeRepo;
     }
 
     private String timeAgo(java.time.LocalDateTime dateTime) {
@@ -112,9 +109,7 @@ public class DashboardController {
 
 
         // Get the user's saved courses
-        List<Course> savedCourses = user != null
-                ? courseService.getSavedCourses(user.getId())
-                : List.of();
+        List<Course> savedCourses = courseService.getSavedCourses(user.getId());
 
         // Create a set of saved course IDs for quick lookup in the JSP
         // Used to decide whether a star should be filled or empty
@@ -272,13 +267,19 @@ public class DashboardController {
 
     // Loads the profile page
     @GetMapping("/profile")
-        public String profile(Authentication authentication,
-                              HttpServletRequest request,
-                              Model model) {
-            User user = getLoggedInUser(authentication);
-            request.getSession().removeAttribute("badgeCelebration");
-            request.getSession().removeAttribute("streakCelebration");
-            model.addAttribute("user", user);
-            return "profile";
+    public String profile(Authentication authentication,
+                          HttpServletRequest request,
+                          Model model) {
+
+        User user = getLoggedInUser(authentication);
+        model.addAttribute("user", user);
+        Object badges = request.getSession().getAttribute("badgeCelebrations");
+        if (badges != null) {
+            model.addAttribute("badgeCelebrations", badges);
+            request.getSession().removeAttribute("badgeCelebrations");
         }
+        request.getSession().removeAttribute("streakCelebration");
+
+        return "profile";
+    }
 }

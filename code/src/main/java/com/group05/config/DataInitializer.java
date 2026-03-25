@@ -2,12 +2,36 @@ package com.group05.config;
 
 import com.group05.model.Course;
 import com.group05.repo.CourseRepo;
+import com.group05.model.Badge;
+import com.group05.repo.BadgeRepo;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DataInitializer {
+    @Bean
+    CommandLineRunner initData(BadgeRepo badgeRepo) {
+        return args -> {
+
+            if (badgeRepo.findByName("First Login") == null) {
+                badgeRepo.save(new Badge("First Login"));
+            }
+
+            if (badgeRepo.findByName("Beginner") == null) {
+                badgeRepo.save(new Badge("Beginner"));
+            }
+
+            if (badgeRepo.findByName("Explorer") == null) {
+                badgeRepo.save(new Badge("Explorer"));
+            }
+
+            if (badgeRepo.findByName("Socializer") == null) {
+                badgeRepo.save(new Badge("Socializer"));
+            }
+        };
+    }
 
     @Bean
     public ApplicationRunner initializer(CourseRepo courseRepository) {

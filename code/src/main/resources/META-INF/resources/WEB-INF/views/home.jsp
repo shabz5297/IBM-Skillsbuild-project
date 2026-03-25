@@ -16,9 +16,13 @@
         </div>
 
 
-    <div class="popup badge-popup" id="badge-popup" style="display: none;">
-        🏆 ${badgeCelebration}
-    </div>
+    <c:if test="${not empty badgeCelebrations}">
+        <c:forEach var="badge" items="${badgeCelebrations}">
+            <div class="popup badge-popup">
+                🏆 ${badge} unlocked!
+            </div>
+        </c:forEach>
+    </c:if>
 </div>
 <!-- TOPBAR -->
 <div class="topbar">
@@ -350,37 +354,49 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-
-        const badgeCelebration = "${badgeCelebration}";
         const streakCelebration = "${streakCelebration}";
-
-        const badgePopup = document.getElementById('badge-popup');
         const streakPopup = document.getElementById('streak-popup');
 
-        console.log("Badge:", badgeCelebration);
         console.log("Streak:", streakCelebration);
 
         // badge popup
-        if (badgeCelebration && badgeCelebration !== "null" && badgeCelebration !== "") {
+        const badgePopups = document.querySelectorAll('.badge-popup');
 
-            badgePopup.style.display = "block";
-            badgePopup.innerText = "🏆 " + badgeCelebration + " unlocked!";
-            badgePopup.classList.add("show");
+        let shown = JSON.parse(sessionStorage.getItem("shownBadges") || "[]");
 
+        let hasNewBadge = false;
+
+        badgePopups.forEach((popup, index) => {
+            const text = popup.innerText;
+
+            if (!shown.includes(text)) {
+                hasNewBadge = true;
+
+                setTimeout(() => {
+                    popup.style.display = "block";
+                    popup.classList.add("show");
+
+                    setTimeout(() => {
+                        popup.classList.remove("show");
+                        popup.style.display = "none";
+                    }, 3000);
+
+                }, index * 1000);
+
+                shown.push(text);
+            }
+        });
+        if (hasNewBadge) {
             confetti({
                 particleCount: 150,
                 spread: 120,
                 origin: { y: 0.6 }
             });
-
-            setTimeout(() => {
-                badgePopup.classList.remove("show");
-                badgePopup.style.display = "none";
-            }, 3000);
         }
+        sessionStorage.setItem("shownBadges", JSON.stringify(shown));
 
         // streak popup
-        if (streakCelebration === "true") {
+        if (streakCelebration === "true" && !sessionStorage.getItem("streakShown")) {
 
             streakPopup.style.display = "block";
             streakPopup.classList.add("show");
@@ -395,6 +411,8 @@
                 streakPopup.classList.remove("show");
                 streakPopup.style.display = "none";
             }, 3000);
+
+            sessionStorage.setItem("streakShown", "true");
         }
 
     });
