@@ -13,9 +13,7 @@
 <div class="topbar">
     <div class="left">
         <a href="${pageContext.request.contextPath}/home" class="brand">
-            <div class="brand-icon">
-                <img src="${pageContext.request.contextPath}/images/ibm-logo2.png" alt="IBM Logo"/>
-            </div>
+            <div class="brand-icon">🔥</div>
             IBM SkillsBuild
         </a>
     </div>
@@ -67,27 +65,66 @@
             <!-- Badges Section -->
             <div class="card">
                 <h3>Achievements</h3>
+                <c:set var="hasBeginner" value="false"/>
+                <c:set var="hasExplorer" value="false"/>
+                <c:set var="hasSocializer" value="false"/>
+                <c:set var="hasFirstLogin" value="false"/>
+
+                <c:forEach var="badge" items="${user.badges}">
+                    <c:if test="${badge.name == 'Beginner'}">
+                        <c:set var="hasBeginner" value="true"/>
+                    </c:if>
+                    <c:if test="${badge.name == 'Explorer'}">
+                        <c:set var="hasExplorer" value="true"/>
+                    </c:if>
+                    <c:if test="${badge.name == 'Socializer'}">
+                        <c:set var="hasSocializer" value="true"/>
+                    </c:if>
+                    <c:if test="${badge.name == 'First Login'}">
+                        <c:set var="hasFirstLogin" value="true"/>
+                    </c:if>
+                </c:forEach>
+
                 <div class="badges-grid">
-                    <c:forEach var="badge" items="${user.badges}">
-                        <div class="badge-card unlocked">
+                    <!-- First Login Badge -->
+                    <div class="badge-card ${!hasFirstLogin ? 'locked' : 'earned'}"
+                         data-lock-text="Unlocks after first login">
+                        🎉 First Login
+                        <c:if test="${!hasFirstLogin}">
+                            <span class="lock">🔒</span>
+                        </c:if>
+                    </div>
 
-                            <c:choose>
-                                <c:when test="${badge.name == 'First Login'}">🎉</c:when>
-                                <c:when test="${badge.name == 'Beginner'}">🌱</c:when>
-                                <c:when test="${badge.name == 'Explorer'}">🚀</c:when>
-                                <c:when test="${badge.name == 'Socializer'}">🤝</c:when>
-                            </c:choose>
+                    <!-- Beginner Badge -->
+                    <div class="badge-card ${!hasBeginner ? 'locked' : 'earned'}"
+                         data-lock-text="Unlocks after 1 completed course">
+                        🌱 Beginner
+                        <c:if test="${!hasBeginner}">
+                            <span class="lock">🔒</span>
+                        </c:if>
+                    </div>
 
-                                ${badge.name}
-                        </div>
-                    </c:forEach>
+                    <!-- Explorer Badge -->
+                    <div class="badge-card ${!hasExplorer ? 'locked' : 'earned'}"
+                         data-lock-text="Unlocks after 3 completed courses">
+                        🚀 Explorer
+                        <c:if test="${!hasExplorer}">
+                            <span class="lock">🔒</span>
+                        </c:if>
+                    </div>
+
+                    <!-- Socializer Badge -->
+                    <div class="badge-card ${!hasSocializer ? 'locked' : 'earned'}"
+                         data-lock-text="Unlock after a sent/received friend request">
+                        🤝 Socializer
+                        <c:if test="${!hasSocializer}">
+                            <span class="lock">🔒</span>
+                        </c:if>
+                    </div>
                 </div>
-                <c:if test="${empty user.badges}">
-                    <p class="no-badges">No badges earned yet.</p>
-                </c:if>
             </div>
 
-        </div>
+
     </main>
 </div>
 

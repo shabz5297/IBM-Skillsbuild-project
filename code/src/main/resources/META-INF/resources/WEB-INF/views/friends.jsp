@@ -12,9 +12,7 @@
 <div class="topbar">
     <div class="left">
         <a href="${pageContext.request.contextPath}/home" class="brand">
-            <div class="brand-icon">
-                <img src="${pageContext.request.contextPath}/images/ibm-logo2.png" alt="IBM Logo"/>
-            </div>
+            <div class="brand-icon">🔥</div>
             IBM SkillsBuild
         </a>
     </div>
@@ -137,7 +135,7 @@
                                         </p>
                                         <p class="friend-flex">
                                             Progress
-                                            <span class="friend-stat-value">${request.sender.progress}%</span>
+                                            <span class="friend-stat-value">${request.sender.progressPercentage}%</span>
                                         </p>
                                     </div>
                                 </div>
@@ -218,7 +216,7 @@
                                         </p>
                                         <p class="friend-flex">
                                             Progress
-                                            <span class="friend-stat-value">${friend.progress}%</span>
+                                            <span class="friend-stat-value">${friend.progressPercentage}%</span>
                                         </p>
                                     </div>
                                 </div>

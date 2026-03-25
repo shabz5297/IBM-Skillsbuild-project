@@ -22,21 +22,26 @@ public class AchievementController {
         this.userRepo = userRepo;
         this.badgeRepo = badgeRepo;
     }
+
     private User getLoggedInUser(Authentication authentication) {
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return null;
+        if (authentication == null || !authentication.isAuthenticated()) return null;
+
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof org.springframework.security.oauth2.core.user.OAuth2User oauthUser) {
+            String providerId = String.valueOf(oauthUser.getAttributes().get("id"));
+            return userRepo.findByProviderAndProviderId("GITHUB", providerId);
         }
-        String username = authentication.getName();
-        return userRepo.findByUsername(username);
+        return userRepo.findByUsername(authentication.getName());
     }
 
     @GetMapping("/achievements")
     public String achievements(Authentication authenticaton, Model model) {
-        User user = userRepo.findByUsername(authenticaton.getName());
+        User user = getLoggedInUser(authenticaton);
         if (user == null) {
             return "redirect:/login";
         }
-        user=userRepo.findById(user.getId()).orElseThrow();
+
+        user = userRepo.findById(user.getId()).orElseThrow();
         model.addAttribute("user", user);
         return "achievements";
     }
