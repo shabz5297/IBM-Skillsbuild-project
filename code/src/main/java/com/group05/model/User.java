@@ -37,7 +37,7 @@ public class User {
     @JoinTable(
             name ="user_badges",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "badge_id")
+            inverseJoinColumns = @JoinColumn(name = "badges_id")
     )
     private List<Badge> badges = new ArrayList<>();
 
@@ -116,16 +116,26 @@ public class User {
     // handles points and levelling system for leaderboard
     public int getPoints() {return points;}
 
-    public void setPoints(int points) {this.points = Math.max(0, points);
-        this.level = calculateLevelFromPoints(this.points);}
+    public void setPoints(int points) {
+        this.points = Math.max(0, points);
+        this.level = calculateLevelFromPoints(this.points);
+        this.progress = getProgressPercentage();
+    }
 
     public int getLevel() {return level;}
     public void setLevel(int level) {this.level = Math.max(1, level);}
 
-    public void addPoints(int delta) {this.points = Math.max(0, this.points + delta);
-        this.level = calculateLevelFromPoints(this.points);}
+    public void addPoints(int delta) {
+        this.points = Math.max(0, this.points + delta);
+        this.level = calculateLevelFromPoints(this.points);
+        this.progress = getProgressPercentage();
+    }
 
     private int calculateLevelFromPoints(int points) {return (points / 30);}
+
+    public int getProgressPercentage() {
+        return (points % 30) * 100 / 30;
+    }
 
     //streaks
     private int streak;

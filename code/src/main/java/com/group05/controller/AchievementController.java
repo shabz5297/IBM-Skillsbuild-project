@@ -5,12 +5,14 @@ import com.group05.model.Badge;
 import com.group05.model.User;
 import com.group05.repo.UserRepo;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class AchievementController {
@@ -21,20 +23,26 @@ public class AchievementController {
         this.badgeRepo = badgeRepo;
     }
 
+    private User getLoggedInUser(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) return null;
+
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof org.springframework.security.oauth2.core.user.OAuth2User oauthUser) {
+            String providerId = String.valueOf(oauthUser.getAttributes().get("id"));
+            return userRepo.findByProviderAndProviderId("GITHUB", providerId);
+        }
+        return userRepo.findByUsername(authentication.getName());
+    }
+
     @GetMapping("/achievements")
-    public String achievements(Authentication authenticaton, Model model, HttpServletRequest request) {
-        User user = userRepo.findByUsername(authenticaton.getName());
+    public String achievements(Authentication authenticaton, Model model) {
+        User user = getLoggedInUser(authenticaton);
         if (user == null) {
             return "redirect:/login";
         }
-        String badgeCelebration = (String)request.getSession().getAttribute("badgeCelebration");
-        if (badgeCelebration != null) {
-            request.getSession().removeAttribute("badgeCelebration");
-            model.addAttribute("badgeCelebration", badgeCelebration);
-        }
-        user=userRepo.findById(user.getId()).orElseThrow();
+
+        user = userRepo.findById(user.getId()).orElseThrow();
         model.addAttribute("user", user);
-        model.addAttribute("allBadges", badgeRepo.findAll());
         return "achievements";
     }
 

@@ -56,14 +56,29 @@ public class LeaderboardController {
 
     @GetMapping("/leaderboard")
     public String leaderboard(Authentication authentication,
-                              @RequestParam(value = "query", required = false) String query,
-                              @RequestParam(value = "category", required = false) String category,
+                              @RequestParam(value = "filter", required = false, defaultValue = "global") String filter,
                               Model model) {
 
         User user = getLoggedInUser(authentication);
 
-        model.addAttribute("leaderboardTop", leaderboardService.getTopStudents(10));
-        model.addAttribute("userRank", user != null ? leaderboardService.getUserRank(user.getId()) : null);
+        if ("friends".equals(filter) && user != null) {
+            // Friends leaderboard
+            List<User> friendsLeaderboard = leaderboardService.getFriendsLeaderboard(user.getId());
+            model.addAttribute("leaderboardTop", friendsLeaderboard);
+            model.addAttribute("userRank", leaderboardService.getFriendsRank(user.getId(), user.getId()));
+            model.addAttribute("currentFilter", "friends");
+            model.addAttribute("filterTitle", "Friends Leaderboard");
+            model.addAttribute("filterSubtitle", "You and your friends ranked by points");
+            model.addAttribute("user", user);
+        } else {
+            // Global leaderboard (default)
+            model.addAttribute("leaderboardTop", leaderboardService.getTopStudents(10));
+            model.addAttribute("userRank", user != null ? leaderboardService.getUserRank(user.getId()) : null);
+            model.addAttribute("currentFilter", "global");
+            model.addAttribute("filterTitle", "Global Leaderboard");
+            model.addAttribute("filterSubtitle", "Top students by points");
+            model.addAttribute("user", user);
+        }
 
         return "leaderboard";
     }

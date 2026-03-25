@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Friends</title>
+    <title>Browse</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
 </head>
 <body>
@@ -17,11 +17,13 @@
     </div>
 
     <div class="right">
-        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️ Light</button>
+        <button class="theme-toggle" onclick="toggleTheme()">☀️ Light</button>
+        <c:if test="${user != null}">
+            <a href="/profile/${user.id}" class="profile-btn">👤 ${user.username}</a>
+        </c:if>
         <form action="${pageContext.request.contextPath}/logout" method="post">
             <button class="logout-btn">Logout</button>
         </form>
-        <a href="${pageContext.request.contextPath}/profile" class="profile-btn">Profile ⚙</a>
     </div>
 </div>
 
@@ -122,17 +124,16 @@
 </main>
 
 <script>
+    /* ── Theme toggle (matches home.css logic) ── */
     function toggleTheme() {
-        const isLight = document.body.classList.toggle('light-mode');
-        document.getElementById('themeToggle').textContent = isLight ? '🌙 Dark' : '☀️ Light';
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        document.body.classList.toggle('light-mode');
+        const btn = document.querySelector('.theme-toggle');
+        btn.textContent = document.body.classList.contains('light-mode') ? '🌙 Dark' : '☀️ Light';
+        localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
     }
-
     if (localStorage.getItem('theme') === 'light') {
         document.body.classList.add('light-mode');
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('themeToggle').textContent = '🌙 Dark';
-        });
+        document.querySelector('.theme-toggle').textContent = '🌙 Dark';
     }
 </script>
 

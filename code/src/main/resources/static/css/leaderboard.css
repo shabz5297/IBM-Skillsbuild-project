@@ -66,10 +66,13 @@ body {
 }
 
 .brand-icon {
-    width: 36px; height: 36px;
+    width: 36px;
+    height: 36px;
     background: linear-gradient(135deg, var(--accent-cyan), #0891b2);
     border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 18px;
 }
 
@@ -631,4 +634,54 @@ body {
     .filter-bar { flex-wrap: wrap; }
     .filter-bar input { min-width: 160px; flex: 1; }
     .quick-stats { grid-template-columns: 1fr 1fr; }
+}
+
+.profile-btn {
+    text-decoration: none;
+    background: var(--accent-blue);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s;
+    display: flex; align-items: center; gap: 6px;
+}
+.profile-btn:hover { background: #3a5ce0; }
+
+.leaderboard-filters {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    transition: all 0.2s;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.filter-btn:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    background: #22d3ee15;
+}
+
+.filter-btn.active {
+    background: var(--accent-cyan);
+    color: var(--bg-primary);
+    border-color: var(--accent-cyan);
+    cursor: default;
+}
+
+.filter-btn:disabled {
+    cursor: default;
 }

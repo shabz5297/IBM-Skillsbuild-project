@@ -19,7 +19,7 @@
         IBM SkillsBuild
     </a>
     <div class="right">
-        <button class="theme-toggle" onclick="toggleTheme()">🌙 Theme</button>
+        <button class="theme-toggle" onclick="toggleTheme()">☀️ Light</button>
         <form action="${pageContext.request.contextPath}/logout" method="post" style="display:inline">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <button class="logout-btn" type="submit">Logout</button>
