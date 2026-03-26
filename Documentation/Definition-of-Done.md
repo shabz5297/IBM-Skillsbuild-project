@@ -70,3 +70,4 @@ A security-related user story is also considered complete when:
 | US-S2-07      | Course Completion Goals      | DoD-B        |
 | US-S2-08      | Adding Friends               | DoD-C        |
 | US-S2-09      | Flashcards and Notes         | DoD-C        |
+| US-S2-10      | Friends Leaderboard          | DoD-B        |

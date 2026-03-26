@@ -119,6 +119,7 @@
 - Experience points increase when courses are completed.  
 - Level upgrades occur automatically when defined thresholds are reached.  
 - The current level is visible on the dashboard, profile, and leaderboard.  
+- Users can view their progress towards the next level via the profile page
 
 ---
 
@@ -142,18 +143,20 @@
 - Badges are awarded for course completion, level progression, or streak milestones.  
 - Earned badges are displayed on the user profile and dashboard.  
 - Users can view badge descriptions via hover or click interaction.  
+- Badge data is stored in the backend and persists across sessions.  
 
 ---
 
 ### 4. Side Menu Navigation
 **User Story:**
-- As a student, I want a persistent side navigation menu on the dashboard so that I can efficiently access the Courses, Leaderboard, Achievements, and Reviews sections of the platform.
+- As a student, I want a persistent side navigation menu on the dashboard so that I can efficiently access the Courses, Browse, Leaderboard and Achievements sections of the platform.
 
 **Acceptance Criteria:**
 - The dashboard displays a persistent side navigation menu.
 - The menu contains links to Home, Browse Courses, Leaderboard and Friends Page
 - The menu is displayed consistently on all dashboard-related pages.
-- The menu includes IBM SkillsBuild branding and logo.
+- The menu includes IBM SkillsBuild branding.
+- The menu must remain accessible even when the user scrolls down.
 
 ### 5. Theme Toggle
 
@@ -211,9 +214,6 @@
 - Students can send and receive friend requests.
 - Users can accept or decline friend requests.
 - Accepted friends appear in the student’s friends list.
-- A friends leaderboard displays the progress, points, or completed courses of connected friends.
-- The leaderboard ranks friends based on their points or completed courses.
-- The friends leaderboard is accessible from the dashboard navigation menu.
 
 ---
 
@@ -231,8 +231,18 @@
 - Notes and flashcards persist after logout and login.
 - The dashboard or course page displays a section where users can access their notes and flashcards.
 
+### 10. Friends Leaderboard Filter
+
+**User Story:**
+- As a student, I want to filter the leaderboard to show only my friends so that I can compare my progress in a more personal and competitive environment.
+
+**Acceptance Criteria:**
+- A filter toggle is available on the leaderboard page to switch between Global and Friends views.
+- The Friends leaderboard displays only the logged-in user and their accepted friends.
+- Friends are ranked by points in descending order.
+- The logged-in user's row is highlighted in both Global and Friends views.
+- Switching between filters updates the leaderboard instantly without a page reload.
+- The Friends filter is only accessible to logged-in users.
 
 
-
-- Badge data is stored in the backend and persists across sessions.  
 
