@@ -48,7 +48,7 @@ This guide explains how to run and use all features of our IBM SkillsBuild Gamif
    - Right-click `Group05Application` → **Run** (or use the green run icon at the top right)
    - Once started, open your browser and visit: `http://localhost:8080`
 
-![Application running on localhost](screenshots/sprint1/01-dashboard.png)
+![Application running on localhost](Documentation/User%20Manual/Screenshots/Sprint%201/01-dashboard.png)
 
 ---
 
@@ -88,9 +88,9 @@ When creating an account, users must follow these rules:
 3. Enter your username and password following the rules above
 4. Click **Register**
 
-![Registration page](screenshots/sprint1/02-registration-page.png)
+![Registration page](Documentation/User%20Manual/Screenshots/Sprint%201/02-registration-page.png)
 
-![Registration validation error for weak password](screenshots/sprint1/03-registration-validation.png)
+![Registration validation error for weak password](Documentation/User%20Manual/Screenshots/Sprint%201/03-registration-validation.png)
 
 ---
 
@@ -102,7 +102,7 @@ When creating an account, users must follow these rules:
 2. Enter your username and password
 3. Click **Sign in**
 
-![Login page](screenshots/sprint1/04-login-page.png)
+![Login page](Documentation/User%20Manual/Screenshots/Sprint%201/04-login-page.png)
 
 ### Result
 
@@ -151,7 +151,7 @@ This page contains:
 - Your saved courses
 - Routes to IBM SkillsBuild courses
 
-![Home dashboard overview](screenshots/sprint1/06-dashboard-overview.png)
+![Home dashboard overview](Documentation/User%20Manual/Screenshots/Sprint%201/06-dashboard-overview.png)
 
 ---
 
@@ -167,7 +167,7 @@ Each course card displays:
 - **Mark Completed** button
 - Star (⭐) button to save
 
-![Course card example](screenshots/sprint1/07-course-card.png)
+![Course card example](Documentation/User%20Manual/Screenshots/Sprint%201/07-course-card.png)
 
 ---
 
@@ -190,7 +190,7 @@ After finishing a course:
 1. Return to the dashboard
 2. Click **Mark Completed** on the course card
 
-![Marking a course as completed](screenshots/sprint1/08-course-completion.png)
+![Marking a course as completed](Documentation/User%20Manual/Screenshots/Sprint%201/08-course-completion.png)
 
 ### Result
 - The course is recorded as completed in the database
@@ -220,7 +220,7 @@ After finishing a course:
 1. Select a category from the filter options (AI, Cloud, Data Science, Security, etc.) and press **Search**
 2. The course list updates to show only matching courses
 
-![Search and filter on the browse page](screenshots/sprint1/09-search-filter.png)
+![Search and filter on the browse page](Documentation/User%20Manual/Screenshots/Sprint%201/09-search-filter.png)
 
 Both search and filter can be used at the same time across all available courses.
 
@@ -255,9 +255,9 @@ On the profile page you can modify:
 3. Upload a profile picture (optional)
 4. Click **Save Changes**
 
-![Profile page](screenshots/sprint1/10-profile-page.png)
+![Profile page](Documentation/User%20Manual/Screenshots/Sprint%201/10-profile-page.png)
 
-![Edit profile form](screenshots/sprint1/11-edit-profile.png)
+![Edit profile form](Documentation/User%20Manual/Screenshots/Sprint%201/11-edit-profile.png)
 
 ### Result
 - Changes are saved to the backend
@@ -283,7 +283,7 @@ Displayed columns include:
 - Points
 - Badges
 
-![Global leaderboard](screenshots/sprint1/12-leaderboard.png)
+![Global leaderboard](Documentation/User%20Manual/Screenshots/Sprint%201/12-leaderboard.png)
 
 ---
 
@@ -301,7 +301,7 @@ The leaderboard can also be filtered to show only you and your accepted friends.
 2. The view switches to show only you and your friends ranked by points
 3. Click **Global** to return to the full rankings
 
-![Friends leaderboard filter](screenshots/sprint2/08-friends-leaderboard.png)
+![Friends leaderboard filter](Documentation/User%20Manual/Screenshots/Sprint%202/08-friends-leaderboard.png)
 
 Your row remains highlighted in both views.
 
@@ -320,7 +320,7 @@ Your row remains highlighted in both views.
 
 The progress bar on your profile shows how far through your current level you are, displayed as a percentage toward the next level threshold.
 
-![Level progress bar on the profile](screenshots/sprint2/04-levels-profile.png)
+![Level progress bar on the profile](Documentation/User%20Manual/Screenshots/Sprint%202/04-levels-profile.png)
 
 ## 8.3 Where Your Level is Displayed
 
@@ -343,7 +343,7 @@ Your current level is visible on:
 
 Your current streak count is displayed on the home dashboard stats bar and on your profile page.
 
-![Streak counter on the dashboard](screenshots/sprint2/05-streak-counter.png)
+![Streak counter on the dashboard](Documentation/User%20Manual/Screenshots/Sprint%202/05-streak-counter.png)
 
 ---
 
@@ -370,7 +370,7 @@ Badges are awarded automatically when you reach specific milestones:
 3. Locked badges are greyed out with a lock icon
 4. Hover over any badge to see the unlock requirement
 
-![Achievements page showing earned and locked badges](screenshots/sprint2/06-badges-achievements.png)
+![Achievements page showing earned and locked badges](Documentation/User%20Manual/Screenshots/Sprint%202/06-badges-achievements.png)
 
 Earned badges are also displayed on your profile page and on the leaderboard.
 
@@ -392,7 +392,7 @@ The sidebar is permanently visible across all dashboard pages and provides quick
 | 👥 Friends | Friend requests and friends list |
 | 🏅 Achievements | Badges and achievements |
 
-![Persistent sidebar navigation](screenshots/sprint2/01-sidebar-navigation.png)
+![Persistent sidebar navigation](Documentation/User%20Manual/Screenshots/Sprint%202/01-sidebar-navigation.png)
 
 The active page is highlighted in the menu so you always know where you are. The sidebar extends the full height of the page even on long scrollable pages.
 
@@ -405,9 +405,9 @@ The active page is highlighted in the menu so you always know where you are. The
 1. Click the **Light / Dark** toggle button in the top right of any dashboard page
 2. The theme switches instantly across the entire interface
 
-![Dark mode dashboard](screenshots/sprint2/02-dark-mode.png)
+![Dark mode dashboard](Documentation/User%20Manual/Screenshots/Sprint%202/02-dark-mode.png)
 
-![Light mode dashboard](screenshots/sprint2/03-light-mode.png)
+![Light mode dashboard](Documentation/User%20Manual/Screenshots/Sprint%202/03-light-mode.png)
 
 ## 12.2 Theme Persistence
 
@@ -427,7 +427,7 @@ Reviews can only be submitted after you have marked a course as completed.
 4. Write a comment in the text field
 5. Click **Submit Review**
 
-![Course review submission form](screenshots/sprint2/11-course-review.png)
+![Course review submission form](Documentation/User%20Manual/Screenshots/Sprint%202/11-course-review.png)
 
 ### Result
 - Your review is saved and displayed immediately for all users
@@ -453,7 +453,7 @@ Each review displays:
 4. Select a time period (daily, weekly, or monthly)
 5. Click **Save**
 
-![Goal creation form](screenshots/sprint2/09-goals-page.png)
+![Goal creation form](Documentation/User%20Manual/Screenshots/Sprint%202/09-goals-page.png)
 
 ## 14.2 Tracking Goal Progress
 
@@ -467,7 +467,7 @@ When you reach your target within the time period:
 - A notification appears on the dashboard confirming the goal was completed
 - You receive rewards — points, badges and level progression
 
-![Completed goal with reward notification](screenshots/sprint2/10-goal-completed.png)
+![Completed goal with reward notification](Documentation/User%20Manual/Screenshots/Sprint%202/10-goal-completed.png)
 
 ## 14.4 Expired Goals
 
@@ -483,7 +483,7 @@ If the time period expires before you reach the target, the goal is automaticall
 2. Type a username into the search bar
 3. Click **Send Request** next to the user you want to add
 
-![Friends page with search bar](screenshots/sprint2/07-friends-page.png)
+![Friends page with search bar](Documentation/User%20Manual/Screenshots/Sprint%202/07-friends-page.png)
 
 ## 15.2 Accepting or Declining a Friend Request
 
@@ -515,7 +515,7 @@ Once you have accepted friends, you can view a friends-only leaderboard from the
 2. Enter a title and write your note content
 3. Click **Save Note**
 
-![Note creation interface](screenshots/sprint2/13-notes.png)
+![Note creation interface](Documentation/User%20Manual/Screenshots/Sprint%202/13-notes.png)
 
 Notes are linked to the specific course and saved to your account. You can view, edit, and delete notes at any time.
 
@@ -525,7 +525,7 @@ Notes are linked to the specific course and saved to your account. You can view,
 2. Enter a question (front of card) and an answer (back of card)
 3. Click **Save Flashcard**
 
-![Flashcard creation interface](screenshots/sprint2/12-flashcards.png)
+![Flashcard creation interface](Documentation/User%20Manual/Screenshots/Sprint%202/12-flashcards.png)
 
 ## 16.4 Study Mode
 
@@ -533,7 +533,7 @@ Notes are linked to the specific course and saved to your account. You can view,
 2. Each card shows the question — click or press the card to flip it and reveal the answer
 3. Work through all cards at your own pace
 
-![Flashcard study mode with card flip](screenshots/sprint2/14-study-mode.png)
+![Flashcard study mode with card flip](Documentation/User%20Manual/Screenshots/Sprint%202/14-study-mode.png)
 
 All flashcards and notes persist after logout and login.
 
