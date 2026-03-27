@@ -86,7 +86,7 @@ When creating an account, users must follow these rules:
 1. Open the application at `http://localhost:8080`
 2. Click **Create an Account**
 3. Enter your username and password following the rules above
-4. Click **Submit**
+4. Click **Register**
 
 ![Registration page](screenshots/sprint1/02-registration-page.png)
 
@@ -100,7 +100,7 @@ When creating an account, users must follow these rules:
 
 1. Navigate to the login page
 2. Enter your username and password
-3. Click **Login**
+3. Click **Sign in**
 
 ![Login page](screenshots/sprint1/04-login-page.png)
 
@@ -122,12 +122,10 @@ To improve user experience, you may log in using GitHub instead of creating a se
 
 ### How It Works
 
-1. On the login page, click **Login with GitHub**
+1. On the login page, click **Continue with GitHub**
 2. You will be redirected to GitHub
 3. Authorise the application if prompted
 4. After successful authentication, you are redirected back to the app
-
-![GitHub OAuth2 login button on the login page](screenshots/sprint1/05-github-login.png)
 
 ---
 
@@ -216,12 +214,11 @@ After finishing a course:
 
 1. Navigate to the **Browse** page from the sidebar
 2. Type a keyword into the search bar
-3. Results update dynamically as you type — no page reload required
 
 ## 5.2 Filtering by Category
 
-1. Select a category from the filter options (AI, Cloud, Data Science, Security, etc.)
-2. The course list updates instantly to show only matching courses
+1. Select a category from the filter options (AI, Cloud, Data Science, Security, etc.) and press **Search**
+2. The course list updates to show only matching courses
 
 ![Search and filter on the browse page](screenshots/sprint1/09-search-filter.png)
 
@@ -321,15 +318,14 @@ Your row remains highlighted in both views.
 
 ## 8.2 Progress Bar
 
-The progress bar on your dashboard and profile shows how far through your current level you are, displayed as a percentage toward the next level threshold.
+The progress bar on your profile shows how far through your current level you are, displayed as a percentage toward the next level threshold.
 
-![Level progress bar on the dashboard](screenshots/sprint2/04-levels-dashboard.png)
+![Level progress bar on the profile](screenshots/sprint2/04-levels-profile.png)
 
 ## 8.3 Where Your Level is Displayed
 
 Your current level is visible on:
 - The home dashboard stats bar
-- Your profile page
 - The leaderboard
 
 ---
@@ -363,6 +359,9 @@ Badges are awarded automatically when you reach specific milestones:
 | 🌱 Beginner | Complete your first course |
 | 🚀 Explorer | Complete three courses |
 | 🤝 Socializer | Send or receive a friend request |
+| 🏆 Monthly Goal Achiever | Complete a Monthly Goal |
+| 🏆 Weekly Goal Achiever | Complete a Weekly Goal |
+| 🏆 Daily Goal Achiever | Complete a Daily Goal |
 
 ## 10.2 Viewing Your Badges
 
@@ -466,7 +465,7 @@ Each review displays:
 
 When you reach your target within the time period:
 - A notification appears on the dashboard confirming the goal was completed
-- You receive a reward — points, badges, or level progression
+- You receive rewards — points, badges and level progression
 
 ![Completed goal with reward notification](screenshots/sprint2/10-goal-completed.png)
 
@@ -573,7 +572,7 @@ If you see errors such as `Cannot add or update a child row: a foreign key const
 Please follow the full step-by-step SQL fix documented in:
 
 ```
-docs/DATABASE_MIGRATION_GUIDE.md
+Documentation/DATABASE_MIGRATION_GUIDE.md
 ```
 
 This guide covers all affected tables and provides the exact SQL commands needed to resolve the issue.
