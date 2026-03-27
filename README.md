@@ -24,6 +24,9 @@ See [System Architecture](Documentation/architecture.md)
 5. Run the Spring Boot application
 6. Access at http://localhost:8080
 
+## User Manual
+
+See [User Manual](Documentation/User%20Manual/User_manual.md)
 
 ## Definition of Done
 See [Definition of Done](Documentation/Definition-of-Done.md)
