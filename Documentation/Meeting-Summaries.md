@@ -37,3 +37,13 @@ Attendees: Destiny-Alliah Colombo, Ousman Ndoye
 ## Discussions
 In this meeting, we discussed the progress we have made on our user stories and any problems we were encountering. We made sure to message the others in the group who couldn't make it regarding the progress we have made as well. We also discussed potentially changing the flashcards user story for an avatars user story and shared this idea with the group via our groupchat.
 
+## Meeting 6: 25-03-26 
+Attendees: Destiny-Alliah Colombo, Ousman Ndoye, Laide Olubunmi, Precious Aghamelu
+
+## Discussions
+In this meeting, we discussed how the demo would be carried out and who would showcase each feature. We also discussed the updates that need to be made to the user manual and how some of the documentation was outdated and how we were going to update this moving forward. We specifically focused on areas where we recieved poor feedback from the last sprint and talked about how we would improve on these areas.
+
+![Meeting 6](Documentation/Screenshots/Meeting-6.png)
+
+
+
